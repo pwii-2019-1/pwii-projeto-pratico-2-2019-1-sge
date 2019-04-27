@@ -40,10 +40,8 @@ class CRUD {
      * CRUD constructor.
      */
     public function __construct() {
-
         $this->openDB();
         $this->closeDB();
-
     }
 
     /**

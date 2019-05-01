@@ -1,5 +1,5 @@
 {
-  "name": "sge",
+  "name": "pwii/sge",
   "type": "project",
   "config": {
     "vendor-dir": "vendor",

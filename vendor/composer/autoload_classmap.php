@@ -6,5 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'core\\CRUD' => $baseDir . '/core/CRUD.php',
+    'core\\CRUD' => $baseDir . '/core/crud/CRUD.php',
+    'core\\Usuario' => $baseDir . '/core/model/Usuario.php',
 );

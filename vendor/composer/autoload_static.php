@@ -29,7 +29,8 @@ class ComposerStaticInitc2037c32e53e82aafd6d754e5434f532
     );
 
     public static $classMap = array (
-        'core\\CRUD' => __DIR__ . '/../..' . '/core/CRUD.php',
+        'core\\CRUD' => __DIR__ . '/../..' . '/core/crud/CRUD.php',
+        'core\\Usuario' => __DIR__ . '/../..' . '/core/model/Usuario.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

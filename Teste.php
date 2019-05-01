@@ -1,6 +1,7 @@
 <?php
 
 use core\CRUD;
+use core\model\Usuario;
 
 class Teste extends CRUD {
 
@@ -99,6 +100,14 @@ class Teste extends CRUD {
         print_r($retorno);
         echo "</pre>";
 
+    }
+
+    public function listar() {
+        $usuario = new Usuario();
+
+        $retorno = $usuario->listar();
+
+        return $retorno;
     }
 
 }

@@ -1,11 +1,12 @@
 /*
     Personalização do input's de pesquisa da página inicial
 */
+
 .has-search .form-control {
     padding-left: 2.375rem;
-  }
-  
-  .has-search .form-control-feedback {
+}
+
+.has-search .form-control-feedback {
     position: absolute;
     z-index: 2;
     display: block;
@@ -15,14 +16,11 @@
     text-align: center;
     pointer-events: none;
     color: #aaa;
-  }
-  
+}
 
 /*
     Personalização do input's de pesquisa da página inicial
 */
-
-
 
 /*
 
@@ -36,7 +34,7 @@ select {
     -moz-appearance: none;
     text-indent: 1px;
     text-overflow: '';
-  }
+}
 
 /*
 
@@ -44,3 +42,16 @@ Remove o estilo padrão dos navegadores
 Usei isso só pra tirar a seta padrão do select
 
 */
+
+/* Estilização do Footer*/
+
+footer {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+footer p {
+    margin-bottom: .25rem;
+}
+
+/* Estilização do Footer*/

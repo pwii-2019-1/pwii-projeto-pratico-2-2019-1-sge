@@ -96,153 +96,162 @@
 		</div>
 	</div>
 
+	<main role='main'>
 
+		<div class="album py-2 bg-light">
+			<div class="container">
 
-	<div class="album py-2 bg-light">
-		<div class="container">
+				<div class="row">
 
-			<div class="row">
+					<div class="col-md-4">
+						<div class="card mb-4 box-shadow">
+							<img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
+							<div class="card-body">
+								<h4 class="card-title">Nome do evento</h4>
 
-				<div class="col-md-4">
-					<div class="card mb-4 box-shadow">
-						<img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
-						<div class="card-body">
-							<h4 class="card-title">Nome do evento</h4>
-
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
-									<a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
+								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+								<div class="d-flex justify-content-between align-items-center">
+									<div class="btn-group">
+										<a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
+										<a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
+									</div>
+									<small class="text-muted">15/02/2015</small>
 								</div>
-								<small class="text-muted">15/02/2015</small>
 							</div>
+							<div class="card-footer text-muted bg-success p-1"> </div>
 						</div>
-						<div class="card-footer text-muted bg-success p-1"> </div>
 					</div>
-				</div>
 
-				<div class="col-md-4">
-					<div class="card mb-4 box-shadow">
-						<img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
-						<div class="card-body">
-							<h4 class="card-title">Nome do evento</h4>
+					<div class="col-md-4">
+						<div class="card mb-4 box-shadow">
+							<img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
+							<div class="card-body">
+								<h4 class="card-title">Nome do evento</h4>
 
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
-									<a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
+								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+								<div class="d-flex justify-content-between align-items-center">
+									<div class="btn-group">
+										<a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
+										<a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
+									</div>
+									<small class="text-muted">15/02/2015</small>
 								</div>
-								<small class="text-muted">15/02/2015</small>
 							</div>
+							<div class="card-footer text-muted bg-danger p-1"> </div>
 						</div>
-						<div class="card-footer text-muted bg-danger p-1"> </div>
 					</div>
-				</div>
 
-				<div class="col-md-4">
-					<div class="card mb-4 box-shadow">
-						<img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
-						<div class="card-body">
-							<h4 class="card-title">Nome do evento</h4>
+					<div class="col-md-4">
+						<div class="card mb-4 box-shadow">
+							<img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
+							<div class="card-body">
+								<h4 class="card-title">Nome do evento</h4>
 
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
-									<a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
+								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+								<div class="d-flex justify-content-between align-items-center">
+									<div class="btn-group">
+										<a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
+										<a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
+									</div>
+									<small class="text-muted">15/02/2015</small>
 								</div>
-								<small class="text-muted">15/02/2015</small>
 							</div>
+							<div class="card-footer text-muted bg-danger p-1"> </div>
 						</div>
-						<div class="card-footer text-muted bg-danger p-1"> </div>
 					</div>
-				</div>
 
-				<div class="col-md-4">
-					<div class="card mb-4 box-shadow">
-						<img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
-						<div class="card-body">
-							<h4 class="card-title">Nome do evento</h4>
+					<div class="col-md-4">
+						<div class="card mb-4 box-shadow">
+							<img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
+							<div class="card-body">
+								<h4 class="card-title">Nome do evento</h4>
 
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
-									<a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
+								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+								<div class="d-flex justify-content-between align-items-center">
+									<div class="btn-group">
+										<a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
+										<a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
+									</div>
+									<small class="text-muted">15/02/2015</small>
 								</div>
-								<small class="text-muted">15/02/2015</small>
 							</div>
+							<div class="card-footer text-muted bg-danger p-1"> </div>
 						</div>
-						<div class="card-footer text-muted bg-danger p-1"> </div>
 					</div>
-				</div>
 
-				<div class="col-md-4">
-					<div class="card mb-4 box-shadow">
-						<img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
-						<div class="card-body">
-							<h4 class="card-title">Nome do evento</h4>
+					<div class="col-md-4">
+						<div class="card mb-4 box-shadow">
+							<img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
+							<div class="card-body">
+								<h4 class="card-title">Nome do evento</h4>
 
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
-									<a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
+								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+								<div class="d-flex justify-content-between align-items-center">
+									<div class="btn-group">
+										<a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
+										<a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
+									</div>
+									<small class="text-muted">15/02/2015</small>
 								</div>
-								<small class="text-muted">15/02/2015</small>
 							</div>
+							<div class="card-footer text-muted bg-danger p-1"> </div>
 						</div>
-						<div class="card-footer text-muted bg-danger p-1"> </div>
 					</div>
-				</div>
 
-				<div class="col-md-4">
-					<div class="card mb-4 box-shadow">
-						<img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
-						<div class="card-body">
-							<h4 class="card-title">Nome do evento</h4>
+					<div class="col-md-4">
+						<div class="card mb-4 box-shadow">
+							<img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
+							<div class="card-body">
+								<h4 class="card-title">Nome do evento</h4>
 
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
-									<a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
+								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+								<div class="d-flex justify-content-between align-items-center">
+									<div class="btn-group">
+										<a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
+										<a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
+									</div>
+									<small class="text-muted">15/02/2015</small>
 								</div>
-								<small class="text-muted">15/02/2015</small>
 							</div>
+							<div class="card-footer text-muted bg-danger p-1"> </div>
 						</div>
-						<div class="card-footer text-muted bg-danger p-1"> </div>
 					</div>
-				</div>
 
+				</div>
 			</div>
 		</div>
-	</div>
 
 
 
-	<nav aria-label="Navegação de página exemplo">
-		<ul class="pagination justify-content-center">
-			<li class="page-item disabled">
-				<a class="page-link" href="#" tabindex="-1">Anterior</a>
-			</li>
-			<li class="page-item"><a class="page-link" href="#">1</a></li>
-			<li class="page-item"><a class="page-link" href="#">2</a></li>
-			<li class="page-item"><a class="page-link" href="#">3</a></li>
-			<li class="page-item">
-				<a class="page-link" href="#">Próximo</a>
-			</li>
-		</ul>
-	</nav>
+		<nav aria-label="Navegação de página exemplo">
+			<ul class="pagination justify-content-center">
+				<li class="page-item disabled">
+					<a class="page-link" href="#" tabindex="-1">Anterior</a>
+				</li>
+				<li class="page-item"><a class="page-link" href="#">1</a></li>
+				<li class="page-item"><a class="page-link" href="#">2</a></li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item">
+					<a class="page-link" href="#">Próximo</a>
+				</li>
+			</ul>
+		</nav>
 
 
 
+	</main>
 
 
-
-
+	<footer class="text-muted bg-dark ">
+		<div class="container">
+			<p class="float-right">
+				<a href="#">Back to top</a>
+			</p>
+			<p class="text-white">SGE &copy; 2019</p>
+			<p class="text-white">Sistema Gerenciador de Eventos, desenvolvido na matéria de Programação Web II.</p>
+			<p class="text-white">Disponível no <a href="https://github.com/pwii-2019-1/sge">GitHub</a></p>
+		</div>
+	</footer>
 
 
 

@@ -83,6 +83,9 @@
                             </div>
                         </div>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+                        <hr>
+                        <p class="text-center">Ainda não está no SGE? <a href="#">Cadastre-se</a></p>
+                        
                     </form>
                 </div>
                 <div class="col">

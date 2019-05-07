@@ -48,6 +48,8 @@ Usei isso só pra tirar a seta padrão do select
 footer {
     padding-top: 3rem;
     padding-bottom: 3rem;
+    bottom: 0;
+    margin: auto;
 }
 
 footer p {

@@ -242,14 +242,13 @@
 	</main>
 
 
-	<footer class="text-muted bg-dark ">
+	<footer class="text-muted bg-dark p-1">
 		<div class="container">
 			<p class="float-right">
 				<a href="#">Back to top</a>
 			</p>
-			<p class="text-white">SGE &copy; 2019</p>
 			<p class="text-white">Sistema Gerenciador de Eventos, desenvolvido na matéria de Programação Web II.</p>
-			<p class="text-white">Disponível no <a href="https://github.com/pwii-2019-1/sge">GitHub</a></p>
+			<p class="text-white">SGE &copy; 2019 &nbsp; - &nbsp; Disponível no <a href="https://github.com/pwii-2019-1/sge">GitHub</a></p>
 		</div>
 	</footer>
 

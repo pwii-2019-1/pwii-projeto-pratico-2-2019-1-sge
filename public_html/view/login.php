@@ -55,8 +55,8 @@
     <main role='main'>
         <div class="container center-block">
             <div class="row ">
-                <div class="col-4"></div>
-                <div class="col-4 col-md-12">
+                <div class="col"></div>
+                <div class="col-md-6">
                     <h1 class="display-4 text-center">SGE</h1>
                     <form class="form-signin">
                         <h1 class="h3 mb-3 font-weight-normal text-center">Logue-se</h1>
@@ -70,40 +70,40 @@
                             <label for="senha" class="sr-only">Password</label>
                             <input type="password" id="senha" class="form-control" placeholder="Senha" required>
                         </div>
-                        <div class="checkbox mb-4">
+                        <div class="checkbox">
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col">
                                         <input type="checkbox" id="lembrar" value="Lembrar-me"> Lembrar-me
                                     </div>
-                                    <div class="col-6">
-                                        <p class="text-sm-right"><a href="#">Esqueci minha senha</a></p>
+                                    <div class="col">
+                                        <p class="text-right"><a href="#">Esqueci minha senha</a></p>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+                        <hr>
+                        <p class="text-center">Ainda não está no SGE? <a href="#">Cadastre-se</a></p>
+                        
                     </form>
                 </div>
-                <div class="col-4">
+                <div class="col">
                     <div>
                     </div>
                 </div>
             </div>
         </div>
-
     </main>
 
 
-    <footer class="text-muted bg-dark fixed-bottom">
+    <footer class="text-muted bg-dark fixed-bottom p-1">
         <div class="container">
             <p class="float-right">
                 <a href="#">Back to top</a>
             </p>
-            <p class="text-white">SGE &copy; 2019</p>
             <p class="text-white">Sistema Gerenciador de Eventos, desenvolvido na matéria de Programação Web II.</p>
-            <p class="text-white">Disponível no <a href="https://github.com/pwii-2019-1/sge">GitHub</a></p>
+			<p class="text-white">SGE &copy; 2019 &nbsp; - &nbsp; Disponível no <a href="https://github.com/pwii-2019-1/sge">GitHub</a></p>
         </div>
     </footer>
 

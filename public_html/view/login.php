@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 <head>
     <title>SGE</title>
     <!-- Required meta tags -->
@@ -15,17 +14,11 @@
 
     <!-- Biblioteca de ícones do Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
-    <style type="text/css">
-        .card-columns {
-            column-count: 4;
-        }
-    </style>
 </head>
 
-<body>
+<body class="bg-light">
     <!-- NAVBAR-->
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-dark bg-dark mb-3">
         <a href="index.php" class="navbar-brand text-light">SGE</a>
         <div class="dropdown dropleft">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -41,16 +34,6 @@
         </div>
     </nav>
     <!-- NAVBAR-->
-
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="">
-                    <p></p>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <main role='main'>
         <div class="container center-block">
@@ -85,7 +68,7 @@
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
                         <hr>
                         <p class="text-center">Ainda não está no SGE? <a href="#">Cadastre-se</a></p>
-                        
+
                     </form>
                 </div>
                 <div class="col">

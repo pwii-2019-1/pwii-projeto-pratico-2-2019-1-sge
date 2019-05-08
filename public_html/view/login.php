@@ -19,7 +19,7 @@
 <body class="bg-light">
     <!-- NAVBAR-->
     <nav class="navbar navbar-dark bg-dark mb-3">
-        <a href="index.php" class="navbar-brand text-light">SGE</a>
+        <a href="../index.php" class="navbar-brand text-light">SGE</a>
         <div class="dropdown dropleft">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-align-justify"></i>

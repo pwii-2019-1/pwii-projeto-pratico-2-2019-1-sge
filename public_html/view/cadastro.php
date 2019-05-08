@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="col">
                     <h1 class="display-4 text-center">SGE</h1>
-                    <h1 class="h3 mb-3 font-weight-normal text-center">Logue-se</h1>
+                    <h1 class="h3 mb-3 font-weight-normal text-center">Cadastre-se</h1>
                 </div>
             </div>
             <form class="needs-validation">
@@ -68,6 +68,7 @@
                         <input type="text" class="form-control" id="ocupacao" placeholder="Insira sua ocupação" required>
                     </div>
                 </div>
+		<hr>
                 <div class="form-row">
                     <div class="form-group col-md-7">
                         <label for="email">Email:</label>
@@ -84,7 +85,8 @@
                         <input type="password" class="form-control" id="confirm_senha" placeholder="Confirme sua senha" required>
                     </div>
                 </div>
-                <div class="form-row">
+                <hr>
+		<div class="form-row">
                     <div class="form-group col-md-7">
                         <label for="logradouro">Logradouro:</label>
                         <input type="text" class="form-control" id="logradouro" placeholder="Insira seu logradouro" required>

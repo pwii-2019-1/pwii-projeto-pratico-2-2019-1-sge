@@ -7,5 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'sge\\' => array($baseDir . '/public_html'),
+    'setasign\\Fpdi\\' => array($vendorDir . '/setasign/fpdi/src'),
     'core\\' => array($baseDir . '/core'),
+    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
+    'Mpdf\\' => array($vendorDir . '/mpdf/mpdf/src'),
+    'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
 );

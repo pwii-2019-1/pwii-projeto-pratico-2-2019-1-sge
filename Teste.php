@@ -1,5 +1,6 @@
 <?php
 
+use core\controller\Certificado;
 use core\CRUD;
 use core\model\Usuario;
 
@@ -110,4 +111,17 @@ class Teste extends CRUD {
         return $retorno;
     }
 
+    public function gerarCertificado() {
+
+        $certificado = new Certificado();
+
+        try {
+
+            $certificado->gerarCertificado();
+
+        } catch (Exception $e) {
+            echo "Erro: " . $e->getMessage() . "\n" . "Local: " . $e->getTraceAsString();
+        }
+
+    }
 }

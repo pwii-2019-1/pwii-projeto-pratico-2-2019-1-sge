@@ -8,5 +8,6 @@ require_once __DIR__ . '/Teste.php';
 //(new Teste())->deletar();
 //(new Teste())->selecionar();
 //(new Teste())->listar();
+(new Teste())->gerarCertificado();
 
-header('Location: public_html/');
+//header('Location: public_html/');

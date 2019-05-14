@@ -43,89 +43,93 @@
                     <h1 class="h3 mb-3 font-weight-normal text-center">Cadastre-se</h1>
                 </div>
             </div>
-            <form class="needs-validation">
-                <div class="form-row">
-                    <div class="form-group col-md-7">
-                        <label for="nome">Nome:</label>
-                        <input type="text" class="form-control" id="nome" placeholder="Insira seu nome completo" required autofocus>
-                    </div>
-                    <div class="form-group col-md-5">
-                        <label for="cpf">CPF:</label>
-                        <input type="text" class="form-control" id="cpf" placeholder="Insira seu CPF" required>
-                    </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-9">
+                    <form class="needs-validation">
+                        <div class="form-row">
+                            <div class="form-group col-md-7">
+                                <label for="nome">Nome:</label>
+                                <input type="text" class="form-control" id="nome" placeholder="Insira seu nome completo" required autofocus>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for="cpf">CPF:</label>
+                                <input type="text" class="form-control" id="cpf" placeholder="000.000.000-00" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="data_nasc">Data de Nascimento</label>
+                                <input type="date" class="form-control" id="data_nasc" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="nacionalidade">Nacionalidade</label>
+                                <input type="text" class="form-control" id="nacionalidade" placeholder="Insira sua nacionalidade" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="ocupacao">Ocupação</label>
+                                <input type="text" class="form-control" id="ocupacao" placeholder="Insira sua ocupação" required>
+                            </div>
+                        </div>
+        		        <hr>
+                        <div class="form-row">
+                            <div class="form-group col-md-7">
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control" id="email" placeholder="Insira seu e-mail" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="senha">Senha:</label>
+                                <input type="password" class="form-control" id="senha" placeholder="Crie uma senha" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="confirm_senha">Confirmação de Senha:</label>
+                                <input type="password" class="form-control" id="confirm_senha" placeholder="Confirme sua senha" required>
+                            </div>
+                        </div>
+                        <hr>
+        		        <div class="form-row">
+                            <div class="form-group col-md-7">
+                                <label for="logradouro">Logradouro:</label>
+                                <input type="text" class="form-control" id="logradouro" placeholder="Insira seu logradouro" required>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for="bairro">Bairro:</label>
+                                <input type="text" class="form-control" id="bairro" placeholder="Insira seu bairro" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="cep">CEP:</label>
+                                <input type="text" class="form-control" id="cep" placeholder="00000-000" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="estado">Estado:</label>
+                                <select id="estado" class="custom-select" required>
+                                    <option value="">Selecione seu estado</option>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="cidade">Cidade</label>
+                                <select id="cidade" class="custom-select" required>
+                                    <option value="">Selecione sua cidade</option>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-2">
+                                <button type="reset" class="btn btn-block btn-outline-info">Limpar</button>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-block btn-outline-success">Cadastrar</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="data_nasc">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="data_nasc" required>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="nacionalidade">Nacionalidade</label>
-                        <input type="text" class="form-control" id="nacionalidade" placeholder="Insira sua nacionalidade" required>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="ocupacao">Ocupação</label>
-                        <input type="text" class="form-control" id="ocupacao" placeholder="Insira sua ocupação" required>
-                    </div>
-                </div>
-		<hr>
-                <div class="form-row">
-                    <div class="form-group col-md-7">
-                        <label for="email">Email:</label>
-                        <input type="email" class="form-control" id="email" placeholder="Insira seu e-mail" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="senha">Senha:</label>
-                        <input type="password" class="form-control" id="senha" placeholder="Crie uma senha" required>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="confirm_senha">Confirmação de Senha:</label>
-                        <input type="password" class="form-control" id="confirm_senha" placeholder="Confirme sua senha" required>
-                    </div>
-                </div>
-                <hr>
-		<div class="form-row">
-                    <div class="form-group col-md-7">
-                        <label for="logradouro">Logradouro:</label>
-                        <input type="text" class="form-control" id="logradouro" placeholder="Insira seu logradouro" required>
-                    </div>
-                    <div class="form-group col-md-5">
-                        <label for="bairro">Bairro:</label>
-                        <input type="text" class="form-control" id="bairro" placeholder="Insira seu bairro" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="cep">CEP:</label>
-                        <input type="text" class="form-control" id="cep" placeholder="Insira seu CEP" required>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="estado">Estado:</label>
-                        <select id="estado" class="custom-select" required>
-                            <option value="">Selecione seu estado</option>
-                            <option value=""></option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="cidade">Cidade</label>
-                        <select id="cidade" class="custom-select" required>
-                            <option value="">Selecione sua cidade</option>
-                            <option value=""></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-row text-right">
-                    <div class="col-md-8"></div>
-                    <div class="col-md-2">
-                        <button type="reset" class="btn btn-block btn-outline-info">Limpar</button>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-block btn-outline-success">Cadastrar</button>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
     </main>
 

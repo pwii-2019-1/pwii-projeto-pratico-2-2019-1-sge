@@ -50,6 +50,12 @@
                             <label for="titulo">Título:</label>
                             <input type="text" class="form-control" id="titulo" placeholder="Insira o título da atividade" required autofocus>
                         </div>
+			<div class="form-row">
+                            <div class="form-group col-md-7">
+                                <label for="responsavel">Responsável:</label>
+                                <input type="text" class="form-control" id="responsavel" placeholder="Insira nome do responsável" required autofocus>
+                            </div>
+                        </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="data">Data:</label>

@@ -132,4 +132,45 @@ class Usuario extends CRUD {
 
         return $retorno;
     }
+
+    /**
+     * @param $usuario_cpf
+     * @return array
+     */
+    public function selecionarUsuarioCPF($usuario_cpf) {
+
+        $where_condicao = self::COL_USUARIO_ID . " = ?";
+        $where_valor[] = $usuario_cpf;
+
+        $retorno = [];
+
+        try {
+
+            $retorno = $this->read(self::TABELA, "*", $where_condicao, $where_valor, null, null, 1);
+
+        } catch (Exception $e) {
+            echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
+        }
+
+        return $retorno;
+    }
+
+    public function autenticarUsuario($usuario_cpf, $senha) {
+
+        $campos = "*";
+        $where_condicao = self::COL_CPF . " = ? AND " . self::COL_SENHA . " = ?";
+        $where_valor = [$usuario_cpf, $senha];
+
+        $retorno = [];
+
+        try {
+
+            $retorno = $this->read(self::TABELA, $campos, $where_condicao, $where_valor, null, null, 1);
+
+        } catch (Exception $e) {
+            echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
+        }
+
+        return $retorno[0];
+    }
 }

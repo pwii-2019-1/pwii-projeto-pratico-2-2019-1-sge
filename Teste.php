@@ -11,7 +11,7 @@ class Teste extends CRUD {
         $dados = [
             "nome" => "Marco Aurélio",
             "cpf" => "012.345.678-90",
-            "senha" => "1234",
+            "senha" => md5("1234"),
             "email" => "teste@teste.com",
             "data_nascimento" => "2000-01-01",
             "telefone" => "(62) 9 9999-9999",

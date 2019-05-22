@@ -15,7 +15,6 @@ class Api {
         $dados = $request['dados'];
         $acao = $request['acao'];
 
-        print_r($dados);
         $api_controller = explode('/', $acao);
 
         $classe = "\\core\\controller\\" . $api_controller[0];

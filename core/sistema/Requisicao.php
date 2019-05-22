@@ -34,12 +34,12 @@ class Requisicao {
                 $request["dados"][$index] = $valor;
             }
         }
-
+        
         // Passa o index dados para o array principal
         if (!$acao) {
             $request = $request["dados"];
         }
-
+        print_r($request);
         return $request;
     }
 }

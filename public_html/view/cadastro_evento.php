@@ -51,8 +51,8 @@ require_once '../header.php';
                         </div>
 
                         <div class="form-group col-md-4">
-                            <label for="data_prorrogacao">Data de Prorrogação do Término:</label>
-                            <input type="date" class="form-control" id="data_prorrogacao" disabled>
+                            <label for="data_prorrogacao">Data de Prorrogação:</label>
+                            <input type="date" class="form-control" id="data_prorrogacao">
                         </div>
                     </div>
                     <div class="form-row">
@@ -61,7 +61,7 @@ require_once '../header.php';
                             <button type="reset" class="btn btn-block btn-outline-info">Limpar</button>
                         </div>
                         <div class="col-md-2">
-                            <button type="submit" class="btn btn-block btn-outline-success">Cadastrar</button>
+                            <button type="submit" id="botao_submit" class="btn btn-block btn-outline-success">Cadastrar</button>
                         </div>
                     </div>
                 </form>
@@ -73,7 +73,9 @@ require_once '../header.php';
 <?php
 
 $footer = new Footer();
+$footer->setJS('../assets/js/cadastro_evento.js');
 
 require_once '../footer.php';
+
 
 ?>

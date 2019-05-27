@@ -20,7 +20,7 @@ const eventos = () => {
             data_termino = $('#data_termino').val(),
             data_prorrogacao = $('#data_prorrogacao').val();
 
-
+            
             if (nome !== "" && 
                 evento_inicio !== "" &&
                 evento_termino !== "" && 
@@ -37,9 +37,9 @@ const eventos = () => {
                         data_inicio: data_inicio,
                         data_termino: data_termino,
                         data_prorrogacao: data_prorrogacao
-                    }
+                    };
 
-                    dados.acao = "";  
+                    dados.acao = "Eventos/cadastrar";  
 
                     console.log(dados);
                     $.ajax({

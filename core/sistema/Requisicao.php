@@ -39,8 +39,7 @@ class Requisicao {
         if (!$acao) {
             $request = $request["dados"];
         }
-        echo "<pre>";
-        print_r($request);
+        
         return $request;
     }
 }

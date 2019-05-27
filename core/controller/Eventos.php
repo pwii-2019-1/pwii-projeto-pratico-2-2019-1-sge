@@ -27,10 +27,6 @@ class Eventos {
 
         $resultado = $evento->adicionar($dados);
 
-        echo "Controler/Eventos.php";
-        echo '<br>';
-        echo '<pre>';
-        echo $resultado;
         if ($resultado > 0) {
             return true;
         } else {

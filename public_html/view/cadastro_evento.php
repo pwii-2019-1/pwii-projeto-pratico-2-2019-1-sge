@@ -17,11 +17,10 @@ require_once '../header.php';
         </div>
         <div class="row justify-content-md-center">
             <div class="col-md-9">
-                <form class="needs-validation">
+                <form class="needs-validation" id="formulario">
                     <div class="form-group">
                         <label for="nome">Nome:</label>
-                        <input type="text" class="form-control" id="nome" placeholder="Insira o nome do evento" required
-                               autofocus>
+                        <input type="text" class="form-control" id="nome" placeholder="Insira o nome do evento" required autofocus>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
@@ -35,8 +34,7 @@ require_once '../header.php';
                     </div>
                     <div class="form-group mb-4">
                         <label for="descricao">Descrição:</label>
-                        <textarea id="descricao" class="form-control" rows="2"
-                                  placeholder="Insira a descrição do evento" required></textarea>
+                        <textarea id="descricao" class="form-control" rows="2" placeholder="Insira a descrição do evento" required></textarea>
                     </div>
                     <hr class="mb-3">
                     <h1 class="h4 mb-3 font-weight-normal">Inscrições</h1>
@@ -52,7 +50,7 @@ require_once '../header.php';
 
                         <div class="form-group col-md-4">
                             <label for="data_prorrogacao">Data de Prorrogação:</label>
-                            <input type="date" class="form-control" id="data_prorrogacao">
+                            <input type="date" class="form-control" id="data_prorrogacao" required>
                         </div>
                     </div>
                     <div class="form-row">
@@ -67,6 +65,55 @@ require_once '../header.php';
                 </form>
             </div>
         </div>
+        <!-- Toast Sucesso -->
+        <div class="toast" id="msg_sucesso" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000" style="position: absolute; top: 4rem; right: 1rem;">
+            <div class="toast-header">
+                <strong class="mr-auto">Deu tudo certo!</strong>
+                <small>Agora</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+               Pronto, o evento foi cadastrado com sucesso.
+            </div>
+            <div class="card-footer text-muted bg-success p-1"></div>
+        </div>
+        <!-- Toast -->
+
+        <!-- Toast Erro -->
+        <div class="toast" id="msg_erro" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000" style="position: absolute; top: 4rem; right: 1rem;">
+            <div class="toast-header">
+                <strong class="mr-auto">Houve um erro!</strong>
+                <small>Agora</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+               Desculpe, não conseguimos efetuar seu cadastro.
+            </div>
+            <div class="card-footer text-muted bg-warning p-1"></div>
+        </div>
+        <!-- Toast -->
+
+        <!-- Toast Alerta -->
+
+        <div class="toast" id="msg_alerta" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000" style="position: absolute; top: 4rem; right: 1rem;">
+            <div class="toast-header">
+                <strong class="mr-auto">Houve um erro!</strong>
+                <small>Agora</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+               Por favor, confira todos os dados informados.
+            </div>
+            <div class="card-footer text-muted bg-warning p-1"></div>
+        </div>
+        <!-- Toast -->
+
     </div>
 </main>
 

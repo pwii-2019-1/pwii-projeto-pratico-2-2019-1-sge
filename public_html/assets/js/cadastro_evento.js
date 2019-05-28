@@ -9,7 +9,7 @@ let construct = () => {
 }
 
 const eventos = () => {
-    $('#botao_submit').on('click', function (e){
+    $('#formulario').on('submit', function (e) {
         e.preventDefault();
 
         let nome = $('#nome').val(),
@@ -20,47 +20,70 @@ const eventos = () => {
             data_termino = $('#data_termino').val(),
             data_prorrogacao = $('#data_prorrogacao').val();
 
-            
-            if (nome !== "" && 
-                evento_inicio !== "" &&
-                evento_termino !== "" && 
-                descricao !== "" && 
-                data_inicio !== "" && 
-                data_termino !== "" &&
-                data_prorrogacao !== ""
-                ){
-                    let dados = {
-                        nome: nome,
-                        evento_inicio: evento_inicio,
-                        evento_termino: evento_termino,
-                        descricao: descricao,
-                        data_inicio: data_inicio,
-                        data_termino: data_termino,
-                        data_prorrogacao: data_prorrogacao
-                    };
+        const validaDatas = () => {
 
-                    dados.acao = "Eventos/cadastrar";  
+            date_evento_inicio = new Date(evento_inicio);
+            date_evento_termino = new Date(evento_termino);
+            date_data_inicio = new Date(data_inicio);
+            date_data_termino = new Date(data_termino);
+            date_data_prorrogacao = new Date(data_prorrogacao);
 
-                    console.log(dados);
-                    $.ajax({
-                        url: baseUrl,
-                        type: "POST",
-                        data: dados,
-                        dataType: "text",
-                        async: true,
-                        success: function (res){
-                            if (res) {
-                                alert('Cadastro efetuado com sucesso!');
-                                // window.location.href = `${base}/${url[1]}`;
-                            } else {
-                                alert('Houve um erro no cadastro, verifique os dados novamente!');
-                            }
-                        },
-                        error: function (request, status, str_error) {
-                            console.log(request, status, str_error)
-                        }
-                    });
-                } 
+            if (date_evento_inicio <= date_evento_termino &&
+                date_data_inicio < date_data_termino &&
+                date_data_termino < date_data_prorrogacao) {
+
+                return true;
+            } else {
+                $('#msg_alerta').toast('show');
+                return false;
+            }
+
+        };
+
+
+
+        if (nome !== "" &&
+            evento_inicio !== "" &&
+            evento_termino !== "" &&
+            descricao !== "" &&
+            data_inicio !== "" &&
+            data_termino !== "" &&
+            data_prorrogacao !== "" &&
+            validaDatas()
+        ) {
+            let dados = {
+                nome: nome,
+                evento_inicio: evento_inicio,
+                evento_termino: evento_termino,
+                descricao: descricao,
+                data_inicio: data_inicio,
+                data_termino: data_termino,
+                data_prorrogacao: data_prorrogacao
+            };
+
+            dados.acao = "Eventos/cadastrar";
+
+            $.ajax({
+                url: baseUrl,
+                type: "POST",
+                data: dados,
+                dataType: "text",
+                async: true,
+                success: function (res) {
+                    if (res) {
+                        $('#msg_sucesso').toast('show'); // Para aparecer a mensagem de sucesso
+                        $('#formulario').each( function () {
+                            this.reset(); // Pra limpar o formulário
+                        });
+                    } else {
+                        $('#msg_erro').toast('show');
+                    }
+                },
+                error: function (request, status, str_error) {
+                    console.log(request, status, str_error)
+                }
+            });
+        }
     });
 };
 

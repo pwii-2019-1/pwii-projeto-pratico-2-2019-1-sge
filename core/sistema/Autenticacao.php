@@ -79,7 +79,9 @@ class Autenticacao {
      * Efetua o logout no sistema e remove os cookies de acesso
      */
     public static function logout() {
-        setcookie(self::COOKIE_USUARIO, "", time() - 1, PATH_COOKIE);
-        setcookie(self::COOKIE_ACESSO, "", time() - 1, PATH_COOKIE);
+        if (isset($_COOKIE[self::COOKIE_USUARIO]) && isset($_COOKIE[self::COOKIE_ACESSO])) {
+            setcookie(self::COOKIE_USUARIO, "", time() - 1, PATH_COOKIE);
+            setcookie(self::COOKIE_ACESSO, "", time() - 1, PATH_COOKIE);
+        }
     }
 }

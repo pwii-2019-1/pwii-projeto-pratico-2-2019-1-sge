@@ -1,21 +1,20 @@
 <?php
 
-require_once '../../vendor/autoload.php';
-require_once '../../config.php';
+require_once '../vendor/autoload.php';
 
 use core\sistema\Autenticacao;
 use core\sistema\Footer;
 
 if (Autenticacao::verificarLogin()) {
-    header('Location: ../index.php');
+    header('Location: index.php');
 }
 
-require_once '../header.php';
+require 'header.php';
 
 ?>
 
 <main role='main'>
-    <div class="container center-block">
+    <div class="container center-block container-login">
         <div class="row ">
             <div class="col"></div>
             <div class="col-md-6">
@@ -62,6 +61,6 @@ require_once '../header.php';
 <?php
 
 $footer = new Footer();
-$footer->setJS('../assets/js/login.js');
+$footer->setJS('assets/js/login.js');
 
-require_once '../footer.php';
+require_once 'footer.php';

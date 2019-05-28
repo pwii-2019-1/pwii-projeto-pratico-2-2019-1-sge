@@ -1,9 +1,8 @@
 <?php
 
-use core\sistema\Footer;
+require_once 'header.php';
 
-require_once '../../vendor/autoload.php';
-require_once '../header.php';
+use core\sistema\Footer;
 
 ?>
 
@@ -86,6 +85,6 @@ require_once '../header.php';
 
 $footer = new Footer();
 
-require_once '../footer.php';
+require_once 'footer.php';
 
 ?>

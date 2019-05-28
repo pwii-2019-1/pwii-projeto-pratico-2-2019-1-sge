@@ -1,9 +1,8 @@
 <?php
 
-use core\sistema\Footer;
+require_once 'header.php';
 
-require_once '../../vendor/autoload.php';
-require_once '../header.php';
+use core\sistema\Footer;
 
 ?>
 
@@ -120,9 +119,9 @@ require_once '../header.php';
 <?php
 
 $footer = new Footer();
-$footer->setJS('../assets/js/cadastro_evento.js');
+$footer->setJS('assets/js/cadastro_evento.js');
 
-require_once '../footer.php';
+require_once 'footer.php';
 
 
 ?>

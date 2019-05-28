@@ -43,6 +43,10 @@ Usei isso só pra tirar a seta padrão do select
 
 */
 
+.container-login {
+    padding: 80px 0;
+}
+
 /* Estilização do Footer*/
 
 footer {

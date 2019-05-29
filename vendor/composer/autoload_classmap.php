@@ -259,6 +259,7 @@ return array(
     'core\\sistema\\Autenticacao' => $baseDir . '/core/sistema/Autenticacao.php',
     'core\\sistema\\Footer' => $baseDir . '/core/sistema/Footer.php',
     'core\\sistema\\Requisicao' => $baseDir . '/core/sistema/Requisicao.php',
+    'core\\sistema\\Util' => $baseDir . '/core/sistema/Util.php',
     'setasign\\Fpdi\\FpdfTpl' => $vendorDir . '/setasign/fpdi/src/FpdfTpl.php',
     'setasign\\Fpdi\\FpdfTplTrait' => $vendorDir . '/setasign/fpdi/src/FpdfTplTrait.php',
     'setasign\\Fpdi\\Fpdi' => $vendorDir . '/setasign/fpdi/src/Fpdi.php',

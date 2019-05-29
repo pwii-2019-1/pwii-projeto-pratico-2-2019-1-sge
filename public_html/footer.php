@@ -4,7 +4,7 @@ $footer_js = $footer->getJS();
 
 ?>
 
-<footer class="text-muted bg-dark p-4">
+<footer class="text-muted bg-dark p-1">
     <div class="container">
         <p class="float-right">
             <a href="#">Back to top</a>

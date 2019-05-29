@@ -315,6 +315,7 @@ class ComposerStaticInitc2037c32e53e82aafd6d754e5434f532
         'core\\sistema\\Autenticacao' => __DIR__ . '/../..' . '/core/sistema/Autenticacao.php',
         'core\\sistema\\Footer' => __DIR__ . '/../..' . '/core/sistema/Footer.php',
         'core\\sistema\\Requisicao' => __DIR__ . '/../..' . '/core/sistema/Requisicao.php',
+        'core\\sistema\\Util' => __DIR__ . '/../..' . '/core/sistema/Util.php',
         'setasign\\Fpdi\\FpdfTpl' => __DIR__ . '/..' . '/setasign/fpdi/src/FpdfTpl.php',
         'setasign\\Fpdi\\FpdfTplTrait' => __DIR__ . '/..' . '/setasign/fpdi/src/FpdfTplTrait.php',
         'setasign\\Fpdi\\Fpdi' => __DIR__ . '/..' . '/setasign/fpdi/src/Fpdi.php',

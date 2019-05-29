@@ -72,7 +72,6 @@ class Evento extends CRUD {
 
         $campos = $campos != null ? $campos : "*";
         $ordem = $ordem != null ? $ordem : self::COL_NOME . " ASC";
-        $limite = $limite != null ? $limite : 10;
 
         $where_condicao = "1 = 1";
         $where_valor = [];

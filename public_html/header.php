@@ -1,4 +1,7 @@
 <?php
+
+use core\sistema\Autenticacao;
+
 require_once '../vendor/autoload.php';
 require_once '../config.php';
 
@@ -35,10 +38,20 @@ require_once '../config.php';
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="index.php">Página Inicial</a>
-                <a class="dropdown-item disabled" href="#">Opção 2</a>
-                <a class="dropdown-item" href="#">Opção 3</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Opção 5</a>
+                <?php if (!Autenticacao::verificarLogin()) { ?>
+                    <a class="dropdown-item" href="cadastro.php">Cadastrar Usuário</a>
+                <?php }
+                if (Autenticacao::verificarLogin()) {
+                    if (Autenticacao::usuarioAdministrador()) { ?>
+                        <a class="dropdown-item" href="#">Listagem de Eventos</a>
+                        <a class="dropdown-item" href="cadastro_evento.php">Cadastrar Evento</a>
+                    <?php } ?>
+                    <div class="dropdown-divider"></div>
+                    <a id="logout" class="dropdown-item" href="#">Sair</a>
+                <?php } else { ?>
+                    <a id="login" class="dropdown-item" href="login.php">Entrar</a>
+                <?php } ?>
             </div>
         </div>
     </div>

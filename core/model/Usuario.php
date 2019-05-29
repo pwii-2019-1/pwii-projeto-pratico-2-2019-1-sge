@@ -124,7 +124,7 @@ class Usuario extends CRUD {
 
         try {
 
-            $retorno = $this->read(self::TABELA, "*", $where_condicao, $where_valor, null, null, 1);
+            $retorno = $this->read(self::TABELA, "*", $where_condicao, $where_valor, null, null, 1)[0];
 
         } catch (Exception $e) {
             echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();

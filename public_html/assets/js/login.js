@@ -1,7 +1,3 @@
-const base = window.location.origin;
-const url = window.location.pathname.split('/');
-const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
-
 let construct = () => {
     eventos();
 };
@@ -30,7 +26,7 @@ const eventos = () => {
                 dataType: "text",
                 async: true,
                 success: function (res) {
-                    if (res) {
+                    if (res && res === '1') {
                         alert('Login efetuado com sucesso!');
                         window.location.href = `${base}/${url[1]}/`;
                     } else {

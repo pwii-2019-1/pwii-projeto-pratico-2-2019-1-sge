@@ -6,7 +6,8 @@ namespace core\controller;
 
 use core\model\Evento;
 
-class Eventos {
+class Eventos
+{
 
     /**
      * Limite da listagem de eventos
@@ -24,11 +25,13 @@ class Eventos {
     private $lista_eventos = [];
     private $total_paginas = null;
 
-    public function __set($atributo, $valor) {
+    public function __set($atributo, $valor)
+    {
         $this->$atributo = $valor;
     }
 
-    public function __get($atributo) {
+    public function __get($atributo)
+    {
         return $this->$atributo;
     }
 
@@ -39,17 +42,25 @@ class Eventos {
      * @param $dados
      * @return bool
      */
-    public function cadastrar($dados) {
+    public function cadastrar($dados)
+    {
 
         $dados['nome'] = ucfirst($dados['nome']); // Deixa a primeira letra do nome do evento maiúscula
         $dados['descricao'] = ucfirst($dados['descricao']); // Deixa a primeira letra da descricao do evento maiúscula
 
         $evento = new Evento();
+        // Tratar o cadastro ou alteração aqui 
 
-        $resultado = $evento->adicionar($dados);
+        if (isset($dados['evento_id'])) {
+            // Se for passado o evento_id será feito o update
+            $resultado = $evento->alterar($dados);
+        } else {
+            //Senão, será feito o cadastro
+            $resultado = $evento->adicionar($dados);
+        }
 
         if ($resultado > 0) {
-            return true;
+            return $resultado;
         } else {
             return false;
         }
@@ -61,7 +72,8 @@ class Eventos {
      * @param $dados
      * @return array
      */
-    public function listarEventos($dados = []) {
+    public function listarEventos($dados = [])
+    {
         $evento = new Evento();
 
         $busca = isset($dados['busca']) ? $dados['busca'] : [];
@@ -84,4 +96,14 @@ class Eventos {
         ];
     }
 
+    public function listarEvento($evento_id)
+    {
+        $evento = new Evento();
+
+
+        $dados = $evento->selecionarEvento($evento_id);
+
+        $dados = $dados[0];
+        return $dados;
+    }
 }

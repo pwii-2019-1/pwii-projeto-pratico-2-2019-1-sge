@@ -1,9 +1,9 @@
 <?php
 
-use core\sistema\Autenticacao;
-
 require_once '../vendor/autoload.php';
 require_once '../config.php';
+
+use core\sistema\Autenticacao;
 
 ?>
 <!doctype html>
@@ -40,6 +40,7 @@ require_once '../config.php';
             <div class="dropdown-divider"></div>
             <?php if (!Autenticacao::verificarLogin()) { ?>
                 <a class="dropdown-item" href="cadastro.php">Cadastrar Usuário</a>
+                <a class="dropdown-item" href="cadastro.php#">Meus Eventos</a>
             <?php }
             if (Autenticacao::verificarLogin()) {
                 if (Autenticacao::usuarioAdministrador()) { ?>

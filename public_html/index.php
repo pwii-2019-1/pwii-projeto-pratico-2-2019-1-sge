@@ -3,6 +3,7 @@
 require_once '../vendor/autoload.php';
 
 use core\controller\Eventos;
+use core\sistema\Autenticacao;
 use core\sistema\Footer;
 use core\sistema\Util;
 
@@ -81,7 +82,9 @@ $dados = $eventos->listarEventos($dados_eventos);
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a href="evento.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn btn-outline-secondary">Visualizar</a>
-                                        <a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
+                                        <a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn-outline-success">
+                                            <?= (Autenticacao::usuarioAdministrador()) ? "Atividades" : "Inscrever-se"?>
+                                        </a>
                                     </div>
                                     <small class="text-muted"><?= Util::formataDataBR($evento->evento_inicio) ?></small>
                                 </div>

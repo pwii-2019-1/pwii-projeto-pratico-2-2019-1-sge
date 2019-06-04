@@ -2,6 +2,7 @@
 require_once 'header.php';
 
 use core\controller\Eventos;
+use core\sistema\Autenticacao;
 use core\sistema\Footer;
 use core\sistema\Util;
 
@@ -68,9 +69,11 @@ $evento = $eventos->listarEvento($evento_id);
 			</div>
 			<div class="col-md-2">
 				<div class="btn-group-vertical">
-					<button type="button" class="btn btn-lg btn-outline-dark">Increver-se</button>
-					<button type="button" class="btn btn-lg btn-outline-dark">Acompanhar Inscrição</button>
-					<button type="button" class="btn btn-lg btn-outline-dark">Certificado</button>
+					<a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark">
+						<?= (Autenticacao::usuarioAdministrador()) ? "Atividades" : "Inscrever-se"?>
+					</a>
+					<a href="#" class="btn btn-lg btn-outline-dark">Acompanhar Inscrição</a>
+					<a href="#" class="btn btn-lg btn-outline-dark">Certificado</a>
 				</div>
 			</div>
 		</div>
@@ -104,7 +107,7 @@ $evento = $eventos->listarEvento($evento_id);
 		<div class="tab-content mb-5" id="myTabContent">
 			<div class="tab-pane fade show active" id="dia1" role="tabpanel" aria-labelledby="dia1-tab">
 				<table class="table table-responsive table-hover table-bordered">
-					<thead>
+					<thead class="thead-dark">
 						<tr>
 							<th scope="col">Horário</th>
 							<th class="col-md-6" scope="col">Título</th>
@@ -136,7 +139,7 @@ $evento = $eventos->listarEvento($evento_id);
 			</div>
 			<div class="tab-pane fade" id="dia2" role="tabpanel" aria-labelledby="dia2-tab">
 				<table class="table table-responsive table-hover table-bordered">
-					<thead>
+					<thead class="thead-dark">
 						<tr>
 							<th scope="col">Horário</th>
 							<th class="col-md-6" scope="col">Título</th>
@@ -162,7 +165,7 @@ $evento = $eventos->listarEvento($evento_id);
 			</div>
 			<div class="tab-pane fade" id="dia3" role="tabpanel" aria-labelledby="dia3-tab">
 				<table class="table table-responsive table-hover table-bordered">
-					<thead>
+					<thead class="thead-dark">
 						<tr>
 							<th scope="col">Horário</th>
 							<th class="col-md-6" scope="col">Título</th>

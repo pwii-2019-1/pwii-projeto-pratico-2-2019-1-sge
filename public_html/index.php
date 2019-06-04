@@ -80,7 +80,7 @@ $dados = $eventos->listarEventos($dados_eventos);
                                 <p class="card-text"><?= $evento->descricao ?></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="#" class="btn btn-sm btn btn-outline-secondary">Visualizar</a>
+                                        <a href="evento.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn btn-outline-secondary">Visualizar</a>
                                         <a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
                                     </div>
                                     <small class="text-muted"><?= Util::formataDataBR($evento->evento_inicio) ?></small>

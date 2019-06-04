@@ -252,6 +252,7 @@ return array(
     'core\\controller\\Certificado' => $baseDir . '/core/controller/Certificado.php',
     'core\\controller\\Eventos' => $baseDir . '/core/controller/Eventos.php',
     'core\\controller\\Login' => $baseDir . '/core/controller/Login.php',
+    'core\\controller\\Usuarios' => $baseDir . '/core/controller/Usuarios.php',
     'core\\model\\Atividade' => $baseDir . '/core/model/Atividade.php',
     'core\\model\\Evento' => $baseDir . '/core/model/Evento.php',
     'core\\model\\Presenca' => $baseDir . '/core/model/Presenca.php',

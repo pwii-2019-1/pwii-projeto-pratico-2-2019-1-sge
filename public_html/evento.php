@@ -1,17 +1,30 @@
 <?php
 require_once 'header.php';
+
+use core\controller\Eventos;
 use core\sistema\Footer;
+use core\sistema\Util;
+
+$evento_id = isset($_GET['evento_id']) ? $_GET['evento_id'] : null;
+
+$eventos = new Eventos();
+
+$dados_eventos = "";
+$evento = "";
+
+$evento = $eventos->listarEvento($evento_id);
+
 ?>
 
 <main role='main'>
-	<div class="jumbotron mt-n3" style="background:url(assets/imagens/default.svg);">
+	<div class="jumbotron mt-n3" style="border-radius:0px; background:url(assets/imagens/default.svg);">
 		<div class="container mb-5">
 		</div>
 	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 mb-3">
-				<h1 class="display-4 text-center">Nome do Evento</h1>
+				<h1 class="display-4 text-center"><?= $evento->nome ?></h1>
 			</div>
 		</div>
 		<div class="row mb-3">
@@ -25,8 +38,8 @@ use core\sistema\Footer;
 							<div class="card-body">
 								<h5 class="card-title">Inscrições</h5>
 								<p class="card-text">
-									Início: 00/00/00 <br>
-									Fim: 00/00/00
+									Início: <?= Util::formataDataBR($evento->data_inicio) ?> <br>
+									Fim: <?= Util::formataDataBR($evento->data_termino) ?>
 								</p>
 								<p class="card-text"><small class="text-muted">Inscrições somente pelo site</small></p>
 							</div>
@@ -44,8 +57,8 @@ use core\sistema\Footer;
 							<div class="card-body">
 								<h5 class="card-title">Evento</h5>
 								<p class="card-text">
-									Início: 00/00/00 <br>
-									Fim: 00/00/00
+									Início: <?= Util::formataDataBR($evento->evento_inicio) ?> <br>
+									Fim: <?= Util::formataDataBR($evento->evento_termino) ?>
 								</p>
 								<p class="card-text"><small class="text-muted">Se programe para esse programa</small></p>
 							</div>
@@ -66,11 +79,7 @@ use core\sistema\Footer;
 			<div class="col-md-10 offset-md-1">
 				<h1 class="display-5 text-center">Sobre o evento</h1>
 				<p class="text-justify">
-					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam fugiat, eaque magni ipsa odio
-					sit quo necessitatibus? Adipisci quaerat aliquid illum debitis! Expedita porro pariatur inventore,
-					tempora optio similique eos. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Temporibus
-					veritatis odio cumque libero alias minima vero at perspiciatis nulla? Alias nihil beatae culpa nobis
-					quas enim nam sequi nostrum. Ut!
+					<?= $evento->descricao ?>
 				</p>
 			</div>
 		</div>
@@ -195,7 +204,5 @@ use core\sistema\Footer;
 
 <?php
 $footer = new Footer();
-//$footer->setJS('assets/js/cadastro_evento.js');
-
 require_once 'footer.php';
 ?>

@@ -7,7 +7,9 @@ namespace core\controller;
 use core\model\Usuario;
 
 class Usuarios {
-
+/**
+     * Limite da listagem de usuario
+     */
     /**
      * Limite da listagem de usuario
      */

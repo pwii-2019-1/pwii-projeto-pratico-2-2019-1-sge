@@ -6,8 +6,7 @@ namespace core\controller;
 
 use core\model\Evento;
 
-class Eventos
-{
+class Eventos {
 
     /**
      * Limite da listagem de eventos
@@ -25,13 +24,11 @@ class Eventos
     private $lista_eventos = [];
     private $total_paginas = null;
 
-    public function __set($atributo, $valor)
-    {
+    public function __set($atributo, $valor) {
         $this->$atributo = $valor;
     }
 
-    public function __get($atributo)
-    {
+    public function __get($atributo) {
         return $this->$atributo;
     }
 
@@ -41,15 +38,15 @@ class Eventos
      * la
      * @param $dados
      * @return bool
+     * @throws \Exception
      */
-    public function cadastrar($dados)
-    {
+    public function cadastrar($dados) {
 
         $dados['nome'] = ucfirst($dados['nome']); // Deixa a primeira letra do nome do evento maiúscula
         $dados['descricao'] = ucfirst($dados['descricao']); // Deixa a primeira letra da descricao do evento maiúscula
 
         $evento = new Evento();
-        // Tratar o cadastro ou alteração aqui 
+        // Tratar o cadastro ou alteração aqui
 
         if (isset($dados['evento_id'])) {
             // Se for passado o evento_id será feito o update
@@ -72,8 +69,7 @@ class Eventos
      * @param $dados
      * @return array
      */
-    public function listarEventos($dados = [])
-    {
+    public function listarEventos($dados = []) {
         $evento = new Evento();
 
         $busca = isset($dados['busca']) ? $dados['busca'] : [];
@@ -87,7 +83,10 @@ class Eventos
         $lista = $evento->listar(null, $busca, Evento::COL_EVENTO_INICIO . " DESC", $limite);
         $paginas = $evento->listar("COUNT(*) as total", $busca, null, null);
 
-        $this->__set("lista_eventos", $lista);
+        if (count($lista) > 0 && isset($lista[0]) && count($lista[0]) > 0) {
+            $this->__set("lista_eventos", $lista);
+        }
+
         $this->__set("total_paginas", $paginas[0]->total);
 
         return [
@@ -96,8 +95,7 @@ class Eventos
         ];
     }
 
-    public function listarEvento($evento_id)
-    {
+    public function listarEvento($evento_id) {
         $evento = new Evento();
 
 

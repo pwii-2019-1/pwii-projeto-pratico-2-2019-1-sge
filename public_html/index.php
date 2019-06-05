@@ -11,11 +11,18 @@ require_once 'header.php';
 
 $pg = isset($_GET['pg']) ? $_GET['pg'] : null;
 
+$busca = [];
+if (isset($_GET['texto'])) $busca['texto'] = $_GET['texto'];
+if (isset($_GET['data_inicio'])) $busca['data_inicio'] = $_GET['data_inicio'];
+if (isset($_GET['data_termino'])) $busca['data_termino'] = $_GET['data_termino'];
+if (isset($_GET['periodo'])) $busca['periodo'] = $_GET['periodo'];
+
 $eventos = new Eventos();
 
 $dados_eventos = [];
 
 if ($pg != null) $dados_eventos['pg'] = $pg;
+if (count($busca) > 0) $dados_eventos['busca'] = $busca;
 
 $dados = $eventos->listarEventos($dados_eventos);
 
@@ -34,33 +41,36 @@ $dados = $eventos->listarEventos($dados_eventos);
 <div class="container">
     <div class="row">
         <div class="col-4">
+            <label for="periodo">Nome ou descrição do evento:</label>
             <div class="form-group has-search">
                 <span class="fa fa-search form-control-feedback"></span>
-                <input type="text" class="form-control" placeholder="Nome do evento">
+                <input id="texto" type="text" class="form-control" placeholder="Buscar">
             </div>
         </div>
-        <div class="col-4">
+        <div class="form-row col-4">
+            <div class="form-group col-md-6">
+                <label for="data_inicio">Data de Início:</label>
+                <input type="date" class="form-control" id="data_inicio" required value="<?= (isset($evento->data_inicio)) ? $evento->data_inicio : "" ?>">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="data_termino">Data de Término:</label>
+                <input type="date" class="form-control" id="data_termino" required value="<?= (isset($evento->data_termino)) ? $evento->data_termino : "" ?>">
+            </div>
+        </div>
+        <div class="col-3">
             <div class="form-group has-search">
+                <label for="periodo">Período:</label>
                 <span class="fa fa-search form-control-feedback"></span>
-                <select class="custom-select form-control">
-                    <option selected disabled>Situação do Evento</option>
-                    <option value="1">Inscrições Abertas</option>
-                    <option value="2">Em Andamento</option>
-                    <option value="3">Evento Finalizado</option>
+                <select id="periodo" class="custom-select form-control">
+                    <option selected disabled>Selecione um período</option>
+                    <option value="hoje">Hoje</option>
+                    <option value="semana">Essa semana</option>
+                    <option value="mes">Esse mês</option>
                 </select>
             </div>
         </div>
-        <div class="col-4">
-            <div class="form-group has-search">
-                <span class="fa fa-search form-control-feedback"></span>
-                <select class="custom-select form-control">
-                    <option selected disabled>Período</option>
-                    <option value="1">Hoje</option>
-                    <option value="2">Essa semana</option>
-                    <option value="3">Esse mês</option>
-                </select>
-            </div>
-        </div>
+
+        <button id="filtrar" class="col-1 btn btn-block btn-outline-dark">FILTRAR</button>
 
     </div>
 </div>
@@ -95,35 +105,39 @@ $dados = $eventos->listarEventos($dados_eventos);
 
                     <?php }
                 } else { ?>
-                    <h3>Nenhum resultado encontrado!</h3>
+                    <h3 class="sem-resultado">Nenhum resultado encontrado!</h3>
                 <?php } ?>
             </div>
         </div>
     </div>
 
-    <nav>
-        <ul class="pagination justify-content-center">
-            <li class="page-item <?= ($pg == null || $pg < 2) ? "disabled" : "" ?>">
-                <a class="page-link" href="<?= ($pg == null || $pg <= 2) ? "index.php" : "index.php?pg=" . --$pg ?>">Anterior</a>
-            </li>
-
-            <?php for ($i = 1; $i <= $dados['total_paginas']; $i++) { ?>
-
-                <li class="page-item <?= (($pg == null && $i == 1) || $pg == $i) ? "disabled" : "" ?>">
-                    <a class="page-link" href="index.php?pg=<?= $i ?>"><?= $i ?></a>
+    <?php if (isset($dados['total_paginas']) && $dados['total_paginas'] > 0) { ?>
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item <?= ($pg == null || $pg < 2) ? "disabled" : "" ?>">
+                    <a class="page-link" href="<?= ($pg == null || $pg <= 2) ? "index.php" : "index.php?pg=" . --$pg ?>">Anterior</a>
                 </li>
 
-            <?php } ?>
+                <?php for ($i = 1; $i <= $dados['total_paginas']; $i++) { ?>
 
-            <li class="page-item <?= ($pg == $dados['total_paginas']) ? "disabled" : "" ?>">
-                <a class="page-link" href="index.php?pg=<?= ($pg == null) ? '2' : ++$pg ?>">Próximo</a>
-            </li>
-        </ul>
-    </nav>
+                    <li class="page-item <?= (($pg == null && $i == 1) || $pg == $i) ? "disabled" : "" ?>">
+                        <a class="page-link" href="index.php?pg=<?= $i ?>"><?= $i ?></a>
+                    </li>
+
+                <?php } ?>
+
+                <li class="page-item <?= ($pg == $dados['total_paginas']) ? "disabled" : "" ?>">
+                    <a class="page-link" href="index.php?pg=<?= ($pg == null) ? '2' : ++$pg ?>">Próximo</a>
+                </li>
+            </ul>
+        </nav>
+    <?php } ?>
 </main>
 
 <?php
 
 $footer = new Footer();
+
+$footer->setJS('assets/js/listagem_eventos.js');
 
 require_once 'footer.php';

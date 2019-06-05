@@ -28,6 +28,7 @@ class Usuarios {
     private $nacionalidade = null;
     private $ocupacao = null;
     private $adm = null;
+    private $lista_usuarios = [];
 
     public function __set($atributo, $valor) {
         $this->$atributo = $valor;
@@ -58,9 +59,46 @@ class Usuarios {
     }
 
     /**
-     * Lista os eventos
+     * Listar usuários
      *
-     * @param $dados
      * @return array
      */
+    public function listarUsuarios() {
+        $usuario = new Usuario();
+
+        $campos = Usuario::COL_USUARIO_ID . ", " . Usuario::COL_NOME . ", " . Usuario::COL_EMAIL . ", " . Usuario::COL_ADMIN;
+
+        $lista = $usuario->listar($campos, null, null, 100);
+
+        if (count($lista) > 0) {
+            $this->__set("lista_usuarios", $lista);
+        }
+
+        return $this->lista_usuarios;
+    }
+
+    /**
+     * Altera as permissões dos usuários cadastrados
+     *
+     * @param $dados
+     * @return bool
+     * @throws \Exception
+     */
+    public function atualizarPermissoes($dados) {
+        $user = new Usuario();
+
+        $retorno = [];
+
+        if (isset($dados['usuarios']) && count($dados['usuarios']) > 0) {
+            foreach ($dados['usuarios'] as $usuario) {
+                $retorno[] = $user->alterar($usuario);
+            }
+        }
+
+        if (array_search('false', $retorno) > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

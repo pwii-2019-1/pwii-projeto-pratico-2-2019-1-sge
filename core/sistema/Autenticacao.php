@@ -45,6 +45,24 @@ class Autenticacao {
         }
     }
 
+    public static function usuarioAdministrador() {
+        if (isset($_COOKIE[self::COOKIE_USUARIO]) && isset($_COOKIE[self::COOKIE_ACESSO])) {
+            $user = new Usuario();
+
+            $usuario = $user->selecionarUsuario($_COOKIE[self::COOKIE_USUARIO]);
+
+            if (count($usuario) > 0 && $usuario->admin == 1) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } else {
+            self::logout();
+            return false;
+        }
+    }
+
     /**
      * Efetua o login do usuário no sistema
      *

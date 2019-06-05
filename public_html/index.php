@@ -2,9 +2,22 @@
 
 require_once '../vendor/autoload.php';
 
+use core\controller\Eventos;
+use core\sistema\Autenticacao;
 use core\sistema\Footer;
+use core\sistema\Util;
 
 require_once 'header.php';
+
+$pg = isset($_GET['pg']) ? $_GET['pg'] : null;
+
+$eventos = new Eventos();
+
+$dados_eventos = [];
+
+if ($pg != null) $dados_eventos['pg'] = $pg;
+
+$dados = $eventos->listarEventos($dados_eventos);
 
 ?>
 
@@ -56,138 +69,54 @@ require_once 'header.php';
     <div class="album py-2 bg-light">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title">Nome do evento</h4>
-                            <p class="card-text">This is a wider card with supporting text below as a natural
-                                lead-in to additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
-                                    <a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
+
+                <?php if (count($dados['lista_eventos']) > 0) {
+                    foreach ($dados['lista_eventos'] as $i => $evento) { ?>
+
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
+                            <div class="card-body">
+                                <h4 class="card-title"><?= $evento->nome ?></h4>
+                                <p class="card-text"><?= $evento->descricao ?></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="evento.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn btn-outline-secondary">Visualizar</a>
+                                        <a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn-outline-success">
+                                            <?= (Autenticacao::usuarioAdministrador()) ? "Atividades" : "Inscrever-se"?>
+                                        </a>
+                                    </div>
+                                    <small class="text-muted"><?= Util::formataDataBR($evento->evento_inicio) ?></small>
                                 </div>
-                                <small class="text-muted">15/02/2015</small>
                             </div>
+                            <div class="card-footer text-muted bg-success p-1"></div>
                         </div>
-                        <div class="card-footer text-muted bg-success p-1"></div>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title">Nome do evento</h4>
-
-                            <p class="card-text">This is a wider card with supporting text below as a natural
-                                lead-in to additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
-                                    <a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
-                                </div>
-                                <small class="text-muted">15/02/2015</small>
-                            </div>
-                        </div>
-                        <div class="card-footer text-muted bg-danger p-1"></div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title">Nome do evento</h4>
-
-                            <p class="card-text">This is a wider card with supporting text below as a natural
-                                lead-in to additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
-                                    <a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
-                                </div>
-                                <small class="text-muted">15/02/2015</small>
-                            </div>
-                        </div>
-                        <div class="card-footer text-muted bg-danger p-1"></div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title">Nome do evento</h4>
-
-                            <p class="card-text">This is a wider card with supporting text below as a natural
-                                lead-in to additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
-                                    <a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
-                                </div>
-                                <small class="text-muted">15/02/2015</small>
-                            </div>
-                        </div>
-                        <div class="card-footer text-muted bg-danger p-1"></div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title">Nome do evento</h4>
-
-                            <p class="card-text">This is a wider card with supporting text below as a natural
-                                lead-in to additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
-                                    <a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
-                                </div>
-                                <small class="text-muted">15/02/2015</small>
-                            </div>
-                        </div>
-                        <div class="card-footer text-muted bg-danger p-1"></div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" src="assets/imagens/default.svg" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title">Nome do evento</h4>
-
-                            <p class="card-text">This is a wider card with supporting text below as a natural
-                                lead-in to additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a href="#" class="btn btn-sm btn btn-outline-secondary">View</a>
-                                    <a href="#" class="btn btn-sm btn-outline-success">Inscrever-se</a>
-                                </div>
-                                <small class="text-muted">15/02/2015</small>
-                            </div>
-                        </div>
-                        <div class="card-footer text-muted bg-danger p-1"></div>
-                    </div>
-                </div>
+                    <?php }
+                } else { ?>
+                    <h3>Nenhum resultado encontrado!</h3>
+                <?php } ?>
             </div>
         </div>
     </div>
 
-    <nav aria-label="Navegação de página exemplo">
+    <nav>
         <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Anterior</a>
+            <li class="page-item <?= ($pg == null || $pg < 2) ? "disabled" : "" ?>">
+                <a class="page-link" href="<?= ($pg == null || $pg <= 2) ? "index.php" : "index.php?pg=" . --$pg ?>">Anterior</a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Próximo</a>
+
+            <?php for ($i = 1; $i <= $dados['total_paginas']; $i++) { ?>
+
+                <li class="page-item <?= (($pg == null && $i == 1) || $pg == $i) ? "disabled" : "" ?>">
+                    <a class="page-link" href="index.php?pg=<?= $i ?>"><?= $i ?></a>
+                </li>
+
+            <?php } ?>
+
+            <li class="page-item <?= ($pg == $dados['total_paginas']) ? "disabled" : "" ?>">
+                <a class="page-link" href="index.php?pg=<?= ($pg == null) ? '2' : ++$pg ?>">Próximo</a>
             </li>
         </ul>
     </nav>

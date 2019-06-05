@@ -16,7 +16,7 @@ use core\sistema\Footer;
     </div>
     <div class="row justify-content-md-center">
         <div class="col-md-9">
-            <form class="needs-validation" id="formulario">
+            <form class="needs-validation" id="formulario" data-evento_id="<?= isset($_GET['evento_id']) ? $_GET['evento_id'] : "" ?>">
                 <div class="form-group">
                     <label for="titulo">Título:</label>
                     <input type="text" class="form-control" id="titulo" placeholder="Insira o título da atividade"

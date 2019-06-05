@@ -1,12 +1,6 @@
-const base = window.location.origin;
-const url = window.location.pathname.split('/');
-const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
-
-
-
 let construct = () => {
     eventos();
-}
+};
 
 const eventos = () => {
     $('#formulario').on('submit', function (e) {
@@ -18,15 +12,17 @@ const eventos = () => {
             descricao = $('#descricao').val(),
             data_inicio = $('#data_inicio').val(),
             data_termino = $('#data_termino').val(),
-            data_prorrogacao = $('#data_prorrogacao').val();
+            data_prorrogacao = $('#data_prorrogacao').val(),
+            evento_id = $('#formulario').attr('data-evento_id');
 
+        console.log(evento_id);
         const validaDatas = () => {
 
-            date_evento_inicio = new Date(evento_inicio);
-            date_evento_termino = new Date(evento_termino);
-            date_data_inicio = new Date(data_inicio);
-            date_data_termino = new Date(data_termino);
-            date_data_prorrogacao = new Date(data_prorrogacao);
+            let date_evento_inicio = new Date(evento_inicio),
+                date_evento_termino = new Date(evento_termino),
+                date_data_inicio = new Date(data_inicio),
+                date_data_termino = new Date(data_termino),
+                date_data_prorrogacao = new Date(data_prorrogacao);
 
             if (date_evento_inicio <= date_evento_termino &&
                 date_data_inicio < date_data_termino &&
@@ -37,10 +33,7 @@ const eventos = () => {
                 $('#msg_alerta').toast('show');
                 return false;
             }
-
         };
-
-
 
         if (nome !== "" &&
             evento_inicio !== "" &&
@@ -61,6 +54,10 @@ const eventos = () => {
                 data_prorrogacao: data_prorrogacao
             };
 
+            if(evento_id != ""){
+                dados.evento_id = evento_id;
+            }
+
             dados.acao = "Eventos/cadastrar";
 
             $.ajax({
@@ -71,12 +68,23 @@ const eventos = () => {
                 async: true,
                 success: function (res) {
                     if (res) {
-                        $('#msg_sucesso').toast('show'); // Para aparecer a mensagem de sucesso
-                        $('#formulario').each( function () {
-                            this.reset(); // Pra limpar o formulário
-                        });
+                        console.log(res);
+                        if (evento_id == ""){
+                            $('#msg_sucesso').toast('show'); // Para aparecer a mensagem de sucesso
+
+                            urlAtividade =  './cadastro_atividade.php?evento_id=' + res; // Para inservir na div btn_atividade o botão para cadastro de atividade dps que o cadastro de evento for feito
+                            $('#btn_atividade').append('<a href="' + urlAtividade + '"" class="btn btn-block btn-outline-dark" title="Adicionar Atividades"><i class="fas fa-plus"></i></a>');
+                        }else{
+                            $('#msg_alterar_sucesso').toast('show'); // Para aparecer a mensagem de sucesso 
+                        }
                     } else {
-                        $('#msg_erro').toast('show');
+
+                        if (evento_id == ""){
+                            $('#msg_erro').toast('show');
+                        }else{
+                            $('#msg_alterar_erro').toast('show');
+
+                        }
                     }
                 },
                 error: function (request, status, str_error) {

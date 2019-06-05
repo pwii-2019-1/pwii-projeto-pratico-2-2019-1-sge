@@ -17,4 +17,14 @@ class Login {
     public function login($dados) {
         return Autenticacao::login($dados['cpf'], $dados['senha'], $dados['lembrar'], false);
     }
+
+    /**
+     * Efetua o logout do sistema
+     *
+     * @return bool
+     */
+    public function logout() {
+        Autenticacao::logout();
+        return true;
+    }
 }

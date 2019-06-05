@@ -30,6 +30,8 @@ class Usuario extends CRUD {
      */
     public function adicionar($dados) {
 
+        if (isset($dados['senha'])) $dados['senha'] = md5($dados['senha']);
+
         try {
 
             $retorno = $this->create(self::TABELA, $dados);

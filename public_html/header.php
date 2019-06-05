@@ -44,8 +44,9 @@ use core\sistema\Autenticacao;
             <?php }
             if (Autenticacao::verificarLogin()) {
                 if (Autenticacao::usuarioAdministrador()) { ?>
-                    <a class="dropdown-item" href="#">Listagem de Eventos</a>
+                    <a class="dropdown-item" href="index.php">Listagem de Eventos</a>
                     <a class="dropdown-item" href="cadastro_evento.php">Cadastrar Evento</a>
+                    <a class="dropdown-item" href="usuarios.php">Usuários</a>
                 <?php } ?>
                 <div class="dropdown-divider"></div>
                 <a id="logout" class="dropdown-item" href="#">Sair</a>

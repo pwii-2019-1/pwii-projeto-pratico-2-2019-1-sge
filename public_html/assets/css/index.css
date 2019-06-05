@@ -43,6 +43,21 @@ Usei isso só pra tirar a seta padrão do select
 
 */
 
+main {
+    min-height: 400px;
+}
+
+main h3.sem-resultado {
+    padding: 40px 0;
+}
+
+#filtrar {
+    display: flex;
+    align-self: center;
+    margin-top: 15px;
+    height: 38px;
+}
+
 .container-login {
     padding: 80px 0;
 }

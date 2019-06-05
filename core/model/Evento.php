@@ -78,16 +78,54 @@ class Evento extends CRUD {
 
         if (count($busca) > 0) {
 
-            if (isset($busca[self::COL_NOME]) && !empty($busca[self::COL_NOME])) {
-                $where_condicao .= " AND " . self::COL_NOME . " LIKE ?";
-                $where_valor[] = "%{$busca[self::COL_NOME]}%";
+            if (isset($busca['texto']) && !empty($busca['texto'])) {
+                $where_condicao .= " AND (" . self::COL_NOME . " LIKE ? OR " . self::COL_DESCRICAO . " LIKE ?)";
+                $where_valor[] = "%{$busca['texto']}%";
+                $where_valor[] = "%{$busca['texto']}%";
             }
 
-            if (isset($busca[self::COL_DESCRICAO]) && !empty($busca[self::COL_DESCRICAO])) {
-                $where_condicao .= " AND " . self::COL_DESCRICAO . " LIKE ?";
-                $where_valor[] = "%{$busca[self::COL_DESCRICAO]}%";
+            if (
+                (isset($busca['data_inicio']) && !empty($busca['data_inicio'])) ||
+                (isset($busca['data_termino']) && !empty($busca['data_termino']))
+            ) {
+                if (!empty($busca['data_inicio']) && empty($busca['data_termino'])) {
+
+                    $where_condicao .= " AND " . self::COL_DATA_INICIO . " >= ?";
+                    $where_valor[] = $busca['data_inicio'];
+
+                } else if (!empty($busca['data_inicio']) && !empty($busca['data_termino'])) {
+
+                    $where_condicao .= " AND " . self::COL_DATA_INICIO . " >= ? AND " . self::COL_DATA_TERMINO . " <= ?";
+                    $where_valor[] = $busca['data_inicio'];
+                    $where_valor[] = $busca['data_termino'];
+
+                } else if (empty($busca['data_inicio']) && !empty($busca['data_termino'])) {
+
+                    $where_condicao .= " AND " . self::COL_DATA_TERMINO . " <= ?";
+                    $where_valor[] = $busca['data_termino'];
+
+                }
             }
 
+            if (isset($busca['periodo']) && !empty($busca['periodo'])) {
+                if ($busca['periodo'] == "hoje") {
+
+                    $where_condicao .= " AND " . self::COL_DATA_INICIO . " = ?";
+                    $where_valor[] = date('Y-m-d');
+
+                } else if ($busca['periodo'] == "semana") {
+
+                    $where_condicao .= " AND " . self::COL_DATA_INICIO . " BETWEEN ? AND ?";
+                    $where_valor[] = date('Y-m-d');
+                    $where_valor[] = date('Y-m-d', strtotime('+7 days'));
+
+                } else {
+
+                    $where_condicao .= " AND MONTH(" . self::COL_DATA_INICIO . ") = ?";
+                    $where_valor[] = date('m');
+
+                }
+            }
         }
 
         $retorno = [];

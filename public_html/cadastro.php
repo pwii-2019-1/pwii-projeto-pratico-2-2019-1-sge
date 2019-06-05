@@ -25,7 +25,7 @@ use core\sistema\Footer;
                         </div>
                         <div class="form-group col-md-5">
                             <label for="cpf">CPF:</label>
-                            <input type="text" class="form-control" id="cpf" placeholder="000.000.000-00" required>
+                            <input type="text" class="form-control" id="cpf" name="cpf" placeholder="000.000.000-00" title="Digite um CPF no formato xxx.xxx.xxx-xx"  pattern="\d{3}\.\d{3}.\d{3}-\d{2}" required>
                         </div>
                     </div>
                     <div class="form-row">
@@ -154,7 +154,7 @@ use core\sistema\Footer;
                 </button>
             </div>
             <div class="toast-body">
-               Por favor, confira todos os dados informados.
+               Por favor, verifique o campo senha.
             </div>
             <div class="card-footer text-muted bg-warning p-1"></div>
         </div>

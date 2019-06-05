@@ -3,10 +3,9 @@ let construct = () => {
 };
 
 const eventos = () => {
-   
+    
     $('#formulario').on('submit', function (e) {
         e.preventDefault();
-        
         let nome = $('#nome').val(),
             cpf = $('#cpf').val(),
             data_nascimento = $('#data_nascimento').val(),
@@ -21,9 +20,6 @@ const eventos = () => {
             estado  = $('#estado').val(),
             cidade  = $('#cidade').val();
             alert(nome);
-        
-        
-
 
         if (nome !== "" &&
             cpf !== "" &&
@@ -31,7 +27,7 @@ const eventos = () => {
             nacionalidade !== "" &&
             ocupacao !== "" &&
             email !== "" &&
-            senha !== "" 
+            senha == conf_senha 
         ) {
             let dados = {
                 nome: nome,
@@ -72,6 +68,8 @@ const eventos = () => {
                     console.log(request, status, str_error)
                 }
             });
+        }else{
+            $('#msg_alerta').toast('show');
         }
     });
 };

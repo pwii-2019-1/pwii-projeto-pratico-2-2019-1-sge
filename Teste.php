@@ -4,9 +4,11 @@ use core\controller\Certificado;
 use core\CRUD;
 use core\model\Usuario;
 
-class Teste extends CRUD {
+class Teste extends CRUD
+{
 
-    public function inserir() {
+    public function inserir()
+    {
 
         $dados = [
             "nome" => "Marco Aurélio",
@@ -33,7 +35,8 @@ class Teste extends CRUD {
         echo "</pre>";
     }
 
-    public function atualizar() {
+    public function atualizar()
+    {
         $dados = [
             "usuario_id" => 3,
             "nome" => "Marco Aurélio",
@@ -63,7 +66,8 @@ class Teste extends CRUD {
         echo "</pre>";
     }
 
-    public function deletar() {
+    public function deletar()
+    {
 
         $where_condicao = "usuario_id = ?";
         $where_valor[] = 5;
@@ -74,24 +78,24 @@ class Teste extends CRUD {
         print_r($this->pegarUltimoSQL());
         print_r("\n" . $retorno);
         echo "</pre>";
-
     }
 
-    public function selecionar() {
+    public function selecionar()
+    {
 
         $campos = "*";
-//        $campos = "nome, email";
+        //        $campos = "nome, email";
 
-//        $where_condicao = "admin = ?";
+        //        $where_condicao = "admin = ?";
         $where_condicao = "";
-//        $where_valor = [0];
+        //        $where_valor = [0];
         $where_valor = [];
-//
-//        $ordem = "senha DESC";
+        //
+        //        $ordem = "senha DESC";
         $ordem = null;
-//        $limite = 3;
+        //        $limite = 3;
         $limite = null;
-//        $group_by = "nome";
+        //        $group_by = "nome";
         $group_by = null;
 
         $retorno = $this->read("usuario", $campos, $where_condicao, $where_valor, $group_by, $ordem, $limite);
@@ -100,10 +104,10 @@ class Teste extends CRUD {
         print_r($this->pegarUltimoSQL() . "\n");
         print_r($retorno);
         echo "</pre>";
-
     }
 
-    public function listar() {
+    public function listar()
+    {
         $usuario = new Usuario();
 
         $retorno = $usuario->listar();
@@ -111,17 +115,28 @@ class Teste extends CRUD {
         return $retorno;
     }
 
-    public function gerarCertificado() {
+    public function gerarCertificado()
+    {
 
         $certificado = new Certificado();
 
         try {
 
             $certificado->gerarCertificado();
-
         } catch (Exception $e) {
             echo "Erro: " . $e->getMessage() . "\n" . "Local: " . $e->getTraceAsString();
         }
+    }
 
+    public function gerarListaPresenca()
+    {
+
+        $listaPresenca = new Certificado();
+
+        try {
+            $listaPresenca->gerarListaPresenca();
+        } catch (Exception $e) {
+            echo "Erro " . $e->getMessage() . "\n" . "Local: " . $e->getTraceAsString();
+        }
     }
 }

@@ -24,9 +24,7 @@ $evento = $eventos->listarEvento($evento_id);
 $atividade = $atividades->listarAtividades($evento_id);
 $x = 0;
 
-// echo "<pre>";
-// print_r($atividade);
-// echo "</pre>";
+
 
 ?>
 

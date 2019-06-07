@@ -3,6 +3,7 @@ require_once 'header.php';
 
 use core\controller\Eventos;
 use core\controller\Atividades;
+use core\sistema\Autenticacao;
 use core\sistema\Footer;
 use core\sistema\Util;
 

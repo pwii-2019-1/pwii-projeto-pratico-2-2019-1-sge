@@ -3,6 +3,7 @@
 namespace core\model;
 
 use core\CRUD;
+use Exception;
 
 class Presenca extends CRUD {
 
@@ -16,11 +17,14 @@ class Presenca extends CRUD {
      * @return bool
      */
     public function adicionar($dados) {
+        $retorno = 0;
+
         try {
-            $retorno = 0;
-            foreach ($dados["atividade_id"] as $i => $value) {
-                $dado = [$value, $dados["usuario_id"]];
-                $this->create(self::TABELA, $dados);
+            foreach ($dados["lista_presenca"] as $i => $value) {
+
+                $this->deletarRelacao($value[self::COL_ATIVIDADE_ID], $value[self::COL_USUARIO_ID]);
+
+                $this->create(self::TABELA, $value);
                 $retorno++;
             }
 
@@ -30,32 +34,6 @@ class Presenca extends CRUD {
         }
 
         return $retorno;
-    }
-
-    /**
-     * @param $dados
-     * @return bool
-     * @throws Exception
-     */
-    public function alterar($dados) {
-
-        if (!isset($dados[self::COL_EVENTO_ID])) {
-            throw new Exception("É necessário informar o ID do evento para atualizar");
-        }
-
-        $where_condicao = self::COL_EVENTO_ID . " = ?";
-        $where_valor[] = $dados[self::COL_EVENTO_ID];
-
-        try {
-
-            $this->update(self::TABELA, $dados, $where_condicao, $where_valor);
-
-        } catch (Exception $e) {
-            echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
-            return false;
-        }
-
-        return $dados[self::COL_EVENTO_ID];
     }
 
     /**
@@ -158,5 +136,30 @@ class Presenca extends CRUD {
         }
 
         return $retorno;
+    }
+
+    /**
+     * Remove a relação entre o Usuário e a Atividade antes de inserir/atualizar uma nova relação
+     *
+     * @param $atividade_id
+     * @param $usuario_id
+     * @return bool|mixed
+     */
+    public function deletarRelacao($atividade_id, $usuario_id) {
+
+        $where_condicao = self::COL_ATIVIDADE_ID . " = ? AND " . self::COL_USUARIO_ID . " = ?";
+        $where_valor = [$atividade_id, $usuario_id];
+
+        try {
+
+            $retorno = $this->delete(self::TABELA, $where_condicao, $where_valor);
+
+        } catch (Exception $e) {
+            echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
+            return false;
+        }
+
+        return $retorno;
+
     }
 }

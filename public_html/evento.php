@@ -19,9 +19,6 @@ $dados_atividades = [];
 $evento = $eventos->listarEvento($evento_id);
 $atividade = $atividades->listarAtividades($evento_id);
 
-// echo "<pre>";
-// print_r($atividade);
-// echo "</pre>";
 ?>
 
 <main role='main'>

@@ -4,6 +4,7 @@
 namespace core\controller;
 
 
+use core\model\Evento;
 use core\model\Presenca;
 
 class Presencas {
@@ -38,14 +39,10 @@ class Presencas {
 
         $presenca = new Presenca();
 
-        if (isset($dados['alterar'])) {
-            $resultado = $presenca->alterar($dados);
-        } else {
-            $resultado = $presenca->adicionar($dados);
-        }
+        $resultado = $presenca->adicionar($dados);
 
         if ($resultado > 0) {
-            return echo $resultado;
+            return $resultado;
         } else {
             return false;
         }
@@ -85,7 +82,6 @@ class Presencas {
 
     public function listarEvento($evento_id) {
         $evento = new Evento();
-
 
         $dados = $evento->selecionarEvento($evento_id);
 

@@ -79,8 +79,17 @@ $atividade = $atividades->listarAtividades($evento_id);
 					<a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark">
 						<?= (Autenticacao::usuarioAdministrador()) ? "Atividades" : "Inscrever-se"?>
 					</a>
-					<a href="#" class="btn btn-lg btn-outline-dark">Acompanhar Inscrição</a>
-					<a href="#" class="btn btn-lg btn-outline-dark">Certificado</a>
+					<?php if (Autenticacao::usuarioAdministrador()) { ?>
+						<a href="cadastro_atividade.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark">
+							Adicionar Atividades
+						</a>
+						<a href="cadastro_evento.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark">
+							Editar
+						</a>
+					<?php } else { ?>
+						<a href="#" class="btn btn-lg btn-outline-dark">Acompanhar Inscrição</a>
+						<a href="#" class="btn btn-lg btn-outline-dark">Certificado</a>
+					<?php } ?>
 				</div>
 			</div>
 		</div>
@@ -136,21 +145,22 @@ $atividade = $atividades->listarAtividades($evento_id);
 											<td class="align-middle"><?= $ativ->responsavel ?></td>
 											<td class="align-middle"><?= $ativ->local ?></td>
 										</tr>
-									<?php } }
-								} else { ?>
-									<tr>
-										<td colspan="4">Em Breve!</td>
-									</tr>
-								<?php } ?>
-							</tbody>
-						</table>
-					</div>
-				<?php } ?>
-			</div>
+									<?php }
+								}
+							} else { ?>
+								<tr>
+									<td colspan="4">Em Breve!</td>
+								</tr>
+							<?php } ?>
+						</tbody>
+					</table>
+				</div>
+			<?php } ?>
 		</div>
-	</main>
+	</div>
+</main>
 
-	<?php
-	$footer = new Footer();
-	require_once 'footer.php';
-	?>
+<?php
+$footer = new Footer();
+require_once 'footer.php';
+?>

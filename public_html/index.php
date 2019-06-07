@@ -92,9 +92,15 @@ $dados = $eventos->listarEventos($dados_eventos);
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a href="evento.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn btn-outline-secondary">Visualizar</a>
-                                        <a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn-outline-success">
-                                            <?= (Autenticacao::usuarioAdministrador()) ? "Atividades" : "Inscrever-se"?>
-                                        </a>
+                                        <?php if (Autenticacao::usuarioAdministrador()){ ?>
+                                            <a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn-outline-success">
+                                                Atividades
+                                            </a>
+                                        <?php } else { ?>
+                                            <a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn-outline-success" data-toggle="" data-target="#" data-whatever="">
+                                                Inscrever-se
+                                            </a>
+                                        <?php }?>
                                     </div>
                                     <small class="text-muted"><?= Util::formataDataBR($evento->evento_inicio) ?></small>
                                 </div>
@@ -103,6 +109,25 @@ $dados = $eventos->listarEventos($dados_eventos);
                         </div>
                     </div>
 
+                    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Deseja realmente fazer inscrição neste evento?
+                                </div>
+                                <div class="modal-footer p-2">
+                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Não</button>
+                                    <a id="botao" href="#" class="btn btn-outline-success">Sim</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <?php }
                 } else { ?>
                     <h3 class="sem-resultado">Nenhum resultado encontrado!</h3>

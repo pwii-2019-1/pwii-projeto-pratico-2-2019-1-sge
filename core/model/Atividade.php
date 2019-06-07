@@ -67,10 +67,10 @@ class Atividade extends CRUD {
      * @param $evento_id
      * @return array
      */
-    public function listar($evento_id) {
+    public function listar($evento_id, $campos, $busca, $ordem) {
 
-        $campos = "*";
-        $ordem = self::COL_TITULO . " ASC";
+        $campos = $campos != null ? $campos : "*";
+        $ordem = $ordem != null ? $ordem : self::COL_DATAHORA_INICIO . " ASC";
 
         $where_condicao = self::COL_EVENTO_ID . " = ?";
         $where_valor[] = $evento_id;
@@ -79,7 +79,7 @@ class Atividade extends CRUD {
 
         try {
 
-            $retorno = $this->read(self::TABELA, $campos, $where_condicao, $where_valor, null, $ordem);
+            $retorno = $this->read(self::TABELA, $campos, $where_condicao, $where_valor, $busca, $ordem, null);
 
         } catch (Exception $e) {
             echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();

@@ -12,7 +12,7 @@ const atividades = () => {
 
     $('#formulario').on('submit', function (e) {
         e.preventDefault();
-        
+
         let titulo = $('#titulo').val(),
             responsavel = $('#responsavel').val(),
             carga_horaria = $('#carga_horaria').val(),
@@ -27,7 +27,7 @@ const atividades = () => {
         const validaHorario = () => {
             let hr_ini = hora_inicio.split(":")
             let hr_fim = hora_termino.split(":")
-    
+
             if (hr_ini[0] < hr_fim[0]) {
                 return true
             } else {
@@ -39,7 +39,7 @@ const atividades = () => {
                 }
             }
         };
-        
+
 
 
 
@@ -67,10 +67,10 @@ const atividades = () => {
 
             if (evento_id !== "") dados.evento_id = evento_id;
 
-           
+
             dados.acao = "Atividades/cadastrar";
             //console.log(dados);
-            
+
 
             $.ajax({
                 url: baseUrl,
@@ -80,12 +80,12 @@ const atividades = () => {
                 async: true,
                 success: function (res) {
                     if (res) {
-                        
+
                         $('#msg_sucesso').toast('show'); // Para aparecer a mensagem de sucesso
                         $('#formulario').each( function () {
                         this.reset(); // Pra limpar o formulário
                         });
-                    
+
                     } else {
                         alert('Cadastro não efetuado');
                         $('#msg_erro').toast('show');

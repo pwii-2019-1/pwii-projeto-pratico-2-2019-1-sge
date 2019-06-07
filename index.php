@@ -12,4 +12,4 @@ require_once __DIR__ . '/Teste.php';
 // (new Teste())->gerarListaPresenca();
 
 
-// header('Location: public_html/');
+header('Location: public_html/');

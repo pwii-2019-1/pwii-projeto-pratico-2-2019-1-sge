@@ -305,6 +305,7 @@ class ComposerStaticInitc2037c32e53e82aafd6d754e5434f532
         'Psr\\Log\\Test\\TestLogger' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/TestLogger.php',
         'core\\CRUD' => __DIR__ . '/../..' . '/core/crud/CRUD.php',
         'core\\controller\\Api' => __DIR__ . '/../..' . '/core/controller/Api.php',
+        'core\\controller\\Atividades' => __DIR__ . '/../..' . '/core/controller/Atividades.php',
         'core\\controller\\Certificado' => __DIR__ . '/../..' . '/core/controller/Certificado.php',
         'core\\controller\\Eventos' => __DIR__ . '/../..' . '/core/controller/Eventos.php',
         'core\\controller\\Login' => __DIR__ . '/../..' . '/core/controller/Login.php',

@@ -21,7 +21,7 @@ class Api {
         $metodo = $api_controller[1];
 
         $class = new $classe();
-
+        
         if (method_exists($class, $metodo)) {
             echo call_user_func_array([$class, $metodo], [$dados, $this]);
         } else {

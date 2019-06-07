@@ -2,6 +2,7 @@
 require_once 'header.php';
 
 use core\controller\Eventos;
+use core\controller\Atividades;
 use core\sistema\Autenticacao;
 use core\sistema\Footer;
 use core\sistema\Util;
@@ -9,11 +10,14 @@ use core\sistema\Util;
 $evento_id = isset($_GET['evento_id']) ? $_GET['evento_id'] : null;
 
 $eventos = new Eventos();
+$atividades = new Atividades();
 
 $dados_eventos = "";
 $evento = "";
+$dados_atividades = [];
 
 $evento = $eventos->listarEvento($evento_id);
+$atividade = $atividades->listarAtividades($evento_id);
 
 ?>
 
@@ -88,124 +92,62 @@ $evento = $eventos->listarEvento($evento_id);
 		</div>
 
 		<ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
-			<li class="nav-item">
-				<a class="nav-link active" id="dia1-tab" data-toggle="tab" href="#dia1" role="tab" aria-controls="dia1" aria-selected="true">
-					22/05
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" id="dia2-tab" data-toggle="tab" href="#dia2" role="tab" aria-controls="dia2" aria-selected="false">
-					23/05
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" id="dia3-tab" data-toggle="tab" href="#dia3" role="tab" aria-controls="dia3" aria-selected="false">
-					24/05
-				</a>
-			</li>
+			<?php if (count($atividade["total_dias"][0]) > 0) {
+				foreach ($atividade["total_dias"] as $i => $dia) { ?>
+					<li class="nav-item">
+						<a class="nav-link <?= $i == 0 ? "active" : "" ?>" id="dia<?= $i ?>-tab" data-toggle="tab" href="#dia<?= $i ?>" role="tab" aria-controls="dia<?= $i ?>" aria-selected="true">
+							<?= Util::dia($dia->data) ."/". Util::mes($dia->data) ?>
+						</a>
+					</li>
+				<?php }
+			} else { ?>
+				<li class="nav-item">
+					<a class="nav-link active" id="dia1-tab" data-toggle="tab" href="#dia1" role="tab" aria-controls="dia1" aria-selected="true">
+						Programação
+					</a>
+				</li>
+			<?php } ?>
 		</ul>
 		<div class="tab-content mb-5" id="myTabContent">
-			<div class="tab-pane fade show active" id="dia1" role="tabpanel" aria-labelledby="dia1-tab">
-				<table class="table table-responsive table-hover table-bordered">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">Horário</th>
-							<th class="col-md-6" scope="col">Título</th>
-							<th scope="col">Responsável</th>
-							<th scope="col">Local</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="tab-pane fade" id="dia2" role="tabpanel" aria-labelledby="dia2-tab">
-				<table class="table table-responsive table-hover table-bordered">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">Horário</th>
-							<th class="col-md-6" scope="col">Título</th>
-							<th scope="col">Responsável</th>
-							<th scope="col">Local</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="tab-pane fade" id="dia3" role="tabpanel" aria-labelledby="dia3-tab">
-				<table class="table table-responsive table-hover table-bordered">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">Horário</th>
-							<th class="col-md-6" scope="col">Título</th>
-							<th scope="col">Responsável</th>
-							<th scope="col">Local</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-					</tbody>
-				</table>
+			<?php foreach ($atividade["total_dias"] as $i => $dia) { ?>
+				<div class="tab-pane fade <?= $i == 0 ? "show active" : "" ?>" id="dia<?= $i ?>" role="tabpanel" aria-labelledby="dia<?= $i ?>-tab">
+					<table class="table table-responsive table-hover table-bordered"  style="min-width: 100%">
+						<thead class="thead-dark">
+							<tr>
+								<th class="col-md-2">Horário</th>
+								<th class="col-md-6">Título</th>
+								<th class="col-md-2">Responsável</th>
+								<th class="col-md-2">Local</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php if (count($atividade["lista_atividades"][0]) > 0) {
+								foreach ($atividade["lista_atividades"] as $j => $ativ) {
+									if (Util::dia($ativ->datahora_inicio) == Util::dia($dia->data)) {?>
+										<tr>
+											<td class="align-middle">
+												<?= Util::hora($ativ->datahora_inicio) .":". Util::min($ativ->datahora_inicio) ?> às
+												<?= Util::hora($ativ->datahora_termino) .":". Util::min($ativ->datahora_termino) ?>
+											</td>
+											<td class="align-middle"><?= $ativ->titulo ?></td>
+											<td class="align-middle"><?= $ativ->responsavel ?></td>
+											<td class="align-middle"><?= $ativ->local ?></td>
+										</tr>
+									<?php } }
+								} else { ?>
+									<tr>
+										<td colspan="4">Em Breve!</td>
+									</tr>
+								<?php } ?>
+							</tbody>
+						</table>
+					</div>
+				<?php } ?>
 			</div>
 		</div>
-	</div>
-</main>
+	</main>
 
-<?php
-$footer = new Footer();
-require_once 'footer.php';
-?>
+	<?php
+	$footer = new Footer();
+	require_once 'footer.php';
+	?>

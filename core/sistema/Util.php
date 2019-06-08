@@ -13,6 +13,11 @@ class Util {
         return $nova_data->format('d/m/Y');
     }
 
+    public static function formataDtHrBR($data) {
+        $nova_data = DateTime::createFromFormat("Y-m-d H:i:s", $data);
+        return $nova_data->format('d/m/Y H:i:s');
+    }
+
     public static function ano($data) {
         $dt = explode("-", $data);
         return $dt[0];

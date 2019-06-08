@@ -3,6 +3,7 @@ require_once 'header.php';
 
 use core\controller\Eventos;
 use core\controller\Atividades;
+use core\controller\Presencas;
 use core\sistema\Autenticacao;
 use core\sistema\Footer;
 use core\sistema\Util;
@@ -11,21 +12,19 @@ if (!Autenticacao::verificarLogin()) {
     header('Location: login.php');
 }
 
-$evento_id = isset($_GET['evento_id']) ? $_GET['evento_id'] : null;
+$evento_id = isset($_GET['evento_id']) ? $_GET['evento_id'] : header('Location: login.php');
 
 $eventos = new Eventos();
 $atividades = new Atividades();
-
-$dados_eventos = "";
-$evento = "";
-$dados_atividades = [];
+$presencas = new Presencas();
 
 $evento = $eventos->listarEvento($evento_id);
 $atividade = $atividades->listarAtividades($evento_id);
+$ativUsuario = $presencas->listarPresencas([$evento_id, Autenticacao::getCookieUsuario()], "atividades");
 $x = 0;
-
-
-
+echo "<pre>";
+print_r($ativUsuario);
+echo "</pre>";
 ?>
 
 <main role='main'>
@@ -71,7 +70,7 @@ $x = 0;
             <div class="tab-content mb-2" id="myTabContent">
                 <?php foreach ($atividade["total_dias"] as $i => $dia) { ?>
                     <div class="tab-pane fade <?= $i == 0 ? "show active" : "" ?>" id="dia<?= $i ?>" role="tabpanel" aria-labelledby="dia<?= $i ?>-tab">
-                        <table class="table table-responsive table-hover">
+                        <table class="table table-hover">
                             <thead class="thead-dark">
                                 <tr>
                                     <?php if (!Autenticacao::usuarioAdministrador()) { ?>
@@ -116,30 +115,69 @@ $x = 0;
                                                         <a class="btn btn-outline-danger" href="#" id="botao_excluir" title="Excluir">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </a>
+                                                        <a class="btn btn-outline-success" href="lista_presenca.php?evento_id=<?= $evento->evento_id ?>&atividade_id=<?= $ativ->atividade_id ?>" id="" title="Inscritos">
+                                                            <i class="fas fa-users"></i>
+                                                        </a>
                                                     </td>
-                                                <?php } else{ ?>
-                                                    <td class="align-middle">presenca/40</td>
+                                                <?php } else{
+                                                    $presenca = $presencas->listarPresencas([$ativ->atividade_id, null], "nomes");
+                                                    if (empty($presenca[0])) unset($presenca[0]);?>
+                                                    <td class="align-middle"><?= ($ativ->quantidade_vaga-count($presenca)) . "/" . $ativ->quantidade_vaga?></td>
                                                 <?php } ?>
                                             </tr>
-                                        <?php } }
-                                    } else { ?>
-                                        <tr>
-                                            <td colspan="4">Em Breve!</td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    <?php } ?>
-                </div>
-                <div class="row mb-5">
-                    <div class="col-md-3 ml-md-auto">
-                        <button class="btn btn-outline-success btn-block" id="botao_atividade" type="submit">Salvar</button>
+                                        <?php }
+                                    }
+                                } else { ?>
+                                    <tr>
+                                        <td class="text-center" colspan="4">Em Breve!</td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
                     </div>
+                <?php } ?>
+            </div>
+            <div class="row mb-5">
+                <div class="col-md-3 ml-md-auto">
+                    <button class="btn btn-outline-success btn-block" id="botao_atividade" type="submit">Salvar</button>
                 </div>
-            </form>
+            </div>
+        </form>
+
+        <!-- Toast Sucesso -->
+        <div class="toast" id="msg_sucesso" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000" style="position: absolute; top: 4rem; right: 1rem;">
+            <div class="toast-header">
+                <strong class="mr-auto">Deu tudo certo!</strong>
+                <small>Agora</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                Pronto, as atividades foram cadastradas com sucesso.
+            </div>
+            <div class="card-footer text-muted bg-success p-1"></div>
         </div>
+        <!-- Toast -->
+
+        <!-- Toast Erro -->
+        <div class="toast" id="msg_erro" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000" style="position: absolute; top: 4rem; right: 1rem;">
+            <div class="toast-header">
+                <strong class="mr-auto">Houve um erro!</strong>
+                <small>Agora</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                Desculpe, não conseguimos efetuar sua inscrições.
+            </div>
+            <div class="card-footer text-muted bg-warning p-1"></div>
+        </div>
+        <!-- Toast -->
+
     </div>
+</div>
 </main>
 
 <?php

@@ -120,7 +120,7 @@ $atividade = $atividades->listarAtividades($evento_id);
 		<div class="tab-content mb-5" id="myTabContent">
 			<?php foreach ($atividade["total_dias"] as $i => $dia) { ?>
 				<div class="tab-pane fade <?= $i == 0 ? "show active" : "" ?>" id="dia<?= $i ?>" role="tabpanel" aria-labelledby="dia<?= $i ?>-tab">
-					<table class="table table-responsive table-hover table-bordered"  style="min-width: 100%">
+					<table class="table table-hover table-bordered">
 						<thead class="thead-dark">
 							<tr>
 								<th class="col-md-2">Horário</th>
@@ -146,7 +146,7 @@ $atividade = $atividades->listarAtividades($evento_id);
 								}
 							} else { ?>
 								<tr>
-									<td colspan="4">Em Breve!</td>
+									<td class="text-center" colspan="4">Em Breve!</td>
 								</tr>
 							<?php } ?>
 						</tbody>

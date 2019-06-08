@@ -108,4 +108,22 @@ class Atividade extends CRUD {
         return true;
     }
 
+    public function selecionarAtividade($atividade_id) {
+
+        $where_condicao = self::COL_ATIVIDADE_ID . " = ?";
+        $where_valor[] = $atividade_id;
+
+        $retorno = [];
+
+        try {
+
+            $retorno = $this->read(self::TABELA, "*", $where_condicao, $where_valor, null, null, 1);
+
+        } catch (Exception $e) {
+            echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
+        }
+
+        return $retorno;
+    }
+
 }

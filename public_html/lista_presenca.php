@@ -1,8 +1,27 @@
 <?php
-
-use core\sistema\Footer;
-
 require_once 'header.php';
+
+use core\controller\Eventos;
+use core\controller\Atividades;
+use core\controller\Presencas;
+use core\sistema\Autenticacao;
+use core\sistema\Footer;
+use core\sistema\Util;
+
+if (!Autenticacao::verificarLogin() || !Autenticacao::usuarioAdministrador()) {
+    header('Location: login.php');
+}
+
+$evento_id = isset($_GET['evento_id']) ? $_GET['evento_id'] : "";
+$atividade_id = isset($_GET['atividade_id']) ? $_GET['atividade_id'] : "";
+
+$eventos = new Eventos();
+$atividades = new Atividades();
+$presencas = new Presencas();
+
+$evento = $eventos->listarEvento($evento_id);
+$atividade = $atividades->listarAtividade($atividade_id);
+$presenca = $presencas->listarPresencas([$atividade_id, null], "nomes");
 
 ?>
 
@@ -11,12 +30,12 @@ require_once 'header.php';
     <div class="container">
         <div class="row">
             <div class="col-md-12 mb-3">
-                <h1 class="display-4 text-center">Nome do Evento</h1>
+                <h1 class="display-4 text-center"><?= $evento->nome ?></h1>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 mb-3">
-                <h1 class="h3 mb-3 font-weight-normal text-center">Nome da Atividade</h1>
+                <h1 class="h3 mb-3 font-weight-normal text-center"><?= $atividade->titulo ?></h1>
                 <h1 class="h4 mb-3 font-weight-normal text-center">Lista de Presença</h1>
             </div>
         </div>
@@ -33,24 +52,20 @@ require_once 'header.php';
                         </tr>
                     </thead>
                     <tbody class="">
+                        <?php if (count($presenca[0]) > 0) {
+                            foreach ($presenca as $j => $pre) {?>
                         <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">Ciclano de Tal</td>
-                            <td class="text-center">065.396.191-03</td>
-                            <td class="text-center"><input class="form-check-input" type="checkbox" id="10" value=""></td>
+                            <td class="text-center"><?= ($j+1) ?></td>
+                            <td class="text-center"><?= $pre->nome ?></td>
+                            <td class="text-center"><?= $pre->cpf ?></td>
+                            <td class="text-center"><input class="form-check-input" type="checkbox" id="<?= $pre->usuario_id ?>" value="<?= $pre->usuario_id ?>"></td>
                         </tr>
+                    <?php }} else{ ?>
                         <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">Ciclano de Tal</td>
-                            <td class="text-center">065.396.191-03</td>
-                            <td class="text-center"><input class="form-check-input" type="checkbox" id="20" value=""></td>
+                            <td class="text-center" colspan="4">Nenhum inscrito!</td>
                         </tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">Ciclano de Tal</td>
-                            <td class="text-center">065.396.191-03</td>
-                            <td class="text-center"><input class="form-check-input" type="checkbox" id="30" value=""></td>
-                        </tr>
+                    <?php } ?>
+
                     </tbody>
                 </table>
 

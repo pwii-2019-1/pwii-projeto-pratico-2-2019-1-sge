@@ -34,9 +34,9 @@ const atividades = () => {
             success: function (res) {
                 if (res && Number(res) > 0) {
                     console.log(res);
-                    console.log("foi");
+                    $('#msg_sucesso').toast('show'); // Para aparecer a mensagem de sucesso
                 } else {
-                    console.log("nao foi");
+                    $('#msg_erro').toast('show');
                 }
             },
             error: function (request, status, str_error) {
@@ -45,5 +45,6 @@ const atividades = () => {
         });
     });
 };
+
 
 construct();

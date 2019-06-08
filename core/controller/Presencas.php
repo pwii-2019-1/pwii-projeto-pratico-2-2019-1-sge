@@ -4,8 +4,9 @@
 namespace core\controller;
 
 
-use core\model\Evento;
 use core\model\Presenca;
+use core\model\Usuario;
+use core\model\Atividade;
 
 class Presencas {
 
@@ -37,9 +38,9 @@ class Presencas {
      */
     public function cadastrar($dados) {
 
-        $presenca = new Presenca();
+        $presencas = new Presenca();
 
-        $resultado = $presenca->adicionar($dados);
+        $resultado = $presencas->adicionar($dados);
 
         if ($resultado > 0) {
             return $resultado;
@@ -54,38 +55,37 @@ class Presencas {
      * @param $dados
      * @return array
      */
-    public function listarEventos($dados = []) {
-        $evento = new Evento();
+    public function listarPresencas($id = [], $listagem = null) {
+        $presencas = new Presenca();
+        $evento = new Usuario();
+        $atividade = new Atividade();
 
-        $busca = isset($dados['busca']) ? $dados['busca'] : [];
+        if ($listagem == "nomes") {
+            $campos = Usuario::TABELA . "." . Usuario::COL_USUARIO_ID . ", " . Usuario::COL_NOME . ", " . Usuario::COL_CPF;
+            $ordem = Usuario::COL_USUARIO_ID . " ASC";
 
-        if (isset($dados['pg']) && is_numeric($dados['pg'])) {
-            $limite = ($dados['pg'] - 1) * self::LIMITE . ", " . self::LIMITE;
+            $innerjoin = [Usuario::TABELA, Presenca::TABELA . "." . Presenca::COL_USUARIO_ID, Usuario::TABELA . "." . Usuario::COL_USUARIO_ID];
+            $busca = [];
+            $busca[0] = Presenca::COL_ATIVIDADE_ID;
+            $lista = $presencas->listar($id, $campos, $innerjoin, $busca, $ordem);
+
         } else {
-            $limite = self::LIMITE;
+            $innerjoin = [Atividade::TABELA, Presenca::TABELA . "." . Presenca::COL_ATIVIDADE_ID, Atividade::TABELA . "." . Atividade::COL_ATIVIDADE_ID];
+            $busca = [];
+            $busca[0] = Atividade::TABELA . "." . Atividade::COL_EVENTO_ID;
+
+            if ($listagem == "atividades") {
+                $busca[1] = Presenca::TABELA . "." . Presenca::COL_USUARIO_ID;
+            }
+
+            $lista = $presencas->listar($id, null, $innerjoin, $busca, null);
         }
 
-        $lista = $evento->listar(null, $busca, Evento::COL_EVENTO_INICIO . " DESC", $limite);
-        $paginas = $evento->listar("COUNT(*) as total", $busca, null, null);
-
-        if (count($lista) > 0 && isset($lista[0]) && count($lista[0]) > 0) {
-            $this->__set("lista_eventos", $lista);
+        if (count($lista) > 0) {
+            $this->__set("lista_presenca", $lista);
         }
 
-        $this->__set("total_paginas", $paginas[0]->total);
-
-        return [
-            "lista_eventos" => $this->lista_eventos,
-            "total_paginas" => ceil($this->total_paginas / self::LIMITE)
-        ];
+        return $this->lista_presenca;
     }
 
-    public function listarEvento($evento_id) {
-        $evento = new Evento();
-
-        $dados = $evento->selecionarEvento($evento_id);
-
-        $dados = $dados[0];
-        return $dados;
-    }
 }

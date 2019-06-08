@@ -43,72 +43,29 @@ class Presenca extends CRUD {
      * @param null $limite
      * @return array
      */
-    public function listar($campos = null, $busca = [], $ordem = null, $limite = null) {
+    public function listar($id = [], $campos = null, $innerjoin = [], $busca = [], $ordem = null) {
 
         $campos = $campos != null ? $campos : "*";
-        $ordem = $ordem != null ? $ordem : self::COL_NOME . " ASC";
+        $ordem = $ordem != null ? $ordem : null;
+        $innerjoin = $innerjoin != null ? $innerjoin : null;
 
-        $where_condicao = "1 = 1";
-        $where_valor = [];
+        $where_condicao = self::COL_PRESENCA . " = ? ";
 
-        if (count($busca) > 0) {
+        if ($busca[0] == "atividade_id") {
+            $where_condicao .= "AND " . $busca[0] . " = ?";
 
-            if (isset($busca['texto']) && !empty($busca['texto'])) {
-                $where_condicao .= " AND (" . self::COL_NOME . " LIKE ? OR " . self::COL_DESCRICAO . " LIKE ?)";
-                $where_valor[] = "%{$busca['texto']}%";
-                $where_valor[] = "%{$busca['texto']}%";
-            }
-
-            if (
-                (isset($busca['data_inicio']) && !empty($busca['data_inicio'])) ||
-                (isset($busca['data_termino']) && !empty($busca['data_termino']))
-            ) {
-                if (!empty($busca['data_inicio']) && empty($busca['data_termino'])) {
-
-                    $where_condicao .= " AND " . self::COL_DATA_INICIO . " >= ?";
-                    $where_valor[] = $busca['data_inicio'];
-
-                } else if (!empty($busca['data_inicio']) && !empty($busca['data_termino'])) {
-
-                    $where_condicao .= " AND " . self::COL_DATA_INICIO . " >= ? AND " . self::COL_DATA_TERMINO . " <= ?";
-                    $where_valor[] = $busca['data_inicio'];
-                    $where_valor[] = $busca['data_termino'];
-
-                } else if (empty($busca['data_inicio']) && !empty($busca['data_termino'])) {
-
-                    $where_condicao .= " AND " . self::COL_DATA_TERMINO . " <= ?";
-                    $where_valor[] = $busca['data_termino'];
-
-                }
-            }
-
-            if (isset($busca['periodo']) && !empty($busca['periodo'])) {
-                if ($busca['periodo'] == "hoje") {
-
-                    $where_condicao .= " AND " . self::COL_DATA_INICIO . " = ?";
-                    $where_valor[] = date('Y-m-d');
-
-                } else if ($busca['periodo'] == "semana") {
-
-                    $where_condicao .= " AND " . self::COL_DATA_INICIO . " BETWEEN ? AND ?";
-                    $where_valor[] = date('Y-m-d');
-                    $where_valor[] = date('Y-m-d', strtotime('+7 days'));
-
-                } else {
-
-                    $where_condicao .= " AND MONTH(" . self::COL_DATA_INICIO . ") = ?";
-                    $where_valor[] = date('m');
-
-                }
-            }
+        } else {
+            $where_condicao .= "AND ". $busca[0] ." = ?";
+            if (isset($busca[1])) $where_condicao .= " AND ". $busca[1] ." = ?";
         }
-
+        
+        $where_valor[] = 1;
+        $where_valor[] = $id[0];
+        if ($id[1] != null) $where_valor[] = $id[1];
         $retorno = [];
 
         try {
-
-            $retorno = $this->read(self::TABELA, $campos, $where_condicao, $where_valor, null, $ordem, $limite);
-
+            $retorno = $this->readInner(self::TABELA, $campos, $innerjoin, $where_condicao, $where_valor, $ordem);
         } catch (Exception $e) {
             echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
         }
@@ -116,27 +73,6 @@ class Presenca extends CRUD {
         return $retorno;
     }
 
-    /**
-     * @param $evento_id
-     * @return array
-     */
-    public function selecionarEvento($evento_id) {
-
-        $where_condicao = self::COL_EVENTO_ID . " = ?";
-        $where_valor[] = $evento_id;
-
-        $retorno = [];
-
-        try {
-
-            $retorno = $this->read(self::TABELA, "*", $where_condicao, $where_valor, null, null, 1);
-
-        } catch (Exception $e) {
-            echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
-        }
-
-        return $retorno;
-    }
 
     /**
      * Remove a relação entre o Usuário e a Atividade antes de inserir/atualizar uma nova relação

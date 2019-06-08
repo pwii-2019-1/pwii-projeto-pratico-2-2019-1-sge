@@ -74,11 +74,20 @@ class Atividades {
 
             $dias = $atividade->listar($evento_id, "DATE(datahora_inicio) AS data", "data", "data ASC");
             $this->__set("total_dias", $dias);
-        } 
+        }
 
         return [
             "lista_atividades" => $this->lista_atividades,
             "total_dias" => $this->total_dias
         ];
+    }
+
+    public function listarAtividade($atividade_id) {
+        $atividade = new Atividade();
+
+        $dados = $atividade->selecionarAtividade($atividade_id);
+
+        $dados = $dados[0];
+        return $dados;
     }
 }

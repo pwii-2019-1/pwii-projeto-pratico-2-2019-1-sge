@@ -97,7 +97,7 @@ $dados = $eventos->listarEventos($dados_eventos);
                                                 Atividades
                                             </a>
                                         <?php } else { ?>
-                                            <a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn-outline-success" data-toggle="" data-target="#" data-whatever="">
+                                            <a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn-outline-success" name="inscrever" data-toggle="modal" data-target="#">
                                                 Inscrever-se
                                             </a>
                                         <?php }?>

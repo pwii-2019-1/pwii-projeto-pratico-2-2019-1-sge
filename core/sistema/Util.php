@@ -49,10 +49,4 @@ class Util {
         $dt = explode(":", $dt[1]);
         return $dt[2];
     }
-
-    function console_log( $data ){
-      echo '<script>';
-      echo 'console.log('. json_encode( $data ) .')';
-      echo '</script>';
-    }
 }

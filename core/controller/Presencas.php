@@ -96,34 +96,35 @@ class Presencas
      * Lista as atividades em que o usuário está inscrito e retorna elas em array
      *
      * @param $id
-     * @param $listagem 
+     * @param $listagem
      * @return array
      */
-    public function listarAtividadesInscritas($id = [], $listagem = null)
-    {
-        $presencas = new Presenca();
-        $evento = new Usuario();
-        $atividade = new Atividade();
+    public function listarAtividadesInscritas($id = [], $listagem = null) {
 
-        $campos =  Presenca::TABELA . "." . Presenca::COL_ATIVIDADE_ID . "," .
-            Presenca::TABELA . "." . Presenca::COL_USUARIO_ID  . "," .
-            Presenca::TABELA . "." . Presenca::COL_PRESENCA;
-        $innerjoin = [Atividade::TABELA, Presenca::TABELA . "." . Presenca::COL_ATIVIDADE_ID, Atividade::TABELA . "." . Atividade::COL_ATIVIDADE_ID];
-        $busca = [];
-        $busca[0] = Atividade::TABELA . "." . Atividade::COL_EVENTO_ID;
-
-        if ($listagem == "atividades") {
-            $busca[1] = Presenca::TABELA . "." . Presenca::COL_USUARIO_ID;
-        }
-
-        $lista = $presencas->listar($id, $campos, $innerjoin, $busca, null);
-
+        $lista = $this->listarPresencas($id, $listagem);
+        
         $p = [];
         if (count($lista) > 0 && (!empty($lista[0]))) {
             foreach ($lista as $value) {
                 if ($value->presenca == '1'){
                     array_push($p,$value->atividade_id);
                 }
+            }
+            return $p;
+        } else{
+            return false;
+        }
+
+    }
+
+    public function listarUsuariosInscritos($id = [], $listagem = null) {
+
+        $lista = $this->listarPresencas($id, $listagem);
+
+        $p = [];
+        if (count($lista) > 0 && (!empty($lista[0]))) {
+            foreach ($lista as $value) {
+                array_push($p,$value->usuario_id);
             }
             return $p;
         } else{

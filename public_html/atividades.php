@@ -21,8 +21,8 @@ $presencas = new Presencas();
 $evento = $eventos->listarEvento($evento_id);
 $atividade = $atividades->listarAtividades($evento_id);
 $ativUsuario = $presencas->listarPresencas([$evento_id, Autenticacao::getCookieUsuario()], "atividades");
+$atiInscritas = $presencas->listarAtividadesInscritas([$evento_id, Autenticacao::getCookieUsuario()], "atividades");
 $x = 0;
-
 ?>
 
 <main role='main'>
@@ -68,7 +68,7 @@ $x = 0;
             <div class="tab-content mb-2" id="myTabContent">
                 <?php foreach ($atividade["total_dias"] as $i => $dia) { ?>
                     <div class="tab-pane fade <?= $i == 0 ? "show active" : "" ?>" id="dia<?= $i ?>" role="tabpanel" aria-labelledby="dia<?= $i ?>-tab">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="tabela" data-presencas="<?= implode("-",$atiInscritas)?>">
                             <thead class="thead-dark">
                                 <tr>
                                     <?php if (!Autenticacao::usuarioAdministrador()) { ?>
@@ -93,7 +93,7 @@ $x = 0;
                                                 <!-- Colocar o 'atividade_id' da atividade no id e no for -->
                                                 <?php if (!Autenticacao::usuarioAdministrador()) { ?>
                                                     <td class="align-middle">
-                                                        <input type="checkbox" value="<?= $ativ->atividade_id ?>" id="atividade<?= ++$x ?>">
+                                                        <input type="checkbox" value="<?= $ativ->atividade_id ?>" id="atividade<?= ++$x ?>" data-presenca="">
                                                     </td>
                                                 <?php } ?>
                                                 <td class="align-middle">

@@ -308,7 +308,10 @@ class CRUD {
         $innerjoin = [],
         $where_condicao = null,
         $where_valor = [],
-        $ordem = null) {
+        $ordem = null,
+        $group_by = null,
+        $limite = null
+        ) {
 
         $campos = $campos == null ? "*" : $campos;
 

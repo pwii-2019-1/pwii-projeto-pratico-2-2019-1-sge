@@ -65,7 +65,7 @@ class Presenca extends CRUD {
         $retorno = [];
 
         try {
-            $retorno = $this->readInner(self::TABELA, $campos, $innerjoin, $where_condicao, $where_valor, $ordem);
+            $retorno = $this->readInner(self::TABELA, $campos, $innerjoin, $where_condicao, $where_valor, $ordem, null);
         } catch (Exception $e) {
             echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
         }

@@ -8,7 +8,8 @@ use core\model\Presenca;
 use core\model\Usuario;
 use core\model\Atividade;
 
-class Presencas {
+class Presencas
+{
 
     /**
      * Limite da listagem de eventos
@@ -20,11 +21,13 @@ class Presencas {
     private $presenca = null;
     private $lista_eventos = [];
 
-    public function __set($atributo, $valor) {
+    public function __set($atributo, $valor)
+    {
         $this->$atributo = $valor;
     }
 
-    public function __get($atributo) {
+    public function __get($atributo)
+    {
         return $this->$atributo;
     }
 
@@ -36,7 +39,8 @@ class Presencas {
      * @return bool
      * @throws \Exception
      */
-    public function cadastrar($dados) {
+    public function cadastrar($dados)
+    {
 
         $presencas = new Presenca();
 
@@ -55,7 +59,8 @@ class Presencas {
      * @param $dados
      * @return array
      */
-    public function listarPresencas($id = [], $listagem = null) {
+    public function listarPresencas($id = [], $listagem = null)
+    {
         $presencas = new Presenca();
         $evento = new Usuario();
         $atividade = new Atividade();
@@ -68,7 +73,6 @@ class Presencas {
             $busca = [];
             $busca[0] = Presenca::COL_ATIVIDADE_ID;
             $lista = $presencas->listar($id, $campos, $innerjoin, $busca, $ordem);
-
         } else {
             $innerjoin = [Atividade::TABELA, Presenca::TABELA . "." . Presenca::COL_ATIVIDADE_ID, Atividade::TABELA . "." . Atividade::COL_ATIVIDADE_ID];
             $busca = [];
@@ -88,4 +92,43 @@ class Presencas {
         return $this->lista_presenca;
     }
 
+    /**
+     * Lista as atividades em que o usuário está inscrito e retorna elas em array
+     *
+     * @param $id
+     * @param $listagem 
+     * @return array
+     */
+    public function listarAtividadesInscritas($id = [], $listagem = null)
+    {
+        $presencas = new Presenca();
+        $evento = new Usuario();
+        $atividade = new Atividade();
+
+        $campos =  Presenca::TABELA . "." . Presenca::COL_ATIVIDADE_ID . "," .
+            Presenca::TABELA . "." . Presenca::COL_USUARIO_ID  . "," .
+            Presenca::TABELA . "." . Presenca::COL_PRESENCA;
+        $innerjoin = [Atividade::TABELA, Presenca::TABELA . "." . Presenca::COL_ATIVIDADE_ID, Atividade::TABELA . "." . Atividade::COL_ATIVIDADE_ID];
+        $busca = [];
+        $busca[0] = Atividade::TABELA . "." . Atividade::COL_EVENTO_ID;
+
+        if ($listagem == "atividades") {
+            $busca[1] = Presenca::TABELA . "." . Presenca::COL_USUARIO_ID;
+        }
+
+        $lista = $presencas->listar($id, $campos, $innerjoin, $busca, null);
+
+        $p = [];
+        if (count($lista) > 0 && (!empty($lista[0]))) {
+            foreach ($lista as $value) {
+                if ($value->presenca == '1'){
+                    array_push($p,$value->atividade_id);
+                }
+            }
+            return $p;
+        } else{
+            return false;
+        }
+
+    }
 }

@@ -1,5 +1,6 @@
 let construct = () => {
     atividades();
+    marcarAtividades();
 };
 
 const atividades = () => {
@@ -46,5 +47,28 @@ const atividades = () => {
     });
 };
 
+// Função que marca as atividades que o usuário já está inscrito
+const marcarAtividades = () => {
+    $('#tabela').ready(function (){
+        // Pega o atributo da table que contém todos os eventos que o usuário está inscrito 
+        var presencas = $('#tabela').attr('data-presencas');
+        // Transforma os eventos que estavam em string (1-2-3) em um array
+        presencas = presencas.split("-");
+        
+        // Seleciona todas as checkbox da página
+        var checkbox = document.querySelectorAll("input[type='checkbox']");
+        
+        // Para cada checkbox selecionado, ele verifica se o id da atividade que pertence o checkbox 
+        // está no array de atividades que o usuário está inscrito
+        $.each(checkbox, function () {
+            var atividade = $(this).attr("value");
+            if (presencas.includes(atividade)){
+                // Se o id da atividade estiver dentro do array de presencas, ele marca o checkbox                
+                $(this).prop('checked',true);
+            }
+        }); 
+        
+    });
+};
 
 construct();

@@ -22,9 +22,7 @@ $evento = $eventos->listarEvento($evento_id);
 $atividade = $atividades->listarAtividades($evento_id);
 $ativUsuario = $presencas->listarPresencas([$evento_id, Autenticacao::getCookieUsuario()], "atividades");
 $x = 0;
-echo "<pre>";
-print_r($ativUsuario);
-echo "</pre>";
+
 ?>
 
 <main role='main'>

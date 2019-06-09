@@ -15,11 +15,11 @@ const eventos = () => {
             senha = $('#senha').val(),
             conf_senha = $('#confirm_senha').val(),
             endereco = $('#endereco').val(),
+            telefone = $('#telefone').val(),
             bairro = $('#bairro').val(),
             cep = $('#cep').val(),
             estado  = $('#estado').val(),
             cidade  = $('#cidade').val();
-            alert(nome);
 
         if (nome !== "" &&
             cpf !== "" &&
@@ -35,8 +35,9 @@ const eventos = () => {
                 data_nascimento: data_nascimento,
                 nacionalidade: nacionalidade,
                 ocupacao: ocupacao,
-                email:email,
-                senha:senha,
+                email: email,
+                telefone: telefone,
+                senha: senha,
                 endereco : endereco,
                 bairro: bairro,
                 cep: cep,

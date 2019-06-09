@@ -51,6 +51,10 @@ use core\sistema\Footer;
                             <input type="email" class="form-control" id="email" placeholder="Insira seu e-mail"
                                    required>
                         </div>
+                        <div class="form-group col-md-5">
+                            <label for="telefone">Telefone:</label>
+                            <input type="tel" id="telefone" class="form-control" placeholder="Insira seu telefone" pattern="\([0-9]{2}\)[0-9]{4,6}[0-9]{3,4}$" required>
+                        </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">

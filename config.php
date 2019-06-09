@@ -15,10 +15,20 @@ namespace {
 
     define("URL", "//" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 
-    $path_cookie = explode("/", ROOT);
-    $path_cookie = $path_cookie[count($path_cookie) - 2];
-    $path_cookie = "/" . $path_cookie . "/";
-
+    
+    $path_cookie = ROOT;
+    // Verificação para a criação dos Cookies
+    if (strpos($path_cookie, '\\') !== false) {
+        // O path no Windows vem com a \
+        $path_cookie = explode("\\", ROOT);
+        $path_cookie = $path_cookie[count($path_cookie) - 1];
+        $path_cookie = "/" . $path_cookie . "public_html/";
+    } else {
+        // O path do linux vem com a /
+        $path_cookie = explode("/", ROOT);
+        $path_cookie = $path_cookie[count($path_cookie) - 2];
+        $path_cookie = "/" . $path_cookie . "/";    
+    }  
     define("PATH_COOKIE", $path_cookie);
 
     // Define a codificação

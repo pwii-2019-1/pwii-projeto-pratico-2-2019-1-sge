@@ -42,7 +42,7 @@ $x = 0;
                     <h1 class="h3 mb-3 font-weight-normal text-center">Inscreva-se nas Atividades</h1>
                 <?php } else { ?>
                     <h1 class="h3 mb-3 font-weight-normal text-center">Gerenciar as Atividades</h1>
-                <?php }?>
+                <?php } ?>
             </div>
         </div>
 
@@ -51,11 +51,11 @@ $x = 0;
                 foreach ($atividade["total_dias"] as $i => $dia) { ?>
                     <li class="nav-item">
                         <a class="nav-link <?= $i == 0 ? "active" : "" ?>" id="dia<?= $i ?>-tab" data-toggle="tab" href="#dia<?= $i ?>" role="tab" aria-controls="dia<?= $i ?>" aria-selected="true">
-                            <?= Util::dia($dia->data) ."/". Util::mes($dia->data) ?>
+                            <?= Util::dia($dia->data) . "/" . Util::mes($dia->data) ?>
                         </a>
                     </li>
                 <?php }
-            } else { ?>
+        } else { ?>
                 <li class="nav-item">
                     <a class="nav-link active" id="dia1-tab" data-toggle="tab" href="#dia1" role="tab" aria-controls="dia1" aria-selected="true">
                         Programação
@@ -68,7 +68,7 @@ $x = 0;
             <div class="tab-content mb-2" id="myTabContent">
                 <?php foreach ($atividade["total_dias"] as $i => $dia) { ?>
                     <div class="tab-pane fade <?= $i == 0 ? "show active" : "" ?>" id="dia<?= $i ?>" role="tabpanel" aria-labelledby="dia<?= $i ?>-tab">
-                        <table class="table table-hover" id="tabela" data-presencas="<?= implode("-",$atiInscritas)?>">
+                        <table class="table table-hover" id="tabela" data-presencas="<?= (is_array($atiInscritas)) ? implode("-",$atiInscritas) : "" ?>">
                             <thead class="thead-dark">
                                 <tr>
                                     <?php if (!Autenticacao::usuarioAdministrador()) { ?>
@@ -82,23 +82,23 @@ $x = 0;
                                         <th scope="col">Opções</th>
                                     <?php } else { ?>
                                         <th scope="col">Vagas</th>
-                                    <?php }?>
+                                    <?php } ?>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php if (count($atividade["lista_atividades"][0]) > 0) {
                                     foreach ($atividade["lista_atividades"] as $j => $ativ) {
-                                        if (Util::dia($ativ->datahora_inicio) == Util::dia($dia->data)) {?>
+                                        if (Util::dia($ativ->datahora_inicio) == Util::dia($dia->data)) { ?>
                                             <tr>
                                                 <!-- Colocar o 'atividade_id' da atividade no id e no for -->
                                                 <?php if (!Autenticacao::usuarioAdministrador()) { ?>
                                                     <td class="align-middle">
-                                                        <input type="checkbox" value="<?= $ativ->atividade_id ?>" id="atividade<?= ++$x ?>" data-presenca="">
+                                                        <input type="checkbox" value="<?= $ativ->atividade_id ?>" id="atividade<?= ++$x ?>" data-presenca="" data-horario_inicio="<?= Util::hora($ativ->datahora_inicio) . ":" . Util::min($ativ->datahora_inicio) ?>" data-horario_termino="<?= Util::hora($ativ->datahora_termino) . ":" . Util::min($ativ->datahora_termino) ?>" data-data_evento="<?= Util::dia($dia->data) . "/" . Util::mes($dia->data) ?>">
                                                     </td>
                                                 <?php } ?>
-                                                <td class="align-middle">
-                                                    <?= Util::hora($ativ->datahora_inicio) .":". Util::min($ativ->datahora_inicio) ?> às
-                                                    <?= Util::hora($ativ->datahora_termino) .":". Util::min($ativ->datahora_termino) ?>
+                                                <td class="align-middle" name="horario">
+                                                    <?= Util::hora($ativ->datahora_inicio) . ":" . Util::min($ativ->datahora_inicio) ?> às
+                                                    <?= Util::hora($ativ->datahora_termino) . ":" . Util::min($ativ->datahora_termino) ?>
                                                 </td>
                                                 <td class="align-middle"><label class="mb-0" for="atividade<?= $x++ ?>"><?= $ativ->titulo ?></label></td>
                                                 <td class="align-middle"><?= $ativ->responsavel ?></td>
@@ -117,15 +117,15 @@ $x = 0;
                                                             <i class="fas fa-users"></i>
                                                         </a>
                                                     </td>
-                                                <?php } else{
-                                                    $presenca = $presencas->listarPresencas([$ativ->atividade_id, null], "nomes");
-                                                    if (empty($presenca[0])) unset($presenca[0]);?>
-                                                    <td class="align-middle"><?= ($ativ->quantidade_vaga-count($presenca)) . "/" . $ativ->quantidade_vaga?></td>
+                                                <?php } else {
+                                                $presenca = $presencas->listarPresencas([$ativ->atividade_id, null], "nomes");
+                                                if (empty($presenca[0])) unset($presenca[0]); ?>
+                                                    <td class="align-middle"><?= ($ativ->quantidade_vaga - count($presenca)) . "/" . $ativ->quantidade_vaga ?></td>
                                                 <?php } ?>
                                             </tr>
                                         <?php }
-                                    }
-                                } else { ?>
+                                }
+                            } else { ?>
                                     <tr>
                                         <td class="text-center" colspan="4">Em Breve!</td>
                                     </tr>
@@ -168,14 +168,29 @@ $x = 0;
                 </button>
             </div>
             <div class="toast-body">
-                Desculpe, não conseguimos efetuar sua inscrições.
+                Desculpe, não conseguimos efetuar suas inscrições.
+            </div>
+            <div class="card-footer text-muted bg-warning p-1"></div>
+        </div>
+        <!-- Toast -->
+
+        <!-- Toast Alerta -->
+        <div class="toast" id="msg_alerta" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000" style="position: absolute; top: 4rem; right: 1rem;">
+            <div class="toast-header">
+                <strong class="mr-auto">Existe um conflito!</strong>
+                <small>Agora</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+              Desculpe, não é possível realizar a inscrição, alguns horários estão colidindo. 
             </div>
             <div class="card-footer text-muted bg-warning p-1"></div>
         </div>
         <!-- Toast -->
 
     </div>
-</div>
 </main>
 
 <?php

@@ -1,6 +1,7 @@
 let construct = () => {
     atividades();
     marcarAtividades();
+    validaHorarios();
 };
 
 const atividades = () => {
@@ -49,25 +50,86 @@ const atividades = () => {
 
 // Função que marca as atividades que o usuário já está inscrito
 const marcarAtividades = () => {
-    $('#tabela').ready(function (){
+    $('#tabela').ready(function () {
         // Pega o atributo da table que contém todos os eventos que o usuário está inscrito 
         var presencas = $('#tabela').attr('data-presencas');
         // Transforma os eventos que estavam em string (1-2-3) em um array
         presencas = presencas.split("-");
-        
+
         // Seleciona todas as checkbox da página
         var checkbox = document.querySelectorAll("input[type='checkbox']");
-        
+
         // Para cada checkbox selecionado, ele verifica se o id da atividade que pertence o checkbox 
         // está no array de atividades que o usuário está inscrito
         $.each(checkbox, function () {
             var atividade = $(this).attr("value");
-            if (presencas.includes(atividade)){
+            if (presencas.includes(atividade)) {
                 // Se o id da atividade estiver dentro do array de presencas, ele marca o checkbox                
-                $(this).prop('checked',true);
+                $(this).prop('checked', true);
             }
-        }); 
-        
+        });
+
+    });
+};
+
+const validaHorarios = () => {
+    $("input[type='checkbox']").on("click", function (event) {
+        // event.preventDefault();
+
+        if (($(this).is(':checked'))) {
+            // console.log('Checked');
+            var atividade_id = $(this).attr('value');
+
+            var data_evento = $(this).attr('data-data_evento');
+            // console.log(data_evento);
+            var aux = $(this).attr("data-horario_inicio").split(':');
+            var horario_inicioNovo = new Date(Date.UTC(0, 0, 0, aux[0], aux[1], 0));
+
+            var aux = $(this).attr("data-horario_termino").split(':');
+            var horario_terminoNovo = new Date(Date.UTC(0, 0, 0, aux[0], aux[1], 0));
+
+            // console.log(horario_inicioNovo);
+            // console.log(horario_terminoNovo);
+
+            var horarios = $('#form_atividade').find("input:checked[value!='" + atividade_id + "'][data-data_evento='" + data_evento + "']");
+            // console.log(horarios);
+            $.each(horarios, function () {
+
+                var aux = $(this).attr("data-horario_inicio").split(':');
+                var horario_inicioAntigo = new Date(Date.UTC(0, 0, 0, aux[0], aux[1], 0));
+
+                var aux = $(this).attr("data-horario_termino").split(':');
+                var horario_terminoAntigo = new Date(Date.UTC(0, 0, 0, aux[0], aux[1], 0));
+
+
+                if ((horario_inicioAntigo.getTime() < horario_inicioNovo.getTime() && horario_terminoAntigo.getTime() > horario_inicioNovo.getTime()) ||
+                    (horario_inicioNovo.getTime() < horario_inicioAntigo.getTime() && horario_terminoNovo.getTime() > horario_inicioAntigo.getTime()) ||
+                    ((horario_inicioAntigo.getTime() == horario_inicioNovo.getTime()) && (horario_terminoAntigo.getTime() == horario_terminoNovo.getTime()))
+                ) {
+                    // console.log("Conflito");
+                    event.preventDefault();
+                    $('#msg_alerta').toast('show');
+                    // console.log(horario_inicioAntigo.getUTCMilliseconds());
+                    // console.log(horario_terminoAntigo.getUTCMilliseconds());
+                    // console.log(horario_inicioNovo.getUTCMilliseconds());
+                    // console.log(horario_terminoNovo.getUTCMilliseconds());
+
+                } else {
+                    // console.log("Não existe conflito!");
+                    // console.log((horario_inicioAntigo.getUTCMilliseconds() == horario_inicioNovo.getUTCMilliseconds() ) && (horario_terminoAntigo.getUTCMilliseconds() == horario_inicioNovo.getUTCMilliseconds()));
+                    // console.log(horario_inicioAntigo.getUTCMilliseconds());
+                    // console.log(horario_terminoAntigo.getUTCMilliseconds());
+                    // console.log(horario_inicioNovo.getUTCMilliseconds());
+                    // console.log(horario_terminoNovo.getUTCMilliseconds());    
+                }
+
+            });
+        } else {
+            // console.log('Not Checked');
+        }
+
+
+
     });
 };
 

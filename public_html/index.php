@@ -105,7 +105,13 @@ $dados = $eventos->listarEventos($dados_eventos);
                                     <small class="text-muted"><?= Util::formataDataBR($evento->evento_inicio) ?></small>
                                 </div>
                             </div>
-                            <div class="card-footer text-muted bg-success p-1"></div>
+                            <?php if (date('d/m/Y') < Util::formataDataBR($evento->evento_inicio)) { ?>
+                                <div class="card-footer text-muted bg-success p-1"></div>
+                            <?php } else if (date('d/m/Y') > Util::formataDataBR($evento->evento_inicio) && date('d/m/Y') < Util::formataDataBR($evento->evento_termino)) { ?>
+                                <div class="card-footer text-muted bg-warning p-1"></div>
+                            <?php } else { ?>
+                                <div class="card-footer text-muted bg-danger p-1"></div>
+                            <?php }?>
                         </div>
                     </div>
 

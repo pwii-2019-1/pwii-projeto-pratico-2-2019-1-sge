@@ -22,6 +22,8 @@ $presencas = new Presencas();
 $evento = $eventos->listarEvento($evento_id);
 $atividade = $atividades->listarAtividade($atividade_id);
 $presenca = $presencas->listarPresencas([$atividade_id, null], "nomes");
+$atiInscritas = $presencas->listarUsuariosInscritos([$atividade_id, null], "nomes");
+$x = 0;
 
 ?>
 
@@ -40,9 +42,9 @@ $presenca = $presencas->listarPresencas([$atividade_id, null], "nomes");
             </div>
         </div>
 
-        <form action="" id="formulario">
+        <form action="" id="formulario" data-atividade_id="<?= $atividade_id ?>" data-count="<?= count($presenca) ?>">
             <div class="row">
-                <table class="table table-striped">
+                <table class="table table-striped" id="tabela" data-presencas="<?= implode("-",$atiInscritas)?>">
                     <thead class="thead-dark">
                         <tr>
                             <th class="col-md-2 text-center">#</th>
@@ -58,7 +60,9 @@ $presenca = $presencas->listarPresencas([$atividade_id, null], "nomes");
                             <td class="text-center"><?= ($j+1) ?></td>
                             <td class="text-center"><?= $pre->nome ?></td>
                             <td class="text-center"><?= $pre->cpf ?></td>
-                            <td class="text-center"><input class="form-check-input" type="checkbox" id="<?= $pre->usuario_id ?>" value="<?= $pre->usuario_id ?>"></td>
+                            <td class="text-center">
+                                <input class="form-check-input" type="checkbox" id="usuario<?= $x++ ?>" value="<?= $pre->usuario_id ?>" data-presenca="">
+                            </td>
                         </tr>
                     <?php }} else{ ?>
                         <tr>
@@ -76,6 +80,37 @@ $presenca = $presencas->listarPresencas([$atividade_id, null], "nomes");
                 </div>
             </div>
         </form>
+        <!-- Toast Sucesso -->
+        <div class="toast" id="msg_sucesso" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000" style="position: absolute; top: 4rem; right: 1rem;">
+            <div class="toast-header">
+                <strong class="mr-auto">Deu tudo certo!</strong>
+                <small>Agora</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                Pronto, as presenças foram atualizadas com sucesso.
+            </div>
+            <div class="card-footer text-muted bg-success p-1"></div>
+        </div>
+        <!-- Toast -->
+
+        <!-- Toast Erro -->
+        <div class="toast" id="msg_erro" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000" style="position: absolute; top: 4rem; right: 1rem;">
+            <div class="toast-header">
+                <strong class="mr-auto">Houve um erro!</strong>
+                <small>Agora</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                Desculpe, não conseguimos atualizar a presença.
+            </div>
+            <div class="card-footer text-muted bg-warning p-1"></div>
+        </div>
+        <!-- Toast -->
     </div>
 
 </main>

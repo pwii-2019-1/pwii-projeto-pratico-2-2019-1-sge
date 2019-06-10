@@ -18,7 +18,7 @@ class Presenca extends CRUD {
      */
     public function adicionar($dados) {
         $retorno = 0;
-
+        
         try {
             foreach ($dados["lista_presenca"] as $i => $value) {
 
@@ -58,7 +58,7 @@ class Presenca extends CRUD {
             $where_condicao .= "AND ". $busca[0] ." = ?";
             if (isset($busca[1])) $where_condicao .= " AND ". $busca[1] ." = ?";
         }
-        
+
         $where_valor[] = 1;
         $where_valor[] = $id[0];
         if ($id[1] != null) $where_valor[] = $id[1];

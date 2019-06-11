@@ -56,7 +56,7 @@ class Usuario extends CRUD {
         }
 
         if (isset($dados['senha'])) $dados['senha'] = md5($dados['senha']);
-        
+
         $where_condicao = self::COL_USUARIO_ID . " = ?";
         $where_valor[] = $dados[self::COL_USUARIO_ID];
 
@@ -142,7 +142,7 @@ class Usuario extends CRUD {
      * @return array
      */
     public function selecionarUsuarioCPF($usuario_cpf) {
-        print_r($$usuario_cpf);
+        
         $where_condicao = self::COL_CPF . " = ?";
         $where_valor[] = $usuario_cpf;
 

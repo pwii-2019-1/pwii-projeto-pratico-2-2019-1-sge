@@ -309,6 +309,7 @@ class ComposerStaticInitc2037c32e53e82aafd6d754e5434f532
         'core\\controller\\Certificado' => __DIR__ . '/../..' . '/core/controller/Certificado.php',
         'core\\controller\\Eventos' => __DIR__ . '/../..' . '/core/controller/Eventos.php',
         'core\\controller\\Login' => __DIR__ . '/../..' . '/core/controller/Login.php',
+        'core\\controller\\Presencas' => __DIR__ . '/../..' . '/core/controller/Presencas.php',
         'core\\controller\\Usuarios' => __DIR__ . '/../..' . '/core/controller/Usuarios.php',
         'core\\model\\Atividade' => __DIR__ . '/../..' . '/core/model/Atividade.php',
         'core\\model\\Evento' => __DIR__ . '/../..' . '/core/model/Evento.php',

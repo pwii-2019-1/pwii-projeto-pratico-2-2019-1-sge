@@ -42,9 +42,42 @@ const eventos = () => {
             });
         }
     });
+
+    $('#botao_senha').on('click', function (e) {
+        e.preventDefault();
+
+        let cpf = $('#cpf').val();
+
+        if (cpf !== "") {
+            let dados = {
+                cpf: cpf,
+                usuario_id: "alterar"
+            };
+
+            dados.acao = "Usuarios/cadastrar";
+
+            $.ajax({
+                url: baseUrl,
+                type: "POST",
+                data: dados,
+                dataType: "text",
+                async: true,
+                success: function (res) {
+                    if (res) {
+                        $('#msg_sucesso').toast('show');
+                    } else {
+                        console.log(res);
+                        $('#msg_erro').toast('show');
+                    }
+                },
+                error: function (request, status, str_error) {
+                    console.log(request, status, str_error);
+                }
+            });
+        } else {
+            $('#msg_alerta').toast('show');
+        }
+    });
 };
 
 construct();
-
-
-

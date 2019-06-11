@@ -55,6 +55,8 @@ class Usuario extends CRUD {
             throw new Exception("É necessário informar o ID do usuário para atualizar");
         }
 
+        if (isset($dados['senha'])) $dados['senha'] = md5($dados['senha']);
+        
         $where_condicao = self::COL_USUARIO_ID . " = ?";
         $where_valor[] = $dados[self::COL_USUARIO_ID];
 
@@ -140,8 +142,8 @@ class Usuario extends CRUD {
      * @return array
      */
     public function selecionarUsuarioCPF($usuario_cpf) {
-
-        $where_condicao = self::COL_USUARIO_ID . " = ?";
+        print_r($$usuario_cpf);
+        $where_condicao = self::COL_CPF . " = ?";
         $where_valor[] = $usuario_cpf;
 
         $retorno = [];

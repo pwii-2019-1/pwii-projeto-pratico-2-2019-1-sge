@@ -22,8 +22,8 @@ $atividade = $atividades->listarAtividades($evento_id);
 ?>
 
 <main role='main'>
-	<div class="jumbotron mt-n3" style="border-radius:0px; background:url(assets/imagens/default.svg);">
-		<div class="container mb-5">
+	<div class="jumbotron mt-n3" style="border-radius:0px; background:url(assets/imagens/grande.png) no-repeat 0 0">
+		<div class="container mb-4">
 		</div>
 	</div>
 	<div class="container">

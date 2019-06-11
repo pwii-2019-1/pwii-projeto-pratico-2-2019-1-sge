@@ -1,13 +1,18 @@
 <?php
-
 require_once 'header.php';
 
+use core\sistema\Autenticacao;
 use core\sistema\Footer;
+
+if (!Autenticacao::verificarLogin()) {
+    header('Location: index.php');
+}
+
 
 ?>
 
 <main role='main'>
-    <div class="container center-block">
+    <div class="container center-block mb-4">
         <div class="row">
             <div class="col">
                 <h1 class="display-4 text-center">SGE</h1>
@@ -16,7 +21,7 @@ use core\sistema\Footer;
         </div>
         <div class="row justify-content-md-center">
             <div class="col-md-6">
-                <form class="form-signin">
+                <form class="form-signin" id="formulario" data-usuario_id="<?= Autenticacao::getCookieUsuario() ?>">
                     <div class="form-row mb-4">
                         <div class="form-group col">
                             <label for="senha">Senha Atual:</label>
@@ -47,13 +52,61 @@ use core\sistema\Footer;
                 </form>
             </div>
         </div>
+
+        <!-- Toast Sucesso -->
+        <div class="toast" id="msg_sucesso" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000" style="position: absolute; top: 4rem; right: 1rem;">
+            <div class="toast-header">
+                <strong class="mr-auto">Deu tudo certo!</strong>
+                <small>Agora</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                Pronto, sua senha foi alterada com sucesso.
+            </div>
+            <div class="card-footer text-muted bg-success p-1"></div>
+        </div>
+        <!-- Toast -->
+
+        <!-- Toast Erro -->
+        <div class="toast" id="msg_erro" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000" style="position: absolute; top: 4rem; right: 1rem;">
+            <div class="toast-header">
+                <strong class="mr-auto">Houve um erro!</strong>
+                <small>Agora</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                Desculpe, não foi possível alterar sua senha.
+            </div>
+            <div class="card-footer text-muted bg-warning p-1"></div>
+        </div>
+        <!-- Toast -->
+
+        <!-- Toast Alerta -->
+        <div class="toast" id="msg_alerta" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000" style="position: absolute; top: 4rem; right: 1rem;">
+            <div class="toast-header">
+                <strong class="mr-auto">Existe um conflito!</strong>
+                <small>Agora</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                Preencha os campos corretamente.
+            </div>
+            <div class="card-footer text-muted bg-warning p-1"></div>
+        </div>
+        <!-- Toast -->
     </div>
 </main>
 
 <?php
 
 $footer = new Footer();
-
+$footer->setJS('assets/js/alterar_senha.js');
 require_once 'footer.php';
 
 ?>

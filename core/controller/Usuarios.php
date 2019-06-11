@@ -3,7 +3,7 @@
 
 namespace core\controller;
 
-
+use core\sistema\Util;
 use core\model\Usuario;
 
 class Usuarios {
@@ -48,10 +48,31 @@ class Usuarios {
      * @return bool
      */
     public function cadastrar($dados) {
-
         $usuario = new Usuario();
 
-        $resultado = $usuario->adicionar($dados);
+        if (isset($dados["usuario_id"])) {
+            if ($dados["usuario_id"] == "alterar") {
+                $dados = $usuario->selecionarUsuarioCPF($dados["cpf"]);
+                $dados = json_decode(json_encode($dados[0]), True); //transformar o objeto em array
+
+                $dados['senha'] = Util::codigoAlfanumerico();
+
+                $destino = $dados['email'];
+                $assunto = "Alteração de senha da sua conta SGE";
+                $mensagem = "Sua nova senha é: " . $dados['senha'];
+                $headers = "From: sge.trabalho@gmail.com \n";
+                $headers .= "Return-Path: sge.trabalho@gmail.com \n";
+                mail($destino, $assunto, $mensagem, $headers);
+
+                // É necessário habilitar a função 'mail' do php para que a nova senha senha mandada por e-mail
+                print_r($dados['senha']);
+            }
+
+            $resultado = $usuario->alterar($dados);
+
+        } else {
+            $resultado = $usuario->adicionar($dados);
+        }
 
         if ($resultado > 0) {
             return true;

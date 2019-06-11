@@ -13,9 +13,19 @@ class Util {
         return $nova_data->format('d/m/Y');
     }
 
-    public static function formataDtHrBR($data) {
-        $nova_data = DateTime::createFromFormat("Y-m-d H:i:s", $data);
-        return $nova_data->format('d/m/Y H:i:s');
+    public function codigoAlfanumerico() {
+        $maiuscula = implode('', range('A', 'Z')); // ABCDEFGHIJKLMNOPQRSTUVWXYZ
+        $minuscula = implode('', range('a', 'z')); // abcdefghijklmnopqrstuvwxyzy
+        $numeros = implode('', range(0, 9)); // 0123456789
+
+        $alfanumerico = $maiuscula.$minuscula.$numeros; // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
+        $codigo = "";
+        $tamanho = 7; // numero de caracteres
+        for($i = 0; $i < $tamanho; $i++) {
+            $codigo .= $alfanumerico[rand(0, strlen($alfanumerico) - 1)];
+        }
+
+        return $codigo;
     }
 
     public static function ano($data) {

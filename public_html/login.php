@@ -41,7 +41,7 @@ require 'header.php';
                                 </div>
                                 <div class="col">
                                     <p class="text-right">
-                                        <button class="btn btn-sm btn-link" id="botao_senha">Esqueci minha senha</button>
+                                        <!-- <button class="btn btn-sm btn-link" id="botao_senha">Esqueci minha senha</button> -->
                                     </p>
                                 </div>
                             </div>

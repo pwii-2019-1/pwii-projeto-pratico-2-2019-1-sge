@@ -24,6 +24,13 @@ $dados_eventos = [];
 if ($pg != null) $dados_eventos['pg'] = $pg;
 if (count($busca) > 0) $dados_eventos['busca'] = $busca;
 
+if (isset($_GET['me']) && $_GET['me'] == 1) {
+    $dados_eventos['busca']['me'] = Autenticacao::getCookieUsuario();
+    $me = "1";
+} else {
+    $me = "";
+}
+
 $dados = $eventos->listarEventos($dados_eventos);
 
 ?>
@@ -32,7 +39,9 @@ $dados = $eventos->listarEventos($dados_eventos);
     <div class="row">
         <div class="col-sm ">
             <h1 class="display-4">
-                <p class="text-center">Encontre aqui seu evento!</p>
+                <p class="text-center">
+                    <?= ($me != "") ? "Eventos inscritos" : "Encontre aqui seu evento!" ?>
+                </p>
             </h1>
         </div>
     </div>
@@ -40,9 +49,12 @@ $dados = $eventos->listarEventos($dados_eventos);
 
 <div class="container">
     <div class="row">
+        <form id="formulario" data-me="<?= $me ?>">
+
+        </form>
         <div class="col-4">
             <label for="periodo">Nome ou descrição do evento:</label>
-            <div class="form-group has-search">
+            <div class="form-group has-search" data-me="<?= $me ?>">
                 <span class="fa fa-search form-control-feedback"></span>
                 <input id="texto" type="text" class="form-control" placeholder="Buscar">
             </div>
@@ -70,7 +82,7 @@ $dados = $eventos->listarEventos($dados_eventos);
             </div>
         </div>
 
-        <button id="filtrar" class="col-1 btn btn-block btn-outline-dark">FILTRAR</button>
+        <button id="filtrar" class="col-1 btn btn-block btn-outline-dark">Filtrar</button>
 
     </div>
 </div>

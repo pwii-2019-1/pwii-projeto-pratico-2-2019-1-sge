@@ -52,6 +52,7 @@ class Usuarios {
 
         if (isset($dados["usuario_id"])) {
             if ($dados["usuario_id"] == "alterar") {
+                // implementação do esqueci senha
                 $dados = $usuario->selecionarUsuarioCPF($dados["cpf"]);
                 $dados = json_decode(json_encode($dados[0]), True); //transformar o objeto em array
 
@@ -64,7 +65,7 @@ class Usuarios {
                 $headers .= "Return-Path: sge.trabalho@gmail.com \n";
                 mail($destino, $assunto, $mensagem, $headers);
 
-                // É necessário habilitar a função 'mail' do php para que a nova senha senha mandada por e-mail
+                // É necessário habilitar a função 'mail' do php para que a nova senha seja mandada por e-mail
                 print_r($dados['senha']);
             }
 

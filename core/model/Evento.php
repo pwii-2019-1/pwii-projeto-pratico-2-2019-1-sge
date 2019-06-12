@@ -2,6 +2,8 @@
 
 namespace core\model;
 
+use core\model\Presenca;
+use core\model\Atividade;
 use core\CRUD;
 use Exception;
 
@@ -126,14 +128,33 @@ class Evento extends CRUD {
 
                 }
             }
+
+            if (isset($busca['me']) && !empty($busca['me'])) {
+                $innerjoin = [Atividade::TABELA,
+                            self::TABELA . "." . self::COL_EVENTO_ID,
+                            Atividade::TABELA . "." . Atividade::COL_EVENTO_ID];
+
+                $innerjoin2 = [Presenca::TABELA,
+                            Atividade::TABELA . "." . Atividade::COL_ATIVIDADE_ID,
+                            Presenca::TABELA . "." . Presenca::COL_ATIVIDADE_ID];
+
+                $where_condicao .= " AND " . Presenca::COL_PRESENCA . " = ?";
+                $where_condicao .= " AND " . Presenca::TABELA . "." . Presenca::COL_USUARIO_ID . " = ? ";
+                $where_valor[] = 1;
+                $where_valor[] = $busca['me'];
+
+                $group_by = self::TABELA . "." . self::COL_EVENTO_ID;
+            }
         }
 
         $retorno = [];
 
         try {
-
-            $retorno = $this->read(self::TABELA, $campos, $where_condicao, $where_valor, null, $ordem, $limite);
-
+            if (isset($busca['me']) && !empty($busca['me'])) {
+                $retorno = $this->readInner(self::TABELA, $campos, $innerjoin, $innerjoin2, $where_condicao, $where_valor, $ordem, $group_by, $limite);
+            } else {
+                $retorno = $this->read(self::TABELA, $campos, $where_condicao, $where_valor, null, $ordem, $limite);
+            }
         } catch (Exception $e) {
             echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
         }

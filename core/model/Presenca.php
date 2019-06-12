@@ -18,7 +18,7 @@ class Presenca extends CRUD {
      */
     public function adicionar($dados) {
         $retorno = 0;
-        
+
         try {
             foreach ($dados["lista_presenca"] as $i => $value) {
 
@@ -65,7 +65,7 @@ class Presenca extends CRUD {
         $retorno = [];
 
         try {
-            $retorno = $this->readInner(self::TABELA, $campos, $innerjoin, $where_condicao, $where_valor, $ordem, null);
+            $retorno = $this->readInner(self::TABELA, $campos, $innerjoin, null, $where_condicao, $where_valor, $ordem, null);
         } catch (Exception $e) {
             echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
         }

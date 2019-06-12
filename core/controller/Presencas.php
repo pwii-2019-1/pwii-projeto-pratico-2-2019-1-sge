@@ -59,11 +59,8 @@ class Presencas
      * @param $dados
      * @return array
      */
-    public function listarPresencas($id = [], $listagem = null)
-    {
+    public function listarPresencas($id = [], $listagem = null) {
         $presencas = new Presenca();
-        $evento = new Usuario();
-        $atividade = new Atividade();
 
         if ($listagem == "nomes") {
             $campos = Usuario::TABELA . "." . Usuario::COL_USUARIO_ID . ", " . Usuario::COL_NOME . ", " . Usuario::COL_CPF;
@@ -102,7 +99,7 @@ class Presencas
     public function listarAtividadesInscritas($id = [], $listagem = null) {
 
         $lista = $this->listarPresencas($id, $listagem);
-        
+
         $p = [];
         if (count($lista) > 0 && (!empty($lista[0]))) {
             foreach ($lista as $value) {

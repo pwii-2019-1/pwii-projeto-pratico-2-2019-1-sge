@@ -39,7 +39,7 @@ use core\sistema\Autenticacao;
             <a class="dropdown-item" href="index.php">Página Inicial</a>
             <div class="dropdown-divider"></div>
             <?php if (Autenticacao::verificarLogin() and !Autenticacao::usuarioAdministrador()) { ?>
-                <a class="dropdown-item" href="index.php">Meus Eventos</a>
+                <a class="dropdown-item" href="index.php?me=1">Meus Eventos</a>
             <?php }
 
             if (Autenticacao::verificarLogin()) { ?>

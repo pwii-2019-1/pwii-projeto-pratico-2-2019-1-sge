@@ -71,7 +71,7 @@ class Eventos {
      */
     public function listarEventos($dados = []) {
         $evento = new Evento();
-
+        
         $busca = isset($dados['busca']) ? $dados['busca'] : [];
 
         if (isset($dados['pg']) && is_numeric($dados['pg'])) {
@@ -80,14 +80,29 @@ class Eventos {
             $limite = self::LIMITE;
         }
 
-        $lista = $evento->listar(null, $busca, Evento::COL_EVENTO_INICIO . " DESC", $limite);
-        $paginas = $evento->listar("COUNT(*) as total", $busca, null, null);
+        if (isset($dados['busca']['me'])) {
+            $campos = Evento::TABELA . "." . Evento::COL_EVENTO_ID . ", " .
+                    Evento::COL_NOME . ", " .
+                    Evento::COL_DATA_INICIO . ", " .
+                    Evento::COL_DATA_TERMINO . ", " .
+                    Evento::COL_DESCRICAO . ", " .
+                    Evento::COL_DATA_PRORROGACAO . ", " .
+                    Evento::COL_EVENTO_INICIO . ", " .
+                    Evento::COL_EVENTO_TERMINO;
+
+            $lista = $evento->listar($campos, $busca, Evento::COL_EVENTO_INICIO . " ASC", $limite);
+            $paginas = count($lista);
+            $this->__set("total_paginas", $paginas);
+
+        } else {
+            $lista = $evento->listar(null, $busca, Evento::COL_EVENTO_INICIO . " DESC", $limite);
+            $paginas = $evento->listar("COUNT(*) as total", $busca, null, null);
+            $this->__set("total_paginas", $paginas[0]->total);
+        }
 
         if (count($lista) > 0 && isset($lista[0]) && count($lista[0]) > 0) {
             $this->__set("lista_eventos", $lista);
         }
-
-        $this->__set("total_paginas", $paginas[0]->total);
 
         return [
             "lista_eventos" => $this->lista_eventos,

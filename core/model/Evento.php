@@ -49,7 +49,6 @@ class Evento extends CRUD {
 
         $where_condicao = self::COL_EVENTO_ID . " = ?";
         $where_valor[] = $dados[self::COL_EVENTO_ID];
-
         try {
 
             $this->update(self::TABELA, $dados, $where_condicao, $where_valor);

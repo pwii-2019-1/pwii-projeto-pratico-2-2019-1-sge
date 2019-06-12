@@ -74,21 +74,48 @@ $atividade = $atividades->listarAtividades($evento_id);
 			<div class="col-md-2">
 				<div class="btn-group-vertical">
 					<a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark">
-						<?= (Autenticacao::usuarioAdministrador()) ? "Atividades" : "Inscrever-se"?>
+						<?= (Autenticacao::usuarioAdministrador()) ? "Atividades" : "Inscrever-se" ?>
 					</a>
 					<?php if (Autenticacao::usuarioAdministrador()) { ?>
 						<a href="cadastro_atividade.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark">
 							Adicionar Atividades
 						</a>
-						<a href="cadastro_evento.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark">
-							Editar
-						</a>
+						<div class="btn-group">
+							<a href="cadastro_evento.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark">
+								Editar
+							</a>
+							<a href="excluir" class="btn btn-lg btn-outline-danger" name="excluir" data-toggle="modal" data-target="#confirmModal">
+								Excluir
+							</a>
+
+						</div>
+						<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										Deseja realmente <span class="font-weight-bold text-uppercase text-danger"> Excluir</span> esse evento?
+									</div>
+									<div class="modal-footer p-2">
+										<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Não</button>
+										<a id="botao_excluir" href="" class="btn btn-outline-danger" data-evento_id="<?= $evento->evento_id ?>">Sim</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
 					<?php } else { ?>
 						<a href="#" class="btn btn-lg btn-outline-dark">Acompanhar Inscrição</a>
 						<a href="#" class="btn btn-lg btn-outline-dark">Certificado</a>
 					<?php } ?>
 				</div>
 			</div>
+
 		</div>
 
 		<div class="row justify-align-center mb-4">
@@ -105,11 +132,11 @@ $atividade = $atividades->listarAtividades($evento_id);
 				foreach ($atividade["total_dias"] as $i => $dia) { ?>
 					<li class="nav-item">
 						<a class="nav-link <?= $i == 0 ? "active" : "" ?>" id="dia<?= $i ?>-tab" data-toggle="tab" href="#dia<?= $i ?>" role="tab" aria-controls="dia<?= $i ?>" aria-selected="true">
-							<?= Util::dia($dia->data) ."/". Util::mes($dia->data) ?>
+							<?= Util::dia($dia->data) . "/" . Util::mes($dia->data) ?>
 						</a>
 					</li>
 				<?php }
-			} else { ?>
+		} else { ?>
 				<li class="nav-item">
 					<a class="nav-link active" id="dia1-tab" data-toggle="tab" href="#dia1" role="tab" aria-controls="dia1" aria-selected="true">
 						Programação
@@ -132,19 +159,19 @@ $atividade = $atividades->listarAtividades($evento_id);
 						<tbody>
 							<?php if (count($atividade["lista_atividades"][0]) > 0) {
 								foreach ($atividade["lista_atividades"] as $j => $ativ) {
-									if (Util::dia($ativ->datahora_inicio) == Util::dia($dia->data)) {?>
+									if (Util::dia($ativ->datahora_inicio) == Util::dia($dia->data)) { ?>
 										<tr>
 											<td class="align-middle">
-												<?= Util::hora($ativ->datahora_inicio) .":". Util::min($ativ->datahora_inicio) ?> às
-												<?= Util::hora($ativ->datahora_termino) .":". Util::min($ativ->datahora_termino) ?>
+												<?= Util::hora($ativ->datahora_inicio) . ":" . Util::min($ativ->datahora_inicio) ?> às
+												<?= Util::hora($ativ->datahora_termino) . ":" . Util::min($ativ->datahora_termino) ?>
 											</td>
 											<td class="align-middle"><?= $ativ->titulo ?></td>
 											<td class="align-middle"><?= $ativ->responsavel ?></td>
 											<td class="align-middle"><?= $ativ->local ?></td>
 										</tr>
 									<?php }
-								}
-							} else { ?>
+							}
+						} else { ?>
 								<tr>
 									<td class="text-center" colspan="4">Em Breve!</td>
 								</tr>
@@ -154,10 +181,27 @@ $atividade = $atividades->listarAtividades($evento_id);
 				</div>
 			<?php } ?>
 		</div>
+		<!-- Toast Erro Exclusao -->
+		<div class="toast" id="msg_exclusao_erro" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000" style="position: absolute; top: 4rem; right: 1rem;">
+			<div class="toast-header">
+				<strong class="mr-auto">Houve um erro!</strong>
+				<small>Agora</small>
+				<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body">
+				Desculpe, não conseguimos excluir o evento, tente novamente.
+			</div>
+			<div class="card-footer text-muted bg-warning p-1"></div>
+		</div>
+		<!-- Toast -->
 	</div>
 </main>
 
+
 <?php
 $footer = new Footer();
+$footer->setJS('assets/js/evento.js');
 require_once 'footer.php';
 ?>

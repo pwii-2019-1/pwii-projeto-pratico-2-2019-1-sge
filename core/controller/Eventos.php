@@ -6,7 +6,8 @@ namespace core\controller;
 
 use core\model\Evento;
 
-class Eventos {
+class Eventos
+{
 
     /**
      * Limite da listagem de eventos
@@ -24,11 +25,13 @@ class Eventos {
     private $lista_eventos = [];
     private $total_paginas = null;
 
-    public function __set($atributo, $valor) {
+    public function __set($atributo, $valor)
+    {
         $this->$atributo = $valor;
     }
 
-    public function __get($atributo) {
+    public function __get($atributo)
+    {
         return $this->$atributo;
     }
 
@@ -40,7 +43,8 @@ class Eventos {
      * @return bool
      * @throws \Exception
      */
-    public function cadastrar($dados) {
+    public function cadastrar($dados)
+    {
 
         $dados['nome'] = ucfirst($dados['nome']); // Deixa a primeira letra do nome do evento maiúscula
         $dados['descricao'] = ucfirst($dados['descricao']); // Deixa a primeira letra da descricao do evento maiúscula
@@ -70,7 +74,8 @@ class Eventos {
      * @param $dados
      * @return array
      */
-    public function listarEventos($dados = []) {
+    public function listarEventos($dados = [])
+    {
         $evento = new Evento();
 
         $busca = isset($dados['busca']) ? $dados['busca'] : [];
@@ -96,7 +101,8 @@ class Eventos {
         ];
     }
 
-    public function listarEvento($evento_id) {
+    public function listarEvento($evento_id)
+    {
         $evento = new Evento();
 
 
@@ -104,5 +110,21 @@ class Eventos {
 
         $dados = $dados[0];
         return $dados;
+    }
+
+    public function invalidarEvento($evento_id)
+    {
+
+        $evento = new Evento();
+
+        $dados['evento_id'] = $evento_id['evento_id'];
+        $dados['inativo'] = "1";
+        $resultado = $evento->alterar($dados);
+
+        if ($resultado > 0) {
+            return $resultado;
+        } else {
+            return false;
+        }
     }
 }

@@ -78,5 +78,3 @@ create table presenca
 
 create index presenca_ibfk_2
   on presenca (usuario_id);
-
-

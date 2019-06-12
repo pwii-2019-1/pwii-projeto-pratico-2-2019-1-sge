@@ -31,7 +31,13 @@ if (isset($_GET['me']) && $_GET['me'] == 1) {
     $me = "";
 }
 
-$dados = $eventos->listarEventos($dados_eventos);
+$dados = $eventos->listarEventos($dados_eventos); //todos os eventos
+
+//para mudar o botão de 'Inscrever-se'
+if (!Autenticacao::usuarioAdministrador()) {
+    $dados_eventos['busca']['me'] = Autenticacao::getCookieUsuario();
+    $dados2 = $eventos->listarEventos($dados_eventos); //eventos que o usuario se inscreveu
+}
 
 ?>
 
@@ -48,43 +54,41 @@ $dados = $eventos->listarEventos($dados_eventos);
 </div>
 
 <div class="container">
-    <div class="row">
-        <form id="formulario" data-me="<?= $me ?>">
+    <form id="formulario" data-me="<?= $me ?>">
+        <div class="row">
+            <div class="col-4">
+                <label for="periodo">Nome ou descrição do evento:</label>
+                <div class="form-group has-search">
+                    <span class="fa fa-search form-control-feedback"></span>
+                    <input id="texto" type="text" class="form-control" placeholder="Buscar">
+                </div>
+            </div>
+            <div class="form-row col-4">
+                <div class="form-group col-md-6">
+                    <label for="data_inicio">Data de Início:</label>
+                    <input type="date" class="form-control" id="data_inicio" required value="<?= (isset($evento->data_inicio)) ? $evento->data_inicio : "" ?>">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="data_termino">Data de Término:</label>
+                    <input type="date" class="form-control" id="data_termino" required value="<?= (isset($evento->data_termino)) ? $evento->data_termino : "" ?>">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group has-search">
+                    <label for="periodo">Período:</label>
+                    <span class="fa fa-search form-control-feedback"></span>
+                    <select id="periodo" class="custom-select form-control">
+                        <option selected disabled>Selecione um período</option>
+                        <option value="hoje">Hoje</option>
+                        <option value="semana">Essa semana</option>
+                        <option value="mes">Esse mês</option>
+                    </select>
+                </div>
+            </div>
 
-        </form>
-        <div class="col-4">
-            <label for="periodo">Nome ou descrição do evento:</label>
-            <div class="form-group has-search" data-me="<?= $me ?>">
-                <span class="fa fa-search form-control-feedback"></span>
-                <input id="texto" type="text" class="form-control" placeholder="Buscar">
-            </div>
+            <button id="filtrar" class="col-1 btn btn-block btn-outline-dark">Filtrar</button>
         </div>
-        <div class="form-row col-4">
-            <div class="form-group col-md-6">
-                <label for="data_inicio">Data de Início:</label>
-                <input type="date" class="form-control" id="data_inicio" required value="<?= (isset($evento->data_inicio)) ? $evento->data_inicio : "" ?>">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="data_termino">Data de Término:</label>
-                <input type="date" class="form-control" id="data_termino" required value="<?= (isset($evento->data_termino)) ? $evento->data_termino : "" ?>">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="form-group has-search">
-                <label for="periodo">Período:</label>
-                <span class="fa fa-search form-control-feedback"></span>
-                <select id="periodo" class="custom-select form-control">
-                    <option selected disabled>Selecione um período</option>
-                    <option value="hoje">Hoje</option>
-                    <option value="semana">Essa semana</option>
-                    <option value="mes">Esse mês</option>
-                </select>
-            </div>
-        </div>
-
-        <button id="filtrar" class="col-1 btn btn-block btn-outline-dark">Filtrar</button>
-
-    </div>
+    </form>
 </div>
 
 <main role='main'>
@@ -109,10 +113,22 @@ $dados = $eventos->listarEventos($dados_eventos);
                                                 Atividades
                                             </a>
                                         <?php } else { ?>
-                                            <a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn-outline-success" name="inscrever" data-toggle="modal" data-target="#">
-                                                Inscrever-se
-                                            </a>
-                                        <?php }?>
+                                            <?php $cont = 0;
+                                            if (count($dados2['lista_eventos']) > 0) {
+                                                foreach ($dados2['lista_eventos'] as $j => $evento2) {
+                                                    if ($evento->evento_id == $evento2->evento_id) $cont++; ?>
+                                                <?php }
+                                            }
+                                            if ($cont == 1) { ?>
+                                                <a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn-outline-success">
+                                                    Atividades Inscritas
+                                                </a>
+                                            <?php } else { ?>
+                                                <a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn-outline-success" name="inscrever" data-toggle="modal" data-target="#">
+                                                    Inscrever-se
+                                                </a>
+                                            <?php }
+                                        }?>
                                     </div>
                                     <small class="text-muted"><?= Util::formataDataBR($evento->evento_inicio) ?></small>
                                 </div>

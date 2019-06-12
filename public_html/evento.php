@@ -12,12 +12,15 @@ $evento_id = isset($_GET['evento_id']) ? $_GET['evento_id'] : null;
 $eventos = new Eventos();
 $atividades = new Atividades();
 
-$dados_eventos = "";
-$evento = "";
-$dados_atividades = [];
 
 $evento = $eventos->listarEvento($evento_id);
 $atividade = $atividades->listarAtividades($evento_id);
+
+if (!Autenticacao::usuarioAdministrador()) {
+	$dados_eventos = [];
+    $dados_eventos['busca']['me'] = Autenticacao::getCookieUsuario();
+    $dados2 = $eventos->listarEventos($dados_eventos); //eventos que o usuario se inscreveu
+}
 
 ?>
 
@@ -73,7 +76,20 @@ $atividade = $atividades->listarAtividades($evento_id);
 			</div>
 			<div class="col-md-2">
 				<div class="btn-group-vertical">
-					<a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark">
+						<?php if (count($dados2['lista_eventos']) > 0) {
+							$cont = 0;
+							foreach ($dados2['lista_eventos'] as $j => $evento2) {
+								if ($evento->evento_id == $evento2->evento_id) $cont++; ?>
+							<?php }
+						} if ($cont == 1) {
+							$a = "disabled";
+							$b = "";
+						} else {
+							$a = "";
+							$b = "disabled";
+						}?>
+
+						<a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark <?= $a ?>">
 						<?= (Autenticacao::usuarioAdministrador()) ? "Atividades" : "Inscrever-se" ?>
 					</a>
 					<?php if (Autenticacao::usuarioAdministrador()) { ?>
@@ -110,7 +126,7 @@ $atividade = $atividades->listarAtividades($evento_id);
 						</div>
 
 					<?php } else { ?>
-						<a href="#" class="btn btn-lg btn-outline-dark">Acompanhar Inscrição</a>
+						<a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark <?= $b ?>">Atividades Inscritas</a>
 						<a href="#" class="btn btn-lg btn-outline-dark">Certificado</a>
 					<?php } ?>
 				</div>

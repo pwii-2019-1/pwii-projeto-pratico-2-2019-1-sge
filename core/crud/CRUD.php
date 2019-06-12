@@ -259,7 +259,6 @@ class CRUD {
     protected function read(
         $tabela,
         $campos = null,
-        // $innerjoin = [],
         $where_condicao = null,
         $where_valor = [],
         $group_by = null,
@@ -272,7 +271,6 @@ class CRUD {
 
         // Prepara a consulta SQL
         $sql = "SELECT " . $campos . " FROM " . $tabela . " ";
-        // $sql .= $innerjoin > 0 ? "INNER JOIN " . $innerjoin[0] . " ON " . $innerjoin[1] . " = " . $innerjoin[2] . " " : "";
         $sql .= $where_condicao != null ? "WHERE " . $where_condicao . " " : "";
         $sql .= $group_by != null ? "GROUP BY " . $group_by . " " : "";
         $sql .= $ordem != null ? "ORDER BY " . $ordem . " " : "";

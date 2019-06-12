@@ -77,7 +77,7 @@ class Eventos
     public function listarEventos($dados = [])
     {
         $evento = new Evento();
-        
+
         $busca = isset($dados['busca']) ? $dados['busca'] : [];
 
         if (isset($dados['pg']) && is_numeric($dados['pg'])) {
@@ -106,7 +106,7 @@ class Eventos
             $this->__set("total_paginas", $paginas[0]->total);
         }
 
-        if (count($lista) > 0 && isset($lista[0]) && count($lista[0]) > 0) {
+        if (count($lista) > 0 ) {
             $this->__set("lista_eventos", $lista);
         }
 

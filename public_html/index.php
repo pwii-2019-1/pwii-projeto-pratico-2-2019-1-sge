@@ -87,7 +87,7 @@ $dados = $eventos->listarEventos($dados_eventos);
                         <div class="card mb-4 box-shadow">
                             <img class="card-img-top" src="assets/imagens/pequena.png" style="height:200px"alt="Card image cap">
                             <div class="card-body">
-                                <h4 class="card-title"><?= $evento->nome ?></h4>
+                                <h4 class="card-title" style="min-height:7ch;"><?= $evento->nome ?></h4>
                                 <p class="card-text" style="min-height:15ch; max-height: 15ch;"><?= (strlen($evento->descricao)<= 150) ? $evento->descricao : substr($evento->descricao,0, 150). "<a href='evento.php?evento_id={$evento->evento_id}'> Mostrar Mais</a>"?></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">

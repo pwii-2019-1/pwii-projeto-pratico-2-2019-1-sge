@@ -45,6 +45,7 @@ class Eventos {
         $dados['nome'] = ucfirst($dados['nome']); // Deixa a primeira letra do nome do evento maiúscula
         $dados['descricao'] = ucfirst($dados['descricao']); // Deixa a primeira letra da descricao do evento maiúscula
 
+        $dados['inativo'] = "0"; // Cadastra o evento como ativo
         $evento = new Evento();
         // Tratar o cadastro ou alteração aqui
 

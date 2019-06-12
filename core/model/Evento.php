@@ -16,6 +16,7 @@ class Evento extends CRUD {
     const COL_DATA_PRORROGACAO = "data_prorrogacao";
     const COL_EVENTO_INICIO = "evento_inicio";
     const COL_EVENTO_TERMINO = "evento_termino";
+    const COL_EVENTO_INATIVO = "inativo";
 
     /**
      * @param $dados
@@ -73,7 +74,7 @@ class Evento extends CRUD {
         $campos = $campos != null ? $campos : "*";
         $ordem = $ordem != null ? $ordem : self::COL_NOME . " ASC";
 
-        $where_condicao = "1 = 1";
+        $where_condicao =  self::COL_EVENTO_INATIVO . " = 0"; // Se o campo for igual a 0, o evento está ativo, se for igual a 1 o evento está inativo
         $where_valor = [];
 
         if (count($busca) > 0) {

@@ -18,8 +18,8 @@ $lista_usuarios = $usuarios->listarUsuarios();
 
             <h2 class="mb-4">Lista de usuários</h2>
 
-            <table class="table table-striped">
-                <thead>
+            <table class="table table-hover table-bordered">
+                <thead class="thead-dark">
                 <tr>
                     <th scope="col" width="10%">ID</th>
                     <th scope="col" width="40%">Nome</th>

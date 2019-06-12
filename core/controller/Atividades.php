@@ -45,7 +45,7 @@ class Atividades {
 
         $dados['titulo'] = ucfirst($dados['titulo']); // Deixa a primeira letra do nome da atividade maiúscula
         $dados['responsavel'] = ucfirst($dados['responsavel']); // Deixa a primeira letra do responsavel da atividade maiúscula
-
+        $dados['inativo'] = 0;
 
         $atividade = new Atividade();
 
@@ -89,5 +89,20 @@ class Atividades {
 
         $dados = $dados[0];
         return $dados;
+    }
+
+    public function invalidarAtividade($atividade_id) {
+        $atividade = new Atividade();
+
+        $dados['atividade_id'] = $atividade_id['atividade_id'];
+        $dados['inativo'] = "1";
+
+        $resultado = $atividade->alterar($dados);
+
+        if ($resultado > 0) {
+            return $resultado;
+        } else {
+            return false;
+        }
     }
 }

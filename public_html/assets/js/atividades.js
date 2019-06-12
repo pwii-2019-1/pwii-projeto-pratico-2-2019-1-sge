@@ -1,10 +1,11 @@
 let construct = () => {
-    atividades();
+    eventos();
     marcarAtividades();
     validaHorarios();
+    confirmacaoA();
 };
 
-const atividades = () => {
+const eventos = () => {
     $('#form_atividade').on('submit', function (e) {
         e.preventDefault();
 
@@ -46,12 +47,42 @@ const atividades = () => {
             }
         });
     });
+
+    $('#botao_excluir').on('click', function (event) {
+        event.preventDefault();
+        let atividade_id = $(this).attr('data-atividade_id');
+
+        let dados = {
+            atividade_id: atividade_id
+        };
+
+        dados.acao = "Atividades/invalidarAtividade";
+        console.log(dados);
+        $.ajax({
+            url: baseUrl,
+            type: "POST",
+            data: dados,
+            dataType: "text",
+            async: true,
+            success: function (res) {
+                console.log(res);
+                if (res > 0 ) {
+                    window.location.href = `${base}/${url[1]}/`;
+                } else {
+                    $('#msg_exclusao_erro').toast('show');
+                }
+            },
+            error: function (request, status, str_error) {
+                console.log(request, status, str_error);
+            }
+        });
+    });
 };
 
 // Função que marca as atividades que o usuário já está inscrito
 const marcarAtividades = () => {
     $('#tabela').ready(function () {
-        // Pega o atributo da table que contém todos os eventos que o usuário está inscrito 
+        // Pega o atributo da table que contém todos os eventos que o usuário está inscrito
         var presencas = $('#tabela').attr('data-presencas');
         // Transforma os eventos que estavam em string (1-2-3) em um array
         presencas = presencas.split("-");
@@ -59,12 +90,12 @@ const marcarAtividades = () => {
         // Seleciona todas as checkbox da página
         var checkbox = document.querySelectorAll("input[type='checkbox']");
 
-        // Para cada checkbox selecionado, ele verifica se o id da atividade que pertence o checkbox 
+        // Para cada checkbox selecionado, ele verifica se o id da atividade que pertence o checkbox
         // está no array de atividades que o usuário está inscrito
         $.each(checkbox, function () {
             var atividade = $(this).attr("value");
             if (presencas.includes(atividade)) {
-                // Se o id da atividade estiver dentro do array de presencas, ele marca o checkbox                
+                // Se o id da atividade estiver dentro do array de presencas, ele marca o checkbox
                 $(this).prop('checked', true);
             }
         });
@@ -120,16 +151,22 @@ const validaHorarios = () => {
                     // console.log(horario_inicioAntigo.getUTCMilliseconds());
                     // console.log(horario_terminoAntigo.getUTCMilliseconds());
                     // console.log(horario_inicioNovo.getUTCMilliseconds());
-                    // console.log(horario_terminoNovo.getUTCMilliseconds());    
+                    // console.log(horario_terminoNovo.getUTCMilliseconds());
                 }
 
             });
         } else {
             // console.log('Not Checked');
         }
+    });
+};
 
+const confirmacaoA = () => {
+    $("a[name='excluir']").click(function () {
+        let id = $(this).attr('data-atividade_id');
 
-
+        $('#botao_excluir').attr('data-atividade_id',id);
+        $('#confirmModal').modal('show');
     });
 };
 

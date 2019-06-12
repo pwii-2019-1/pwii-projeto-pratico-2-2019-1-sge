@@ -18,6 +18,7 @@ class Atividade extends CRUD {
     const COL_LOCAL = "local";
     const COL_QUANTIDADE_VAGA = "quantidade_vaga";
     const COL_TIPO = "tipo";
+    const COL_ATIVIDADE_INATIVO = "inativo";
 
     /**
      * @param $dados
@@ -73,6 +74,7 @@ class Atividade extends CRUD {
         $ordem = $ordem != null ? $ordem : self::COL_DATAHORA_INICIO . " ASC";
 
         $where_condicao = self::COL_EVENTO_ID . " = ?";
+        $where_condicao .=  " AND " . self::COL_ATIVIDADE_INATIVO . " = 0";
         $where_valor[] = $evento_id;
 
         $retorno = [];
@@ -88,25 +90,6 @@ class Atividade extends CRUD {
         return $retorno;
     }
 
-    /**
-     * @param $atividade_id
-     * @return bool
-     */
-    public function excluir($atividade_id) {
-
-        $where_condicao = self::COL_ATIVIDADE_ID . " = ?";
-        $where_valor[] = $atividade_id;
-
-        try {
-
-            $this->delete(self::TABELA, $where_condicao, $where_valor);
-
-        } catch (Exception $e) {
-            echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
-        }
-
-        return true;
-    }
 
     public function selecionarAtividade($atividade_id) {
 

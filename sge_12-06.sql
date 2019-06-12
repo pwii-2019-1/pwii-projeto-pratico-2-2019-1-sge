@@ -27,6 +27,7 @@ create table atividade
   local            varchar(255) null,
   quantidade_vaga  int(4)       null,
   tipo             varchar(255) null,
+  inativo          int          null,
   constraint atividade_ibfk_1
   foreign key (evento_id) references evento (evento_id)
     on update cascade

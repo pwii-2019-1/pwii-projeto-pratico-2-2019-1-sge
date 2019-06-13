@@ -249,6 +249,7 @@ return array(
     'Psr\\Log\\Test\\TestLogger' => $vendorDir . '/psr/log/Psr/Log/Test/TestLogger.php',
     'core\\CRUD' => $baseDir . '/core/crud/CRUD.php',
     'core\\controller\\Api' => $baseDir . '/core/controller/Api.php',
+    'core\\controller\\Atividades' => $baseDir . '/core/controller/Atividades.php',
     'core\\controller\\Certificado' => $baseDir . '/core/controller/Certificado.php',
     'core\\controller\\Eventos' => $baseDir . '/core/controller/Eventos.php',
     'core\\controller\\Login' => $baseDir . '/core/controller/Login.php',

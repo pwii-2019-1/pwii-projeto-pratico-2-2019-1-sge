@@ -81,7 +81,32 @@ class Usuarios {
             return false;
         }
     }
-
+    /**
+     * Listar usuário id
+     *
+     * @return array
+     */
+    
+    public function listarUsuarioID($usuario_id) {
+        $usuario = new Usuario();
+            
+        $dados = $usuario->selecionarUsuario($usuario_id);
+        
+        $dados = $dados[0];
+        $dados->data_nascimento=date('Y-m-d',  strtotime($dados->data_nascimento));
+        return $dados;
+    }
+    
+    
+    public function atualizarDados($dados) {
+        
+        $usuario = new Usuario();
+        
+        
+        $usuario->alterar($dados);
+        
+        return $usuario;
+    }
     /**
      * Listar usuários
      *
@@ -100,6 +125,8 @@ class Usuarios {
 
         return $this->lista_usuarios;
     }
+
+    
 
     /**
      * Altera as permissões dos usuários cadastrados

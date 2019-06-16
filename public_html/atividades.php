@@ -105,7 +105,7 @@ $x = 0;
                                                 <!-- verificar se não está muito proximo de começar a atividade para não deixar Excluir e Editar -->
                                                 <?php if (Autenticacao::usuarioAdministrador()) { ?>
                                                     <td class="align-middle">
-                                                        <a class="btn btn-outline-info" href="#" id="botao_alterar" title="Editar">
+                                                        <a class="btn btn-outline-info" href="cadastro_atividade.php?atividade_id=<?= $ativ->atividade_id; ?>&evento_id=<?= $ativ->evento_id; ?>" id="botao_alterar" title="Editar">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
                                                         <a class="btn btn-outline-danger" href="#" data-atividade_id="<?= $ativ->atividade_id ?>" name="excluir" data-toggle="modal" data-target="#confirmModal" title="Excluir">

@@ -49,7 +49,11 @@ class Atividades {
 
         $atividade = new Atividade();
 
-        $resultado = $atividade->adicionar($dados);
+        if (isset($dados['evento_id'], $dados['atividade_id'])) {
+            $resultado = $atividade->alterar($dados);
+        }else{
+            $resultado = $atividade->adicionar($dados);
+        }
 
         if ($resultado > 0) {
             return true;

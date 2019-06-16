@@ -156,17 +156,19 @@ const confirmacaoA = () => {
 };
 
 const downloadLista = () => {
-    $("#download_lista").on('click', function () {
-        let evento_id = $(this).attr('data-evento_id'),
-            atividade_id = $(this).attr('data-atividade_id');
+    $.each($('.lista_presenca'), (i, v) => {
+        $(v).on('click', function () {
+            let evento_id = $(this).attr('data-evento_id'),
+                atividade_id = $(this).attr('data-atividade_id');
 
-        let dados = {
-            evento_id: evento_id,
-            atividade_id: atividade_id
-        };
+            let dados = {
+                evento_id: evento_id,
+                atividade_id: atividade_id
+            };
 
-        window.open('api.php?acao=Certificado/gerarListaPresenca&dados=' + JSON.stringify(dados), '_blank');
+            window.open('api.php?acao=Certificado/gerarListaPresenca&dados=' + JSON.stringify(dados), '_blank');
 
+        });
     });
 };
 

@@ -40,7 +40,7 @@ class Atividades {
      * @return bool
      */
 
-    public function cadastrar($dados){
+    public function cadastrar($dados) {
 
 
         $dados['titulo'] = ucfirst($dados['titulo']); // Deixa a primeira letra do nome da atividade maiúscula
@@ -51,7 +51,7 @@ class Atividades {
 
         if (isset($dados['evento_id'], $dados['atividade_id'])) {
             $resultado = $atividade->alterar($dados);
-        }else{
+        } else {
             $resultado = $atividade->adicionar($dados);
         }
 
@@ -66,14 +66,23 @@ class Atividades {
     /**
      * Listar atividades
      *
+     * @param $evento_id
      * @return array
      */
     public function listarAtividades($evento_id) {
         $atividade = new Atividade();
+        $presenca = new Presencas();
 
         $lista = $atividade->listar($evento_id, null, null, null);
 
         if (count($lista) > 0) {
+
+            // Verifica se já tem inscritos no evento
+            foreach ($lista as $i => $v) {
+                $inscritos = $presenca->listarPresencas([$v->atividade_id, null], 'nomes');
+                $lista[$i]->inscritos = count((array)$inscritos[0]) > 0 ? 1 : 0;
+            }
+
             $this->__set("lista_atividades", $lista);
 
             $dias = $atividade->listar($evento_id, "DATE(datahora_inicio) AS data", "data", "data ASC");
@@ -86,6 +95,10 @@ class Atividades {
         ];
     }
 
+    /**
+     * @param $atividade_id
+     * @return array
+     */
     public function listarAtividade($atividade_id) {
         $atividade = new Atividade();
 
@@ -95,6 +108,11 @@ class Atividades {
         return $dados;
     }
 
+    /**
+     * @param $atividade_id
+     * @return bool
+     * @throws \Exception
+     */
     public function invalidarAtividade($atividade_id) {
         $atividade = new Atividade();
 

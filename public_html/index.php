@@ -170,7 +170,7 @@ if (!Autenticacao::usuarioAdministrador()) {
         </div>
     </div>
 
-    <?php if (isset($dados['total_paginas']) && $dados['total_paginas'] > 0) { ?>
+    <?php if (isset($dados['total_paginas']) && $dados['total_paginas'] > 1) { ?>
         <nav>
             <ul class="pagination justify-content-center">
                 <li class="page-item <?= ($pg == null || $pg < 2) ? "disabled" : "" ?>">

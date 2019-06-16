@@ -44,7 +44,7 @@ use core\sistema\Autenticacao;
 
             if (Autenticacao::verificarLogin()) { ?>
                 <a class="dropdown-item" href="alterar_senha.php">Alterar Senha</a>
-                <a class="dropdown-item" href="#">Editar Dados</a>
+                <a class="dropdown-item" href="cadastro.php">Editar Dados</a>
                 <?php if (Autenticacao::usuarioAdministrador()) { ?>
                     <a class="dropdown-item" href="cadastro_evento.php">Cadastrar Evento</a>
                     <a class="dropdown-item" href="usuarios.php">Usuários</a>

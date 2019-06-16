@@ -7,14 +7,16 @@ use core\sistema\Footer;
 
 $usuario = new Usuarios();
 
-$usuario_id = isset($_GET['usuario_id']) ? $_GET['usuario_id'] : null;
+$usuario_id = isset($_COOKIE["usuario"]) ? $_COOKIE["usuario"] : null;
 
 $usuarios = new Usuarios();
 $dados_eventos = "";
 $usuario = "";
+
 if (isset($usuario_id)){
     $usuario = $usuarios->listarUsuarioID($usuario_id);
 }
+
 ?>
 
 <main role="main">

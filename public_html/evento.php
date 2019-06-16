@@ -2,6 +2,7 @@
 require_once 'header.php';
 
 use core\controller\Eventos;
+use core\controller\Atividades;
 use core\sistema\Autenticacao;
 use core\sistema\Footer;
 use core\sistema\Util;
@@ -9,17 +10,23 @@ use core\sistema\Util;
 $evento_id = isset($_GET['evento_id']) ? $_GET['evento_id'] : null;
 
 $eventos = new Eventos();
+$atividades = new Atividades();
 
-$dados_eventos = "";
-$evento = "";
 
 $evento = $eventos->listarEvento($evento_id);
+$atividade = $atividades->listarAtividades($evento_id);
+
+if (!Autenticacao::usuarioAdministrador()) {
+	$dados_eventos = [];
+    $dados_eventos['busca']['me'] = Autenticacao::getCookieUsuario();
+    $dados2 = $eventos->listarEventos($dados_eventos); //eventos que o usuario se inscreveu
+}
 
 ?>
 
 <main role='main'>
-	<div class="jumbotron mt-n3" style="border-radius:0px; background:url(assets/imagens/default.svg);">
-		<div class="container mb-5">
+	<div class="jumbotron mt-n3" style="border-radius:0px; background:url(assets/imagens/grande.png) no-repeat 0 0">
+		<div class="container mb-4">
 		</div>
 	</div>
 	<div class="container">
@@ -69,13 +76,62 @@ $evento = $eventos->listarEvento($evento_id);
 			</div>
 			<div class="col-md-2">
 				<div class="btn-group-vertical">
-					<a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark">
-						<?= (Autenticacao::usuarioAdministrador()) ? "Atividades" : "Inscrever-se"?>
+						<?php if (count($dados2['lista_eventos']) > 0) {
+							$cont = 0;
+							foreach ($dados2['lista_eventos'] as $j => $evento2) {
+								if ($evento->evento_id == $evento2->evento_id) $cont++; ?>
+							<?php }
+						} if ($cont == 1) {
+							$a = "disabled";
+							$b = "";
+						} else {
+							$a = "";
+							$b = "disabled";
+						}?>
+
+						<a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark <?= $a ?>">
+						<?= (Autenticacao::usuarioAdministrador()) ? "Atividades" : "Inscrever-se" ?>
 					</a>
-					<a href="#" class="btn btn-lg btn-outline-dark">Acompanhar Inscrição</a>
-					<a href="#" class="btn btn-lg btn-outline-dark">Certificado</a>
+					<?php if (Autenticacao::usuarioAdministrador()) { ?>
+						<a href="cadastro_atividade.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark">
+							Adicionar Atividades
+						</a>
+						<div class="btn-group">
+							<a href="cadastro_evento.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark">
+								Editar
+							</a>
+							<a href="excluir" class="btn btn-lg btn-outline-danger" name="excluir" data-toggle="modal" data-target="#confirmModal">
+								Excluir
+							</a>
+
+						</div>
+						<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										Deseja realmente <span class="font-weight-bold text-uppercase text-danger"> Excluir</span> esse evento?
+									</div>
+									<div class="modal-footer p-2">
+										<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Não</button>
+										<a id="botao_excluir" href="" class="btn btn-outline-danger" data-evento_id="<?= $evento->evento_id ?>">Sim</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					<?php } else { ?>
+						<a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark <?= $b ?>">Atividades Inscritas</a>
+						<a href="#" class="btn btn-lg btn-outline-dark">Certificado</a>
+					<?php } ?>
 				</div>
 			</div>
+
 		</div>
 
 		<div class="row justify-align-center mb-4">
@@ -88,124 +144,80 @@ $evento = $eventos->listarEvento($evento_id);
 		</div>
 
 		<ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
-			<li class="nav-item">
-				<a class="nav-link active" id="dia1-tab" data-toggle="tab" href="#dia1" role="tab" aria-controls="dia1" aria-selected="true">
-					22/05
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" id="dia2-tab" data-toggle="tab" href="#dia2" role="tab" aria-controls="dia2" aria-selected="false">
-					23/05
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" id="dia3-tab" data-toggle="tab" href="#dia3" role="tab" aria-controls="dia3" aria-selected="false">
-					24/05
-				</a>
-			</li>
+			<?php if (count($atividade["total_dias"][0]) > 0) {
+				foreach ($atividade["total_dias"] as $i => $dia) { ?>
+					<li class="nav-item">
+						<a class="nav-link <?= $i == 0 ? "active" : "" ?>" id="dia<?= $i ?>-tab" data-toggle="tab" href="#dia<?= $i ?>" role="tab" aria-controls="dia<?= $i ?>" aria-selected="true">
+							<?= Util::dia($dia->data) . "/" . Util::mes($dia->data) ?>
+						</a>
+					</li>
+				<?php }
+		} else { ?>
+				<li class="nav-item">
+					<a class="nav-link active" id="dia1-tab" data-toggle="tab" href="#dia1" role="tab" aria-controls="dia1" aria-selected="true">
+						Programação
+					</a>
+				</li>
+			<?php } ?>
 		</ul>
 		<div class="tab-content mb-5" id="myTabContent">
-			<div class="tab-pane fade show active" id="dia1" role="tabpanel" aria-labelledby="dia1-tab">
-				<table class="table table-responsive table-hover table-bordered">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">Horário</th>
-							<th class="col-md-6" scope="col">Título</th>
-							<th scope="col">Responsável</th>
-							<th scope="col">Local</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="tab-pane fade" id="dia2" role="tabpanel" aria-labelledby="dia2-tab">
-				<table class="table table-responsive table-hover table-bordered">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">Horário</th>
-							<th class="col-md-6" scope="col">Título</th>
-							<th scope="col">Responsável</th>
-							<th scope="col">Local</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="tab-pane fade" id="dia3" role="tabpanel" aria-labelledby="dia3-tab">
-				<table class="table table-responsive table-hover table-bordered">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">Horário</th>
-							<th class="col-md-6" scope="col">Título</th>
-							<th scope="col">Responsável</th>
-							<th scope="col">Local</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-						<tr>
-							<td>10:30h às 11:00h</td>
-							<td>MESA REDONDA - Mulheres expoentes: tecnologia, cultura, ética e transparência</td>
-							<td>STEM</td>
-							<td>Laboratório 1</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+			<?php foreach ($atividade["total_dias"] as $i => $dia) { ?>
+				<div class="tab-pane fade <?= $i == 0 ? "show active" : "" ?>" id="dia<?= $i ?>" role="tabpanel" aria-labelledby="dia<?= $i ?>-tab">
+					<table class="table table-hover table-bordered">
+						<thead class="thead-dark">
+							<tr>
+								<th class="col-md-2">Horário</th>
+								<th class="col-md-6">Título</th>
+								<th class="col-md-2">Responsável</th>
+								<th class="col-md-2">Local</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php if (count($atividade["lista_atividades"][0]) > 0) {
+								foreach ($atividade["lista_atividades"] as $j => $ativ) {
+									if (Util::dia($ativ->datahora_inicio) == Util::dia($dia->data)) { ?>
+										<tr>
+											<td class="align-middle">
+												<?= Util::hora($ativ->datahora_inicio) . ":" . Util::min($ativ->datahora_inicio) ?> às
+												<?= Util::hora($ativ->datahora_termino) . ":" . Util::min($ativ->datahora_termino) ?>
+											</td>
+											<td class="align-middle"><?= $ativ->titulo ?></td>
+											<td class="align-middle"><?= $ativ->responsavel ?></td>
+											<td class="align-middle"><?= $ativ->local ?></td>
+										</tr>
+									<?php }
+							}
+						} else { ?>
+								<tr>
+									<td class="text-center" colspan="4">Em Breve!</td>
+								</tr>
+							<?php } ?>
+						</tbody>
+					</table>
+				</div>
+			<?php } ?>
 		</div>
+		<!-- Toast Erro Exclusao -->
+		<div class="toast" id="msg_exclusao_erro" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000" style="position: absolute; top: 4rem; right: 1rem;">
+			<div class="toast-header">
+				<strong class="mr-auto">Houve um erro!</strong>
+				<small>Agora</small>
+				<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body">
+				Desculpe, não conseguimos excluir o evento, tente novamente.
+			</div>
+			<div class="card-footer text-muted bg-warning p-1"></div>
+		</div>
+		<!-- Toast -->
 	</div>
 </main>
 
+
 <?php
 $footer = new Footer();
+$footer->setJS('assets/js/evento.js');
 require_once 'footer.php';
 ?>

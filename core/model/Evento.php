@@ -2,6 +2,8 @@
 
 namespace core\model;
 
+use core\model\Presenca;
+use core\model\Atividade;
 use core\CRUD;
 use Exception;
 
@@ -16,6 +18,7 @@ class Evento extends CRUD {
     const COL_DATA_PRORROGACAO = "data_prorrogacao";
     const COL_EVENTO_INICIO = "evento_inicio";
     const COL_EVENTO_TERMINO = "evento_termino";
+    const COL_EVENTO_INATIVO = "inativo";
 
     /**
      * @param $dados
@@ -48,7 +51,6 @@ class Evento extends CRUD {
 
         $where_condicao = self::COL_EVENTO_ID . " = ?";
         $where_valor[] = $dados[self::COL_EVENTO_ID];
-
         try {
 
             $this->update(self::TABELA, $dados, $where_condicao, $where_valor);
@@ -73,7 +75,7 @@ class Evento extends CRUD {
         $campos = $campos != null ? $campos : "*";
         $ordem = $ordem != null ? $ordem : self::COL_NOME . " ASC";
 
-        $where_condicao = "1 = 1";
+        $where_condicao =  self::COL_EVENTO_INATIVO . " = 0"; // Se o campo for igual a 0, o evento está ativo, se for igual a 1 o evento está inativo
         $where_valor = [];
 
         if (count($busca) > 0) {
@@ -126,14 +128,33 @@ class Evento extends CRUD {
 
                 }
             }
+
+            if (isset($busca['me']) && !empty($busca['me'])) {
+                $innerjoin = [Atividade::TABELA,
+                            self::TABELA . "." . self::COL_EVENTO_ID,
+                            Atividade::TABELA . "." . Atividade::COL_EVENTO_ID];
+
+                $innerjoin2 = [Presenca::TABELA,
+                            Atividade::TABELA . "." . Atividade::COL_ATIVIDADE_ID,
+                            Presenca::TABELA . "." . Presenca::COL_ATIVIDADE_ID];
+
+                $where_condicao .= " AND " . Presenca::COL_PRESENCA . " = ?";
+                $where_condicao .= " AND " . Presenca::TABELA . "." . Presenca::COL_USUARIO_ID . " = ? ";
+                $where_valor[] = 1;
+                $where_valor[] = $busca['me'];
+
+                $group_by = self::TABELA . "." . self::COL_EVENTO_ID;
+            }
         }
 
         $retorno = [];
 
         try {
-
-            $retorno = $this->read(self::TABELA, $campos, $where_condicao, $where_valor, null, $ordem, $limite);
-
+            if (isset($busca['me']) && !empty($busca['me'])) {
+                $retorno = $this->readInner(self::TABELA, $campos, $innerjoin, $innerjoin2, $where_condicao, $where_valor, $ordem, $group_by, $limite);
+            } else {
+                $retorno = $this->read(self::TABELA, $campos, $where_condicao, $where_valor, null, $ordem, $limite);
+            }
         } catch (Exception $e) {
             echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
         }

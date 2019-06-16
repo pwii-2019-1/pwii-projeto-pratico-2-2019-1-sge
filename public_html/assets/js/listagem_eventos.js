@@ -11,6 +11,7 @@ const eventos = () => {
     const data_inicio = $('#data_inicio');
     const data_termino = $('#data_termino');
     const periodo = $('#periodo');
+    const me = $('#formulario');
     const dados = {};
 
     periodo.on('change', (e) => {
@@ -23,6 +24,7 @@ const eventos = () => {
         if (texto.val() !== "") dados.texto = texto.val();
         if (data_inicio.val() !== "") dados.data_inicio = data_inicio.val();
         if (data_termino.val() !== "") dados.data_termino = data_termino.val();
+        if (me.attr('data-me') !== "") dados.me = me.attr('data-me');
         if (periodo[0].value !== "Selecione um período") {
             dados.periodo = periodo[0].value;
         }

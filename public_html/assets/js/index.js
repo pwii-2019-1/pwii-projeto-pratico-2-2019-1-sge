@@ -30,4 +30,13 @@ const login = () => {
     }
 };
 
+const confirmacao = () => {
+    $("a[name='inscrever']").click(function () {
+        let link = $(this).attr('href');
+        $('#botao').attr('href',link);
+        $('#confirmModal').modal('show');
+    });
+};
+
 login();
+confirmacao();

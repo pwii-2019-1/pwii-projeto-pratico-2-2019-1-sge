@@ -38,12 +38,14 @@ use core\sistema\Autenticacao;
         <div class="dropdown-menu">
             <a class="dropdown-item" href="index.php">Página Inicial</a>
             <div class="dropdown-divider"></div>
-            <?php if (!Autenticacao::verificarLogin()) { ?>
-                <a class="dropdown-item" href="cadastro.php">Cadastrar Usuário</a>
-                <a class="dropdown-item" href="cadastro.php#">Meus Eventos</a>
+            <?php if (Autenticacao::verificarLogin() and !Autenticacao::usuarioAdministrador()) { ?>
+                <a class="dropdown-item" href="index.php?me=1">Meus Eventos</a>
             <?php }
-            if (Autenticacao::verificarLogin()) {
-                if (Autenticacao::usuarioAdministrador()) { ?>
+
+            if (Autenticacao::verificarLogin()) { ?>
+                <a class="dropdown-item" href="alterar_senha.php">Alterar Senha</a>
+                <a class="dropdown-item" href="#">Editar Dados</a>
+                <?php if (Autenticacao::usuarioAdministrador()) { ?>
                     <a class="dropdown-item" href="index.php">Listagem de Eventos</a>
                     <a class="dropdown-item" href="cadastro_evento.php">Cadastrar Evento</a>
                     <a class="dropdown-item" href="usuarios.php">Usuários</a>
@@ -51,6 +53,8 @@ use core\sistema\Autenticacao;
                 <div class="dropdown-divider"></div>
                 <a id="logout" class="dropdown-item" href="#">Sair</a>
             <?php } else { ?>
+                <a class="dropdown-item" href="cadastro.php">Cadastrar Usuário</a>
+                <div class="dropdown-divider"></div>
                 <a id="login" class="dropdown-item" href="login.php">Entrar</a>
             <?php } ?>
         </div>

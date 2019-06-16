@@ -269,14 +269,62 @@ class CRUD {
 
         $this->openDB();
 
-        $where_condicao = $where_condicao != null ? "WHERE " . $where_condicao . " " : "";
-
         // Prepara a consulta SQL
-        $sql = "SELECT " . $campos . " FROM " . $tabela . " " . $where_condicao;
+        $sql = "SELECT " . $campos . " FROM " . $tabela . " ";
+        $sql .= $where_condicao != null ? "WHERE " . $where_condicao . " " : "";
         $sql .= $group_by != null ? "GROUP BY " . $group_by . " " : "";
         $sql .= $ordem != null ? "ORDER BY " . $ordem . " " : "";
         $sql .= $limite != null ? "LIMIT " . $limite . " " : "";
 
+        //Armazena a consulta SQL para verificação
+        $this->ultimo_sql = $sql;
+
+        $this->stmt = $this->conexao->prepare($sql);
+
+        for ($i = 1; $i <= count($where_valor); $i++) {
+            $this->stmt->bindValue($i, $where_valor[$i - 1]);
+        }
+
+        $this->stmt->execute();
+
+        $resultado = $this->stmt->fetchAll(PDO::FETCH_OBJ);
+
+        if (count($resultado) > 0 && isset($resultado[0])) {
+            $lista = $resultado;
+        } else {
+            $lista = [$resultado];
+        }
+
+        $this->closeDB();
+
+        return $lista;
+    }
+
+    protected function readInner(
+        $tabela,
+        $campos = null,
+        $innerjoin = [],
+        $innerjoin2 = [],
+        $where_condicao = null,
+        $where_valor = [],
+        $ordem = null,
+        $group_by = null,
+        $limite = null
+        ) {
+
+        $campos = $campos == null ? "*" : $campos;
+
+        $this->openDB();
+
+        // Prepara a consulta SQL
+        $sql = "SELECT " . $campos . " FROM " . $tabela . " ";
+        $sql .= $innerjoin > 0 ? "INNER JOIN " . $innerjoin[0] . " ON " . $innerjoin[1] . " = " . $innerjoin[2] . " " : "";
+        $sql .= $innerjoin2 > 0 ? "INNER JOIN " . $innerjoin2[0] . " ON " . $innerjoin2[1] . " = " . $innerjoin2[2] . " " : "";
+        $sql .= $where_condicao != null ? "WHERE " . $where_condicao . " " : "";
+        $sql .= $group_by != null ? "GROUP BY " . $group_by . " " : "";
+        $sql .= $ordem != null ? "ORDER BY " . $ordem . " " : "";
+        $sql .= $limite != null ? "LIMIT " . $limite . " " : "";
+        
         //Armazena a consulta SQL para verificação
         $this->ultimo_sql = $sql;
 

@@ -18,6 +18,7 @@ class Atividade extends CRUD {
     const COL_LOCAL = "local";
     const COL_QUANTIDADE_VAGA = "quantidade_vaga";
     const COL_TIPO = "tipo";
+    const COL_ATIVIDADE_INATIVO = "inativo";
 
     /**
      * @param $dados
@@ -67,19 +68,20 @@ class Atividade extends CRUD {
      * @param $evento_id
      * @return array
      */
-    public function listar($evento_id) {
+    public function listar($evento_id, $campos, $busca, $ordem) {
 
-        $campos = "*";
-        $ordem = self::COL_TITULO . " ASC";
+        $campos = $campos != null ? $campos : "*";
+        $ordem = $ordem != null ? $ordem : self::COL_DATAHORA_INICIO . " ASC";
 
         $where_condicao = self::COL_EVENTO_ID . " = ?";
+        $where_condicao .=  " AND " . self::COL_ATIVIDADE_INATIVO . " = 0";
         $where_valor[] = $evento_id;
 
         $retorno = [];
 
         try {
 
-            $retorno = $this->read(self::TABELA, $campos, $where_condicao, $where_valor, null, $ordem);
+            $retorno = $this->read(self::TABELA, $campos, $where_condicao, $where_valor, $busca, $ordem, null);
 
         } catch (Exception $e) {
             echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
@@ -88,24 +90,23 @@ class Atividade extends CRUD {
         return $retorno;
     }
 
-    /**
-     * @param $atividade_id
-     * @return bool
-     */
-    public function excluir($atividade_id) {
+
+    public function selecionarAtividade($atividade_id) {
 
         $where_condicao = self::COL_ATIVIDADE_ID . " = ?";
         $where_valor[] = $atividade_id;
 
+        $retorno = [];
+
         try {
 
-            $this->delete(self::TABELA, $where_condicao, $where_valor);
+            $retorno = $this->read(self::TABELA, "*", $where_condicao, $where_valor, null, null, 1);
 
         } catch (Exception $e) {
             echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
         }
 
-        return true;
+        return $retorno;
     }
 
 }

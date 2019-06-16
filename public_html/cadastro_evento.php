@@ -1,14 +1,11 @@
 <?php
 
-require_once '../vendor/autoload.php';
+require_once 'header.php';
 
 use core\controller\Eventos;
 use core\sistema\Footer;
 
-require_once 'header.php';
-
 $evento_id = isset($_GET['evento_id']) ? $_GET['evento_id'] : null;
-
 
 $eventos = new Eventos();
 

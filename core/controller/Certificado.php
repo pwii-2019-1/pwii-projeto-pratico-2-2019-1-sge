@@ -4,6 +4,8 @@ namespace core\controller;
 
 use core\model\Atividade;
 use core\model\Evento;
+use core\model\Presenca;
+use core\model\Usuario;
 use core\sistema\Util;
 use Mpdf\Mpdf;
 use Mpdf\MpdfException;
@@ -11,10 +13,40 @@ use Mpdf\MpdfException;
 class Certificado {
 
     /**
+     * @param $dados
      * @return bool
      * @throws MpdfException
      */
-    public function gerarCertificado() {
+    public function gerarCertificado($dados) {
+        $usuario = new Usuario();
+        $evento = new Evento();
+        $atividade = new Atividades();
+        $presenca = new Presenca();
+
+        $dados = json_decode($dados['dados'], true);
+
+        $dados_evento = $evento->selecionarEvento($dados['evento_id'])[0];
+        $dados_usuario = $usuario->selecionarUsuario($dados['usuario_id'])[0];
+        $dados_atividades = $atividade->listarAtividades($dados_evento->evento_id)['lista_atividades'];
+        $dados_presenca = [];
+
+        foreach ($dados_atividades as $atividade) {
+            $dados_presenca[] = [
+                'atividade_id' => $atividade->atividade_id,
+                'presenca' => $presenca->checkPresenca($atividade->atividade_id, $dados_usuario->usuario_id),
+                'carga_horaria' => $atividade->carga_horaria
+            ];
+        }
+
+        $carga_horaria = 0;
+
+        if (count($dados_presenca) > 0) {
+            foreach ($dados_presenca as $valor) {
+                if ($valor['presenca'] == 1) {
+                    $carga_horaria += (int)$valor['carga_horaria'];
+                }
+            }
+        }
 
         $converte_mes = [
             '01' => 'Janeiro',
@@ -31,15 +63,15 @@ class Certificado {
             '12' => 'Dezembro'
         ];
 
-        $data_inicio = '2019-05-22';
-        $data_fim = '2019-05-25';
+        $data_inicio = $dados_evento->evento_inicio;
+        $data_fim = $dados_evento->evento_termino;
 
         if ($data_inicio != $data_fim) {
 
             $di = explode('-', $data_inicio);
             $df = explode('-', $data_fim);
 
-            $periodo = "no período de {$di[2]} a {$df[2]} de {$converte_mes[$df[1]]} de {$df[0]}";
+            $periodo = "no período de {$di[2]} à {$df[2]} de {$converte_mes[$df[1]]} de {$df[0]}";
         } else {
 
             $di = explode('-', $data_inicio);
@@ -50,11 +82,11 @@ class Certificado {
         $data_emissao = date('d') . " de " . $converte_mes[date('m')] . " de " . date('Y');
 
         $dados = [
-            'nome' => 'Fulado de Tal da Silva',
-            'cpf' => '012.345.678-90',
-            'evento' => 'III Semana Acadêmica da Graduação e Pós-Graduação do Campus Ceres',
+            'nome' => $dados_usuario->nome,
+            'cpf' => $dados_usuario->cpf,
+            'evento' => $dados_evento->nome,
             'periodo' => $periodo,
-            'carga_horaria' => '06',
+            'carga_horaria' => str_pad($carga_horaria, 2, '0', STR_PAD_LEFT),
             'data_emissao' => $data_emissao
         ];
 

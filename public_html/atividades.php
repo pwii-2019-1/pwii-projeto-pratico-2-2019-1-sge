@@ -1,5 +1,7 @@
 <?php
-require_once 'header.php';
+
+require_once '../vendor/autoload.php';
+require_once '../config.php';
 
 use core\controller\Eventos;
 use core\controller\Atividades;
@@ -12,10 +14,10 @@ if (!Autenticacao::verificarLogin()) {
     header('Location: login.php');
 }
 
+require_once 'header.php';
+
 if (isset($_GET['evento_id'])) {
     $evento_id = $_GET['evento_id'];
-} else {
-    header('Location: login.php');
 }
 
 $eventos = new Eventos();

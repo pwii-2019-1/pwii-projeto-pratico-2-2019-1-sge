@@ -1,13 +1,11 @@
 <?php
 
-require_once '../vendor/autoload.php';
+require_once 'header.php';
 
 use core\controller\Eventos;
 use core\sistema\Autenticacao;
 use core\sistema\Footer;
 use core\sistema\Util;
-
-require_once 'header.php';
 
 $pg = isset($_GET['pg']) ? $_GET['pg'] : null;
 

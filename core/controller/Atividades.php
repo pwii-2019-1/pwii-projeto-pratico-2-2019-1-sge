@@ -35,13 +35,12 @@ class Atividades {
     /**
      * Efetua o cadastro da atividade ao sistema
      * Aqui vc trata os dados e manda eles tratados pra outra pagina que vai efetuar e tratar a resposta
-     * la
      * @param $dados
      * @return bool
+     * @throws \Exception
      */
 
     public function cadastrar($dados) {
-
 
         $dados['titulo'] = ucfirst($dados['titulo']); // Deixa a primeira letra do nome da atividade maiúscula
         $dados['responsavel'] = ucfirst($dados['responsavel']); // Deixa a primeira letra do responsavel da atividade maiúscula
@@ -60,7 +59,6 @@ class Atividades {
         } else {
             return false;
         }
-
     }
 
     /**
@@ -79,8 +77,10 @@ class Atividades {
 
             // Verifica se já tem inscritos no evento
             foreach ($lista as $i => $v) {
-                $inscritos = $presenca->listarPresencas([$v->atividade_id, null], 'nomes');
-                $lista[$i]->inscritos = count((array)$inscritos[0]) > 0 ? 1 : 0;
+                if (count((array)$v) > 0) {
+                    $inscritos = $presenca->listarPresencas([$v->atividade_id, null], 'nomes');
+                    $lista[$i]->inscritos = count((array)$inscritos[0]) > 0 ? 1 : 0;
+                }
             }
 
             $this->__set("lista_atividades", $lista);

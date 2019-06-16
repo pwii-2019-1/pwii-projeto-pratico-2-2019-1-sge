@@ -98,4 +98,23 @@ class Presenca extends CRUD {
         return $retorno;
 
     }
+
+    public function checkPresenca($atividade_id, $usuario_id) {
+
+        $where_condicao = self::COL_ATIVIDADE_ID . " = ? AND " . self::COL_USUARIO_ID . " = ?";
+        $where_valor = [$atividade_id, $usuario_id];
+
+        try {
+
+            $retorno = $this->read(self::TABELA, "*", $where_condicao, $where_valor);
+
+        } catch (Exception $e) {
+            echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
+            return false;
+        }
+
+        $retorno = count((array) $retorno[0]) == 0 ? 0 : $retorno[0]->presenca;
+
+        return $retorno;
+    }
 }

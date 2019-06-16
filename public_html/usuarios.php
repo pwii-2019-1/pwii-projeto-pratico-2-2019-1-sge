@@ -1,9 +1,9 @@
 <?php
 
+require_once 'header.php';
+
 use core\controller\Usuarios;
 use core\sistema\Footer;
-
-require_once 'header.php';
 
 $usuarios = new Usuarios();
 

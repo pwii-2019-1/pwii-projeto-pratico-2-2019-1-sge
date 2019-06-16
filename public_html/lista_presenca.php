@@ -1,16 +1,19 @@
 <?php
-require_once 'header.php';
+
+require_once '../vendor/autoload.php';
+require_once '../config.php';
 
 use core\controller\Eventos;
 use core\controller\Atividades;
 use core\controller\Presencas;
 use core\sistema\Autenticacao;
 use core\sistema\Footer;
-use core\sistema\Util;
 
 if (!Autenticacao::verificarLogin() || !Autenticacao::usuarioAdministrador()) {
     header('Location: login.php');
 }
+
+require_once 'header.php';
 
 $evento_id = isset($_GET['evento_id']) ? $_GET['evento_id'] : "";
 $atividade_id = isset($_GET['atividade_id']) ? $_GET['atividade_id'] : "";

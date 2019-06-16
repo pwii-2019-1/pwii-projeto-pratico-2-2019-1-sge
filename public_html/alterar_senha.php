@@ -1,5 +1,7 @@
 <?php
-require_once 'header.php';
+
+require_once '../vendor/autoload.php';
+require_once '../config.php';
 
 use core\sistema\Autenticacao;
 use core\sistema\Footer;
@@ -8,6 +10,7 @@ if (!Autenticacao::verificarLogin()) {
     header('Location: index.php');
 }
 
+require_once 'header.php';
 
 ?>
 

@@ -8,8 +8,7 @@ use core\model\Presenca;
 use core\model\Usuario;
 use core\model\Atividade;
 
-class Presencas
-{
+class Presencas {
 
     /**
      * Limite da listagem de eventos
@@ -21,13 +20,11 @@ class Presencas
     private $presenca = null;
     private $lista_eventos = [];
 
-    public function __set($atributo, $valor)
-    {
+    public function __set($atributo, $valor) {
         $this->$atributo = $valor;
     }
 
-    public function __get($atributo)
-    {
+    public function __get($atributo) {
         return $this->$atributo;
     }
 
@@ -39,8 +36,7 @@ class Presencas
      * @return bool
      * @throws \Exception
      */
-    public function cadastrar($dados)
-    {
+    public function cadastrar($dados) {
 
         $presencas = new Presenca();
 
@@ -104,12 +100,12 @@ class Presencas
         $p = [];
         if (count($lista) > 0 && (!empty($lista[0]))) {
             foreach ($lista as $value) {
-                if ($value->presenca == '1'){
-                    array_push($p,$value->atividade_id);
+                if ($value->presenca == '1') {
+                    array_push($p, $value->atividade_id);
                 }
             }
             return $p;
-        } else{
+        } else {
             return false;
         }
 
@@ -122,10 +118,10 @@ class Presencas
         $p = [];
         if (count($lista) > 0 && (!empty($lista[0]))) {
             foreach ($lista as $value) {
-                array_push($p,$value->usuario_id);
+                array_push($p, $value->usuario_id);
             }
             return $p;
-        } else{
+        } else {
             return false;
         }
 

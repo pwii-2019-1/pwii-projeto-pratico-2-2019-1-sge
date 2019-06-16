@@ -87,7 +87,7 @@ class Eventos
         }
 
         if (isset($dados['busca']['me'])) {
-            $campos = Evento::TABELA . "." . Evento::COL_EVENTO_ID . ", " .
+            $campos = "e." . Evento::COL_EVENTO_ID . ", " .
                     Evento::COL_NOME . ", " .
                     Evento::COL_DATA_INICIO . ", " .
                     Evento::COL_DATA_TERMINO . ", " .

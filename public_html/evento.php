@@ -81,7 +81,7 @@ if (!Autenticacao::usuarioAdministrador()) {
 						<?php
                         $cont = 0;
 
-                        if (count($dados2) > 0 && count((array) $dados2['lista_eventos']) > 0) {
+                        if (count($dados2) > 0 && count((array) $dados2['lista_eventos']) > 0 && count((array) $dados2['lista_eventos'][0]) > 0) {
 							foreach ($dados2['lista_eventos'] as $j => $evento2) {
 								if ($evento->evento_id == $evento2->evento_id) $cont++; ?>
 							<?php }
@@ -131,7 +131,7 @@ if (!Autenticacao::usuarioAdministrador()) {
 
 					<?php } else { ?>
 						<a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark <?= $b ?>">Atividades Inscritas</a>
-						<a href="#" class="btn btn-lg btn-outline-dark">Certificado</a>
+						<a href="#" id="gerar_certificado" data-evento_id="<?= $evento->evento_id ?>" data-usuario_id="<?= Autenticacao::getCookieUsuario() ?>" class="btn btn-lg btn-outline-dark">Certificado</a>
 					<?php } ?>
 				</div>
 			</div>

@@ -1,5 +1,6 @@
 let construct = () => {
     eventos();
+    gerarCertificado();
 };
 
 
@@ -21,8 +22,7 @@ const eventos = () => {
             dataType: "text",
             async: true,
             success: function (res) {
-                console.log(res);
-                if (res > 0 ) {
+                if (res > 0) {
                     window.location.href = `${base}/${url[1]}/`;
                 } else {
                     $('#msg_exclusao_erro').toast('show');
@@ -35,4 +35,18 @@ const eventos = () => {
     });
 
 };
+
+const gerarCertificado = () => {
+    $('#gerar_certificado').on('click', function (e) {
+        e.preventDefault();
+
+        let dados = {
+            evento_id: $(this).attr('data-evento_id'),
+            usuario_id: $(this).attr('data-usuario_id')
+        };
+
+        window.open('api.php?acao=Certificado/gerarCertificado&dados=' + JSON.stringify(dados), '_blank');
+    })
+};
+
 construct();

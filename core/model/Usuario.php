@@ -177,4 +177,23 @@ class Usuario extends CRUD {
 
         return $retorno[0];
     }
+
+    public function verificarUsuario($usuario_cpf, $email) {
+
+        $campos = "*";
+        $where_condicao = self::COL_CPF . " = ? OR " . self::COL_EMAIL . " = ?";
+        $where_valor = [$usuario_cpf, $email];
+
+        $retorno = [];
+
+        try {
+
+            $retorno = $this->read(self::TABELA, $campos, $where_condicao, $where_valor, null, null, 1);
+
+        } catch (Exception $e) {
+            echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
+        }
+
+        return $retorno[0];
+    }
 }

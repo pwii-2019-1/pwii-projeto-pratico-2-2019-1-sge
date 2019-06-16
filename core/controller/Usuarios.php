@@ -72,7 +72,13 @@ class Usuarios {
             $resultado = $usuario->alterar($dados);
 
         } else {
-            $resultado = $usuario->adicionar($dados);
+            $verificar = $usuario->verificarUsuario($dados["cpf"],$dados["senha"]);
+            $verificar=$verificar->usuario_id;
+            if($verificar>0){
+                $resultado = 0;
+            }else{
+                $resultado = $usuario->adicionar($dados);
+            }
         }
 
         if ($resultado > 0) {
@@ -96,7 +102,6 @@ class Usuarios {
         $dados->data_nascimento=date('Y-m-d',  strtotime($dados->data_nascimento));
         return $dados;
     }
-    
     
     public function atualizarDados($dados) {
         

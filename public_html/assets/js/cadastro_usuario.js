@@ -19,7 +19,8 @@ const eventos = () => {
             bairro = $('#bairro').val(),
             cep = $('#cep').val(),
             estado  = $('#estado').val(),
-            cidade  = $('#cidade').val();
+            cidade  = $('#cidade').val(),
+            usuario_id  = $('#usuario_id').val();
 
         if (nome !== "" &&
             cpf !== "" &&
@@ -45,10 +46,14 @@ const eventos = () => {
                 cidade: cidade
             };
 
-            console.log(dados)
-
-            dados.acao = "Usuarios/cadastrar";
-
+            if(usuario_id>0){
+                dados.usuario_id=usuario_id;
+                delete dados.senha;
+                dados.acao = "Usuarios/atualizarDados";
+            }else{
+                dados.acao = "Usuarios/cadastrar";
+            }
+    
             $.ajax({
                 url: baseUrl,
                 type: "POST",
@@ -58,6 +63,7 @@ const eventos = () => {
                 success: function (res) {
                     if (res) {
                         $('#msg_sucesso').toast('show'); // Para aparecer a mensagem de sucesso
+                        window.location="login.php";
                         $('#formulario').each(function () {
                             this.reset(); // Pra limpar o formulário
                         });

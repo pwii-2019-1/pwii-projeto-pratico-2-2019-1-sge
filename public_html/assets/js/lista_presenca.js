@@ -24,7 +24,6 @@ const presencas = () => {
         };
 
         dados.acao = "Presencas/cadastrar";
-        console.log(dados);
 
         $.ajax({
             url: baseUrl,
@@ -34,7 +33,6 @@ const presencas = () => {
             async: true,
             success: function (res) {
                 if (res && Number(res) > 0) {
-                    console.log(res);
                     $('#msg_sucesso').toast('show'); // Para aparecer a mensagem de sucesso
                 } else {
                     $('#msg_erro').toast('show');

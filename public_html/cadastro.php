@@ -2,8 +2,19 @@
 
 require_once 'header.php';
 
+use core\controller\Usuarios;
 use core\sistema\Footer;
 
+$usuario = new Usuarios();
+
+$usuario_id = isset($_GET['usuario_id']) ? $_GET['usuario_id'] : null;
+
+$usuarios = new Usuarios();
+$dados_eventos = "";
+$usuario = "";
+if (isset($usuario_id)){
+    $usuario = $usuarios->listarUsuarioID($usuario_id);
+}
 ?>
 
 <main role="main">
@@ -20,27 +31,27 @@ use core\sistema\Footer;
                     <div class="form-row">
                         <div class="form-group col-md-7">
                             <label for="nome">Nome:</label>
-                            <input type="text" class="form-control" id="nome" placeholder="Insira seu nome completo"
+                            <input type="text" class="form-control" id="nome" value="<?php if($usuario_id){echo $usuario->nome ;}?>" placeholder="Insira seu nome completo"
                                    required autofocus >
                         </div>
                         <div class="form-group col-md-5">
                             <label for="cpf">CPF:</label>
-                            <input type="text" class="form-control" id="cpf" name="cpf" placeholder="000.000.000-00" pattern="\d{3}\.\d{3}.\d{3}-\d{2}" required>
+                            <input type="text" class="form-control" id="cpf" name="cpf" placeholder="000.000.000-00" pattern="\d{3}\.\d{3}.\d{3}-\d{2}" title="Exemplo: xxx.xxx.xxx-xx" value="<?php if($usuario_id){echo $usuario->cpf ;}?>" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="data_nascimento">Data de Nascimento</label>
-                            <input type="date" class="form-control" id="data_nascimento" required>
+                            <input type="date" class="form-control" id="data_nascimento" value="<?php if($usuario_id){echo $usuario->data_nascimento;}?>"  required>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="nacionalidade">Nacionalidade</label>
                             <input type="text" class="form-control" id="nacionalidade"
-                                   placeholder="Insira sua nacionalidade" required>
+                            value="<?php if($usuario_id){echo $usuario->nacionalidade ;}?>" placeholder="Insira sua nacionalidade" required>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="ocupacao">Ocupação</label>
-                            <input type="text" class="form-control" id="ocupacao" placeholder="Insira sua ocupação"
+                            <input type="text" class="form-control" id="ocupacao" value="<?php if($usuario_id){echo $usuario->ocupacao ;}?>"placeholder="Insira sua ocupação"
                                    required>
                         </div>
                     </div>
@@ -48,18 +59,21 @@ use core\sistema\Footer;
                     <div class="form-row">
                         <div class="form-group col-md-7">
                             <label for="email">Email:</label>
-                            <input type="email" class="form-control" id="email" placeholder="Insira seu e-mail"
+                            <input type="email" class="form-control" id="email" value="<?php if($usuario_id){echo $usuario->email ;}?>" placeholder="Insira seu e-mail"
                                    required>
                         </div>
                         <div class="form-group col-md-5">
                             <label for="telefone">Telefone:</label>
-                            <input type="tel" id="telefone" class="form-control" placeholder="(00) 90000-0000" pattern="\([0-9]{2}\) \[0-9]{4,6}-[0-9]{3,4}$" required>
+                            <input type="tel" id="telefone" class="form-control" placeholder="(00) 90000-0000" value="<?php if($usuario_id){echo $usuario->telefone ;}?>" pattern="\([0-9]{2}\) \[0-9]{4,6}-[0-9]{3,4}$" required>
                         </div>
                     </div>
+                    <?php
+                        if(!$usuario_id){
+                            ?>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="senha">Senha:</label>
-                            <input type="password" class="form-control" id="senha" placeholder="Crie uma senha"
+                            <input type="password" class="form-control" id="senha"  placeholder="Crie uma senha"
                                    required>
                         </div>
                         <div class="form-group col-md-6">
@@ -68,23 +82,24 @@ use core\sistema\Footer;
                                    placeholder="Confirme sua senha" required>
                         </div>
                     </div>
+                    <?php } ?>
                     <hr>
                     <div class="form-row">
                         <div class="form-group col-md-7">
                             <label for="endereco">Logradouro:</label>
-                            <input type="text" class="form-control" id="endereco" placeholder="Insira seu logradouro"
+                            <input type="text" class="form-control" id="endereco" value="<?php if($usuario_id){echo $usuario->endereco ;}?>" placeholder="Insira seu logradouro"
                                    required>
                         </div>
                         <div class="form-group col-md-5">
                             <label for="bairro">Bairro:</label>
-                            <input type="text" class="form-control" id="bairro" placeholder="Insira seu bairro"
+                            <input type="text" class="form-control" id="bairro" placeholder="Insira seu bairro" value="<?php if($usuario_id){echo $usuario->bairro ;}?>"
                                    required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="cep">CEP:</label>
-                            <input type="text" class="form-control" id="cep" placeholder="00000-000" pattern="\d{5}\-\d{3}" required>
+                            <input type="text" class="form-control" id="cep" placeholder="00000-000" pattern="\d{5}\-\d{3}" value="<?php if($usuario_id){echo $usuario->cep ;}?>" required>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="estado">Estado:</label>
@@ -100,14 +115,20 @@ use core\sistema\Footer;
                                 <option value="1"></option>
                             </select>
                         </div>
+                        <div class="form-group col-md-3">
+                        <input type="hidden" id="usuario_id" name="usuario_id" 
+                        value="<?php if($usuario_id){echo $usuario->usuario_id;}?>">
+                        </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-8"></div>
                         <div class="col-md-2">
-                            <button type="reset" class="btn btn-block btn-outline-info">Limpar</button>
+                            <?php if(!$usuario_id){?>
+                                <button type="reset" class="btn btn-block btn-outline-info">Limpar</button>
+                                <?php }?>
                         </div>
                         <div class="col-md-2">
-                            <button type="submit" class="btn btn-block btn-outline-success">Cadastrar</button>
+                            <button type="submit" class="btn btn-block btn-outline-success"><?php if(!$usuario_id){echo("Cadastrar");}else{echo("Atualizar");}?></button>
                         </div>
                     </div>
                 </form>

@@ -49,12 +49,12 @@ $x = 0;
                         <tr>
                             <th class="col-md-2 text-center">#</th>
                             <th class="col-md-4 text-center">Participante</th>
-                            <th class="col-md-4 text-center">Título</th>
+                            <th class="col-md-4 text-center">CPF</th>
                             <th class="col-md-2 text-center">Presença</th>
                         </tr>
                     </thead>
                     <tbody class="">
-                        <?php if (count($presenca[0]) > 0) {
+                        <?php if (count((array) $presenca[0]) > 0) {
                             foreach ($presenca as $j => $pre) {?>
                         <tr>
                             <td class="text-center"><?= ($j+1) ?></td>

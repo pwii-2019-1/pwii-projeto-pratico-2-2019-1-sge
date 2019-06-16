@@ -25,9 +25,8 @@ $x = 0;
 ?>
 
 <main role='main'>
-    <div class="jumbotron mt-n3" style="border-radius:0px; background:url(assets/imagens/grande.png) no-repeat 0 0">
-        <div class="container mb-4">
-        </div>
+    <div class="jumbotron" style="border-radius:0px; background:url(assets/imagens/grande.png) no-repeat 0 0">
+        <div class="container mb-4"></div>
     </div>
     <div class="container">
         <div class="row">
@@ -46,7 +45,7 @@ $x = 0;
         </div>
 
         <ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
-            <?php if (count($atividade["total_dias"][0]) > 0) {
+            <?php if (count((array) $atividade["total_dias"][0]) > 0) {
                 foreach ($atividade["total_dias"] as $i => $dia) { ?>
                     <li class="nav-item">
                         <a class="nav-link <?= $i == 0 ? "active" : "" ?>" id="dia<?= $i ?>-tab" data-toggle="tab" href="#dia<?= $i ?>" role="tab" aria-controls="dia<?= $i ?>" aria-selected="true">
@@ -85,7 +84,7 @@ $x = 0;
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if (count($atividade["lista_atividades"][0]) > 0) {
+                                <?php if (count((array) $atividade["lista_atividades"][0]) > 0) {
                                     foreach ($atividade["lista_atividades"] as $j => $ativ) {
                                         if (Util::dia($ativ->datahora_inicio) == Util::dia($dia->data)) { ?>
                                             <tr>
@@ -114,6 +113,9 @@ $x = 0;
                                                         </a>
                                                         <a class="btn btn-outline-success" href="lista_presenca.php?evento_id=<?= $evento->evento_id ?>&atividade_id=<?= $ativ->atividade_id ?>" id="" title="Inscritos">
                                                             <i class="fas fa-users"></i>
+                                                        </a>
+                                                        <a id="download_lista" data-evento_id="<?= $evento->evento_id ?>" data-atividade_id="<?= $ativ->atividade_id ?>" class="btn btn-outline-primary" title="Baixar Lista de Presença">
+                                                            <i class="fa fa-download" aria-hidden="true"></i>
                                                         </a>
                                                     </td>
                                                 <?php } else {

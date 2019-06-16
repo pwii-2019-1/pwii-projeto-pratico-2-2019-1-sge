@@ -27,11 +27,9 @@ const eventos = () => {
                 async: true,
                 success: function (res) {
                     if (res && res === '1') {
-                        //alert('Login efetuado com sucesso!');
                         $('#msg_sucesso').toast('show'); // Para aparecer a mensagem de sucesso
                         window.location.href = `${base}/${url[1]}/`;
                     } else {
-                        //alert('Usuário/senha inválidos!');
                         alert('Usuário/senha inválidos!');
                         $('#msg_erro').toast('show');
                     }

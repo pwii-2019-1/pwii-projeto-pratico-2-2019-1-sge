@@ -38,5 +38,18 @@ const confirmacao = () => {
     });
 };
 
+const ajustarAlturaMain = () => {
+    const body = $('body');
+    const nav = $('nav');
+    const main = $('main');
+    const footer = $('footer');
+
+    const min_height = body.outerHeight() - (nav.outerHeight() + footer.outerHeight()) - 20;
+
+    $(main).css('min-height', min_height + 'px');
+
+};
+
 login();
 confirmacao();
+ajustarAlturaMain();

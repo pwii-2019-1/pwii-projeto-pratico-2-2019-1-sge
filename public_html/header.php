@@ -28,7 +28,7 @@ use core\sistema\Autenticacao;
 
 <body class="bg-light">
 <!-- NAVBAR-->
-<nav class="navbar navbar-dark bg-dark mb-3">
+<nav class="navbar navbar-dark bg-dark">
     <a href="index.php" class="navbar-brand text-light">SGE</a>
     <div class="dropdown dropleft">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown"
@@ -46,7 +46,6 @@ use core\sistema\Autenticacao;
                 <a class="dropdown-item" href="alterar_senha.php">Alterar Senha</a>
                 <a class="dropdown-item" href="#">Editar Dados</a>
                 <?php if (Autenticacao::usuarioAdministrador()) { ?>
-                    <a class="dropdown-item" href="index.php">Listagem de Eventos</a>
                     <a class="dropdown-item" href="cadastro_evento.php">Cadastrar Evento</a>
                     <a class="dropdown-item" href="usuarios.php">Usuários</a>
                 <?php } ?>

@@ -88,7 +88,7 @@ class Usuario extends CRUD {
         $where_condicao = "1 = 1";
         $where_valor = [];
 
-        if (count($busca) > 0) {
+        if (count((array) $busca) > 0) {
 
             if (isset($busca[self::COL_NOME]) && !empty($busca[self::COL_NOME])) {
                 $where_condicao .= " AND " . self::COL_NOME . " LIKE ?";
@@ -128,7 +128,7 @@ class Usuario extends CRUD {
 
         try {
 
-            $retorno = $this->read(self::TABELA, "*", $where_condicao, $where_valor, null, null, 1)[0];
+            $retorno = $this->read(self::TABELA, "*", $where_condicao, $where_valor, null, null, 1);
 
         } catch (Exception $e) {
             echo "Mensagem: " . $e->getMessage() . "\n Local: " . $e->getTraceAsString();
@@ -142,7 +142,7 @@ class Usuario extends CRUD {
      * @return array
      */
     public function selecionarUsuarioCPF($usuario_cpf) {
-        
+
         $where_condicao = self::COL_CPF . " = ?";
         $where_valor[] = $usuario_cpf;
 

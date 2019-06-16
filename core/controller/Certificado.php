@@ -2,18 +2,19 @@
 
 namespace core\controller;
 
+use core\model\Atividade;
+use core\model\Evento;
+use core\sistema\Util;
 use Mpdf\Mpdf;
 use Mpdf\MpdfException;
 
-class Certificado
-{
+class Certificado {
 
     /**
      * @return bool
      * @throws MpdfException
      */
-    public function gerarCertificado()
-    {
+    public function gerarCertificado() {
 
         $converte_mes = [
             '01' => 'Janeiro',
@@ -129,26 +130,29 @@ class Certificado
         return true;
     }
 
-
     /**
+     * @param $params
      * @return bool
      * @throws MpdfException
      */
-    public function gerarListaPresenca()
-    {
+    public function gerarListaPresenca($params) {
+        $evento = new Evento();
+        $atividade = new Atividade();
+        $presenca = new Presencas();
 
+        $params = json_decode($params['dados'], true);
+        $dados_evento = $evento->selecionarEvento($params['evento_id'])[0];
+        $dados_atividade = $atividade->selecionarAtividade($params['atividade_id'])[0];
+        $participantes = $presenca->listarPresencas([$params['atividade_id'], null], 'nomes');
 
-
+        $data_atividade = explode(' ', $dados_atividade->datahora_inicio)[0];
 
         $dados = [
-            'participantes' => [
-                'Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal','Alexandre Lopes', 'Ciclano de Tal', 'Fulano de Tal'
-            ],
-            'cpf' => '012.345.678-90',
-            'evento' => 'III Semana Acadêmica da Graduação e Pós-Graduação do Campus Ceres',
-            'atividade' => 'Mostra Científica',
-            'data' => '24/08/2018',
-            'responsavel' => 'Alexandre Ferreira Lopes'
+            'participantes' => $participantes,
+            'evento' => $dados_evento->nome,
+            'atividade' => $dados_atividade->titulo,
+            'data' => Util::formataDataBR($data_atividade),
+            'responsavel' => $dados_atividade->responsavel
         ];
 
         $html = "<!DOCTYPE html>";
@@ -156,7 +160,6 @@ class Certificado
         $html .= "<head>";
         $html .= "    <meta charset='UTF-8'>";
         $html .= "    <title>Lista de Presença</title>";
-        $html .= "    <link rel='stylesheet' href='./assets/css/lista.css'>";
         $html .= "</head>";
         $html .= "<body>";
         $html .= "    <p class='center bold '>Ministério da Educação</p>";
@@ -181,7 +184,7 @@ class Certificado
         $html .= "            <td class='left w100' colspan='1'>{$dados['data']}</td>";
         $html .= "        </tr>";
         $html .= "    </table>";
-        $html .= "    <table class='mb25 collapse fs20'>";
+        $html .= "    <table class='mb25 collapse fs16'>";
         $html .= "        <tr>";
         $html .= "            <td class='w40 center '><b>#</b></td>";
         $html .= "            <td class='w500 center '><b>Participante</b></td>";
@@ -192,13 +195,11 @@ class Certificado
         foreach ($dados['participantes'] as $i => $valor) {
             $html .= "        <tr>";
             $html .= "            <td class='center'>{$cont}</td>";
-            $html .= "            <td>{$valor}</td>";
+            $html .= "            <td>{$valor->nome}</td>";
             $html .= "            <td colspan='2'></td>";
             $html .= "        </tr>";
             $cont++;
         }
-
-
 
         $html .= "    </table>";
         $html .= "</body>";
@@ -219,7 +220,6 @@ class Certificado
         ];
 
         $pdf = new Mpdf($config);
-        //  $pdf = new Mpdf();
 
         $style = file_get_contents(ROOT . 'public_html/assets/css/lista.css');
 

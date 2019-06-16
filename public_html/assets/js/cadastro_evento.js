@@ -15,7 +15,6 @@ const eventos = () => {
             data_prorrogacao = $('#data_prorrogacao').val(),
             evento_id = $('#formulario').attr('data-evento_id');
 
-        console.log(evento_id);
         const validaDatas = () => {
 
             let date_evento_inicio = new Date(evento_inicio),
@@ -54,7 +53,7 @@ const eventos = () => {
                 data_prorrogacao: data_prorrogacao
             };
 
-            if(evento_id != ""){
+            if(evento_id !== ""){
                 dados.evento_id = evento_id;
             }
 
@@ -68,14 +67,13 @@ const eventos = () => {
                 async: true,
                 success: function (res) {
                     if (res) {
-                        console.log(res);
                         if (evento_id == ""){
                             $('#msg_sucesso').toast('show'); // Para aparecer a mensagem de sucesso
 
                             urlAtividade =  './cadastro_atividade.php?evento_id=' + res; // Para inservir na div btn_atividade o botão para cadastro de atividade dps que o cadastro de evento for feito
                             $('#btn_atividade').append('<a href="' + urlAtividade + '"" class="btn btn-block btn-outline-dark" title="Adicionar Atividades"><i class="fas fa-plus"></i></a>');
                         }else{
-                            $('#msg_alterar_sucesso').toast('show'); // Para aparecer a mensagem de sucesso 
+                            $('#msg_alterar_sucesso').toast('show'); // Para aparecer a mensagem de sucesso
                         }
                     } else {
 

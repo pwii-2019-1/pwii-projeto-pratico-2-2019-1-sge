@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 /*
     Personalização do input's de pesquisa da página inicial
 */
@@ -44,7 +48,7 @@ Usei isso só pra tirar a seta padrão do select
 */
 
 main {
-    min-height: 400px;
+    margin-top: 20px;
 }
 
 main h3.sem-resultado {

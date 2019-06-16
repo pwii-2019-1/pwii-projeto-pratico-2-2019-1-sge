@@ -3,6 +3,7 @@ let construct = () => {
     marcarAtividades();
     validaHorarios();
     confirmacaoA();
+    downloadLista();
 };
 
 const eventos = () => {
@@ -26,7 +27,6 @@ const eventos = () => {
         };
 
         dados.acao = "Presencas/cadastrar";
-        console.log(dados);
 
         $.ajax({
             url: baseUrl,
@@ -36,7 +36,6 @@ const eventos = () => {
             async: true,
             success: function (res) {
                 if (res && Number(res) > 0) {
-                    console.log(res);
                     $('#msg_sucesso').toast('show'); // Para aparecer a mensagem de sucesso
                 } else {
                     $('#msg_erro').toast('show');
@@ -57,7 +56,6 @@ const eventos = () => {
         };
 
         dados.acao = "Atividades/invalidarAtividade";
-        console.log(dados);
         $.ajax({
             url: baseUrl,
             type: "POST",
@@ -65,7 +63,6 @@ const eventos = () => {
             dataType: "text",
             async: true,
             success: function (res) {
-                console.log(res);
                 if (res > 0 ) {
                     window.location.href = `${base}/${url[1]}/`;
                 } else {
@@ -105,9 +102,8 @@ const marcarAtividades = () => {
 
 const validaHorarios = () => {
     $("input[type='checkbox']").on("click", function (event) {
-        // event.preventDefault();
 
-        if (($(this).is(':checked'))) {
+        if ($(this).is(':checked')) {
             // console.log('Checked');
             var atividade_id = $(this).attr('value');
 
@@ -137,26 +133,15 @@ const validaHorarios = () => {
                     (horario_inicioNovo.getTime() < horario_inicioAntigo.getTime() && horario_terminoNovo.getTime() > horario_inicioAntigo.getTime()) ||
                     ((horario_inicioAntigo.getTime() == horario_inicioNovo.getTime()) && (horario_terminoAntigo.getTime() == horario_terminoNovo.getTime()))
                 ) {
-                    // console.log("Conflito");
                     event.preventDefault();
                     $('#msg_alerta').toast('show');
-                    // console.log(horario_inicioAntigo.getUTCMilliseconds());
-                    // console.log(horario_terminoAntigo.getUTCMilliseconds());
-                    // console.log(horario_inicioNovo.getUTCMilliseconds());
-                    // console.log(horario_terminoNovo.getUTCMilliseconds());
-
                 } else {
-                    // console.log("Não existe conflito!");
-                    // console.log((horario_inicioAntigo.getUTCMilliseconds() == horario_inicioNovo.getUTCMilliseconds() ) && (horario_terminoAntigo.getUTCMilliseconds() == horario_inicioNovo.getUTCMilliseconds()));
-                    // console.log(horario_inicioAntigo.getUTCMilliseconds());
-                    // console.log(horario_terminoAntigo.getUTCMilliseconds());
-                    // console.log(horario_inicioNovo.getUTCMilliseconds());
-                    // console.log(horario_terminoNovo.getUTCMilliseconds());
+
                 }
 
             });
         } else {
-            // console.log('Not Checked');
+
         }
     });
 };
@@ -167,6 +152,21 @@ const confirmacaoA = () => {
 
         $('#botao_excluir').attr('data-atividade_id',id);
         $('#confirmModal').modal('show');
+    });
+};
+
+const downloadLista = () => {
+    $("#download_lista").on('click', function () {
+        let evento_id = $(this).attr('data-evento_id'),
+            atividade_id = $(this).attr('data-atividade_id');
+
+        let dados = {
+            evento_id: evento_id,
+            atividade_id: atividade_id
+        };
+
+        window.open('api.php?acao=Certificado/gerarListaPresenca&dados=' + JSON.stringify(dados), '_blank');
+
     });
 };
 

@@ -20,6 +20,8 @@ if (!Autenticacao::usuarioAdministrador()) {
 	$dados_eventos = [];
     $dados_eventos['busca']['me'] = Autenticacao::getCookieUsuario();
     $dados2 = $eventos->listarEventos($dados_eventos); //eventos que o usuario se inscreveu
+} else {
+    $dados2 = [];
 }
 
 ?>
@@ -76,8 +78,10 @@ if (!Autenticacao::usuarioAdministrador()) {
 			</div>
 			<div class="col-md-2">
 				<div class="btn-group-vertical">
-						<?php if (count($dados2['lista_eventos']) > 0) {
-							$cont = 0;
+						<?php
+                        $cont = 0;
+
+                        if (count($dados2) > 0 && count((array) $dados2['lista_eventos']) > 0) {
 							foreach ($dados2['lista_eventos'] as $j => $evento2) {
 								if ($evento->evento_id == $evento2->evento_id) $cont++; ?>
 							<?php }
@@ -144,7 +148,7 @@ if (!Autenticacao::usuarioAdministrador()) {
 		</div>
 
 		<ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
-			<?php if (count($atividade["total_dias"][0]) > 0) {
+			<?php if (count((array) $atividade["total_dias"][0]) > 0) {
 				foreach ($atividade["total_dias"] as $i => $dia) { ?>
 					<li class="nav-item">
 						<a class="nav-link <?= $i == 0 ? "active" : "" ?>" id="dia<?= $i ?>-tab" data-toggle="tab" href="#dia<?= $i ?>" role="tab" aria-controls="dia<?= $i ?>" aria-selected="true">
@@ -173,7 +177,7 @@ if (!Autenticacao::usuarioAdministrador()) {
 							</tr>
 						</thead>
 						<tbody>
-							<?php if (count($atividade["lista_atividades"][0]) > 0) {
+							<?php if (count((array) $atividade["lista_atividades"][0]) > 0) {
 								foreach ($atividade["lista_atividades"] as $j => $ativ) {
 									if (Util::dia($ativ->datahora_inicio) == Util::dia($dia->data)) { ?>
 										<tr>

@@ -49,9 +49,9 @@ class Autenticacao {
         if (isset($_COOKIE[self::COOKIE_USUARIO]) && isset($_COOKIE[self::COOKIE_ACESSO])) {
             $user = new Usuario();
 
-            $usuario = $user->selecionarUsuario($_COOKIE[self::COOKIE_USUARIO]);
+            $usuario = $user->selecionarUsuario($_COOKIE[self::COOKIE_USUARIO])[0];
 
-            if (count($usuario) > 0 && $usuario->admin == 1) {
+            if (count((array) $usuario) > 0 && $usuario->admin == 1) {
                 return true;
             } else {
                 return false;
@@ -79,7 +79,7 @@ class Autenticacao {
         $user = new Usuario();
         $resultado = $user->autenticarUsuario($usuario_cpf, $nova_senha);
 
-        if (count($resultado) > 0) {
+        if (count((array) $resultado) > 0) {
             $usuario_id = $resultado->usuario_id;
         } else {
             return false;

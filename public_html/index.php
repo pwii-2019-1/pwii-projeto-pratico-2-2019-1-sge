@@ -96,7 +96,7 @@ if (!Autenticacao::usuarioAdministrador()) {
         <div class="container">
             <div class="row">
 
-                <?php if (count($dados['lista_eventos'][0]) > 0) {
+                <?php if (count((array) $dados['lista_eventos'][0]) > 0) {
                     foreach ($dados['lista_eventos'] as $i => $evento) { ?>
 
                     <div class="col-md-4" style="">

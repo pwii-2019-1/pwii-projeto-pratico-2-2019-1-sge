@@ -56,7 +56,8 @@ class Presencas
     /**
      * Lista os eventos
      *
-     * @param $dados
+     * @param array $id
+     * @param null $listagem
      * @return array
      */
     public function listarPresencas($id = [], $listagem = null) {
@@ -94,7 +95,7 @@ class Presencas
      *
      * @param $id
      * @param $listagem
-     * @return array
+     * @return array|bool
      */
     public function listarAtividadesInscritas($id = [], $listagem = null) {
 

@@ -5,8 +5,8 @@ body {
 }
 
 p {
-    margin-bottom: 0px;
-    margin-top: 0px;
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 table {
@@ -58,7 +58,7 @@ table, tr, td {
 }
 
 .w500 {
-    width: 500px;
+    width: 45%;
 }
 
 .w50 {
@@ -66,7 +66,7 @@ table, tr, td {
 }
 
 .w40 {
-    width: 40px;
+    width: 10%;
 }
 
 .pr50 {

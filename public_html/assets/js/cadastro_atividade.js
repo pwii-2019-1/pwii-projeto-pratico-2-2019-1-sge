@@ -1,12 +1,6 @@
-//const base = window.location.origin;
-//const url = window.location.pathname.split('/');
-//const baseUrl = `${base}/${url[1]}/${url[2]}/api.php`;
-
-
-
 let construct = () => {
     atividades();
-}
+};
 
 const atividades = () => {
 
@@ -23,10 +17,10 @@ const atividades = () => {
             quantidade_vaga = $('#quantidade_vaga').val(),
             tipo = $('#tipo option:selected').val(),
             evento_id = $('#formulario').attr('data-evento_id');
-            //console.log(titulo, responsavel, data, hora_inicio, hora_termino, local, quantidade_vaga, tipo);
+
         const validaHorario = () => {
-            let hr_ini = hora_inicio.split(":")
-            let hr_fim = hora_termino.split(":")
+            let hr_ini = hora_inicio.split(":");
+            let hr_fim = hora_termino.split(":");
 
             if (hr_ini[0] < hr_fim[0]) {
                 return true
@@ -40,12 +34,9 @@ const atividades = () => {
             }
         };
 
-
-
-
         if (titulo !== "" &&
             responsavel !== "" &&
-            carga_horaria != "" &&
+            carga_horaria !== "" &&
             data !== "" &&
             hora_inicio !== "" &&
             hora_termino !== "" &&
@@ -58,8 +49,8 @@ const atividades = () => {
                 titulo: titulo,
                 responsavel: responsavel,
                 carga_horaria: carga_horaria,
-                datahora_inicio: data +" "+ hora_inicio,
-                datahora_termino: data +" "+ hora_termino,
+                datahora_inicio: data + " " + hora_inicio,
+                datahora_termino: data + " " + hora_termino,
                 local: local,
                 quantidade_vaga: quantidade_vaga,
                 tipo: tipo
@@ -67,10 +58,7 @@ const atividades = () => {
 
             if (evento_id !== "") dados.evento_id = evento_id;
 
-
             dados.acao = "Atividades/cadastrar";
-            //console.log(dados);
-
 
             $.ajax({
                 url: baseUrl,
@@ -82,8 +70,8 @@ const atividades = () => {
                     if (res) {
 
                         $('#msg_sucesso').toast('show'); // Para aparecer a mensagem de sucesso
-                        $('#formulario').each( function () {
-                        this.reset(); // Pra limpar o formulário
+                        $('#formulario').each(function () {
+                            this.reset(); // Pra limpar o formulário
                         });
 
                     } else {

@@ -105,20 +105,14 @@ if (isset($usuario_id)){
                         </div>
                         <div class="form-group col-md-4">
                             <label for="estado">Estado:</label>
-                            <select id="estado" class="custom-select" required>
-                                <option value="">Selecione seu estado</option>
-                                <option value="1"></option>
-                            </select>
+                            <input type="text" class="form-control" id="estado" placeholder="Insira seu estado" value="<?php if($usuario_id){echo $usuario->estado ;}?>" required>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="cidade">Cidade</label>
-                            <select id="cidade" class="custom-select" required>
-                                <option value="">Selecione sua cidade</option>
-                                <option value="1"></option>
-                            </select>
+                            <label for="cidade">Cidade:</label>
+                            <input type="text" class="form-control" id="cidade" placeholder="Insira sua cidade" value="<?php if($usuario_id){echo $usuario->cidade ;}?>" required>
                         </div>
                         <div class="form-group col-md-3">
-                        <input type="hidden" id="usuario_id" name="usuario_id" 
+                        <input type="hidden" id="usuario_id" name="usuario_id"
                         value="<?php if($usuario_id){echo $usuario->usuario_id;}?>">
                         </div>
                     </div>

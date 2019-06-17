@@ -49,7 +49,14 @@ if (!Autenticacao::usuarioAdministrador()) {
 								<h5 class="card-title">Inscrições</h5>
 								<p class="card-text">
 									Início: <?= Util::formataDataBR($evento->data_inicio) ?> <br>
-									Fim: <?= Util::formataDataBR($evento->data_termino) ?>
+									Fim: <span class="font-weight-bold text-uppercase text-danger">
+									<?php if (strtotime(date('Y/m/d')) >= strtotime($evento->data_termino)) {
+										echo Util::formataDataBR($evento->data_prorrogacao) . " (prorrogado)";
+									} else {
+										//echo Util::formataDataBR($evento->data_prorrogacao);
+										echo Util::formataDataBR($evento->data_termino);
+									}?>
+								</span>
 								</p>
 								<p class="card-text"><small class="text-muted">Inscrições somente pelo site</small></p>
 							</div>

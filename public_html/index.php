@@ -32,7 +32,7 @@ if (isset($_GET['me']) && $_GET['me'] == 1) {
 $dados = $eventos->listarEventos($dados_eventos); //todos os eventos
 
 //para mudar o botão de 'Inscrever-se'
-if (!Autenticacao::usuarioAdministrador()) {
+if (!Autenticacao::usuarioAdministrador() && Autenticacao::verificarLogin()) {
     $dados_eventos['busca']['me'] = Autenticacao::getCookieUsuario();
     $dados2 = $eventos->listarEventos($dados_eventos); //eventos que o usuario se inscreveu
 }
@@ -131,9 +131,9 @@ if (!Autenticacao::usuarioAdministrador()) {
                                     <small class="text-muted"><?= Util::formataDataBR($evento->evento_inicio) ?></small>
                                 </div>
                             </div>
-                            <?php if (date('d/m/Y') < Util::formataDataBR($evento->evento_inicio)) { ?>
+                            <?php if (strtotime(date('Y/m/d')) < strtotime($evento->evento_inicio)) {?>
                                 <div class="card-footer text-muted bg-success p-1"></div>
-                            <?php } else if (date('d/m/Y') > Util::formataDataBR($evento->evento_inicio) && date('d/m/Y') < Util::formataDataBR($evento->evento_termino)) { ?>
+                            <?php } else if (strtotime(date('Y/m/d')) > strtotime($evento->evento_inicio) && strtotime(date('Y/m/d')) < strtotime($evento->evento_termino)) { ?>
                                 <div class="card-footer text-muted bg-warning p-1"></div>
                             <?php } else { ?>
                                 <div class="card-footer text-muted bg-danger p-1"></div>

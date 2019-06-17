@@ -79,16 +79,18 @@ $atividade = $atividades->listarAtividade($atividade_id);
                                 <option value="">Selecione o tipo</option>
                                 <option value="1" <?php echo (isset($atividade->tipo) && $atividade->tipo == 1) ? "selected" : "" ?>>Palestra</option>
                                 <option value="2" <?php echo (isset($atividade->tipo) && $atividade->tipo == 2) ? "selected" : "" ?>>Minicurso</option>
+                                <option value="3" <?php echo (isset($atividade->tipo) && $atividade->tipo == 3) ? "selected" : "" ?>>Mesa Redonda</option>
+                                <option value="4" <?php echo (isset($atividade->tipo) && $atividade->tipo == 4) ? "selected" : "" ?>>Mostra</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-md-6"></div> 
+                        <div class="col-md-6"></div>
                         <div class="col-md-2">
                             <!-- <button type="" class="btn btn-block btn-outline-dark" onclick="history.go(-1)"><i >Voltar</i></button> -->
                             <a type="" href="cadastro_evento.php" class="btn btn-block btn-outline-dark" onclick="">Voltar</a>
                         </div>
-                       
+
                         <div class="col-md-2">
                             <button type="reset" class="btn btn-block btn-outline-info">Limpar</button>
                         </div>

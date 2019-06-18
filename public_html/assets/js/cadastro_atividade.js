@@ -1,6 +1,7 @@
 
 let construct = () => {
     atividades();
+
 };
 
 const atividades = () => {
@@ -17,9 +18,31 @@ const atividades = () => {
             local = $('#local').val(),
             quantidade_vaga = $('#quantidade_vaga').val(),
             tipo = $('#tipo option:selected').val(),
-            atividade_id = $('#formulario').attr('data-atividade_id');
-            evento_id = $('#formulario').attr('data-evento_id');
-
+            atividade_id = $('#formulario').attr('data-atividade_id'),
+            evento_id = $('#formulario').attr('data-evento_id'),
+            evento_inicio = $('#formulario').attr('data-evento_inicio'),
+            evento_termino = $('#formulario').attr('data-evento-termino');
+            
+            const validaAtividade_Evento = () => {
+                // Essa função verifica se uma atividade está dentro do período que o evento irá acontecer
+                console.log('asd');
+                
+                evento_inicio = new Date(evento_inicio);
+                evento_termino = new Date(evento_termino);
+                
+                data_atividade = new Date(data);
+                data_atividade.setDate(data_atividade.getDate() + 1);
+    
+                console.log(evento_inicio +'\n'+ evento_termino +'\n'+ data_atividade);
+                if (data_atividade >= evento_inicio && data_atividade <= evento_termino){
+                    return true;
+                }else{
+                    $('#msg_alerta').toast('show');
+                    return false;
+                }
+            };
+            
+ 
         const validaHorario = () => {
             let hr_ini = hora_inicio.split(":");
             let hr_fim = hora_termino.split(":");
@@ -45,7 +68,8 @@ const atividades = () => {
             local !== "" &&
             quantidade_vaga !== "" &&
             tipo !== "" &&
-            validaHorario()
+            validaHorario() && 
+            validaAtividade_Evento()
         ) {
             let dados = {
                 titulo: titulo,

@@ -3,6 +3,8 @@
 require_once '../vendor/autoload.php';
 require_once 'header.php';
 
+
+use core\controller\Eventos;
 use core\controller\Atividades;
 use core\sistema\Footer;
 
@@ -14,6 +16,8 @@ $atividades = new Atividades();
 $atividade = [];
 
 $atividade = $atividades->listarAtividade($atividade_id);
+$eventos = new Eventos();
+$evento = $eventos->listarEvento($_GET['evento_id']);
 
 
 ?>
@@ -30,7 +34,10 @@ $atividade = $atividades->listarAtividade($atividade_id);
             <div class="col-md-9">
                 <form class="needs-validation" id="formulario"
                       data-evento_id="<?= isset($_GET['evento_id']) ? $_GET['evento_id'] : "" ?>"
-                      data-atividade_id="<?= isset($_GET['atividade_id']) ? $_GET['atividade_id'] : "" ?>">
+                      data-atividade_id="<?= isset($_GET['atividade_id']) ? $_GET['atividade_id'] : "" ?>"
+                      data-evento_inicio="<?= (isset($evento->data_inicio)) ? $evento->data_inicio : "" ?>" 
+                      data-evento-termino="<?= (isset($evento->data_termino)) ? $evento->data_termino : "" ?>"
+                      >
                     <div class="form-group">
                         <label for="titulo">Título:</label>
                         <input type="text" class="form-control" id="titulo" placeholder="Insira o título da atividade"

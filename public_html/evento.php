@@ -16,7 +16,7 @@ $atividades = new Atividades();
 $evento = $eventos->listarEvento($evento_id);
 $atividade = $atividades->listarAtividades($evento_id);
 
-(strtotime(date('Y/m/d')) > strtotime($evento->evento_termino)) ? $d = "disabled" : $d = "";
+(strtotime(date('Y/m/d')) > strtotime($evento->evento_termino) || strtotime(date('Y/m/d')) < strtotime($evento->data_inicio)) ? $d = "disabled" : $d = "";
 
 if (!Autenticacao::usuarioAdministrador() && Autenticacao::verificarLogin()) {
 	$dados_eventos = [];
@@ -51,13 +51,14 @@ if (!Autenticacao::usuarioAdministrador() && Autenticacao::verificarLogin()) {
 								<h5 class="card-title">Inscrições</h5>
 								<p class="card-text">
 									Início: <?= Util::formataDataBR($evento->data_inicio) ?> <br>
-									Fim: <span class="font-weight-bold text-uppercase text-danger">
-									<?php if (strtotime(date('Y/m/d')) >= strtotime($evento->data_termino)) {
-										echo Util::formataDataBR($evento->data_prorrogacao) . " (prorrogado)";
-									} else {
+									Fim:
+									<?php if (strtotime(date('Y/m/d')) >= strtotime($evento->data_termino)) { ?>
+										<span class="font-weight-bold text-uppercase text-danger">
+											<?= Util::formataDataBR($evento->data_prorrogacao) ?>
+										</span> (prorrogado)
+									<?php } else {
 										echo Util::formataDataBR($evento->data_termino);
 									}?>
-								</span>
 								</p>
 								<p class="card-text"><small class="text-muted">Inscrições somente pelo site</small></p>
 							</div>

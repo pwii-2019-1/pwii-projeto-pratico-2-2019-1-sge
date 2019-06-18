@@ -96,7 +96,7 @@ if (!Autenticacao::usuarioAdministrador() && Autenticacao::verificarLogin()) {
 
                 <?php if (count((array) $dados['lista_eventos'][0]) > 0) {
                     foreach ($dados['lista_eventos'] as $i => $evento) {
-                        (strtotime(date('Y/m/d')) > strtotime($evento->data_prorrogacao)) ? $d = "disabled" : $d = ""; ?>
+                        (strtotime(date('Y/m/d')) > strtotime($evento->data_prorrogacao) || strtotime(date('Y/m/d')) < strtotime($evento->data_inicio)) ? $d = "disabled" : $d = ""; ?>
 
                     <div class="col-md-4" style="">
                         <div class="card mb-4 box-shadow">

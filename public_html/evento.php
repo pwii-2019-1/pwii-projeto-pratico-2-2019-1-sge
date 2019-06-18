@@ -17,6 +17,7 @@ $evento = $eventos->listarEvento($evento_id);
 $atividade = $atividades->listarAtividades($evento_id);
 
 (strtotime(date('Y/m/d')) > strtotime($evento->evento_termino)) ? $d = "disabled" : $d = "";
+(strtotime(date('Y/m/d')) < strtotime($evento->evento_termino)) ? $verificacaoGerarCeritificado = "disabled": $verificacaoGerarCeritificado = "";
 
 if (!Autenticacao::usuarioAdministrador() && Autenticacao::verificarLogin()) {
 	$dados_eventos = [];
@@ -141,7 +142,7 @@ if (!Autenticacao::usuarioAdministrador() && Autenticacao::verificarLogin()) {
 
 					<?php } else { ?>
 						<a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark <?= $b ?>">Atividades Inscritas</a>
-						<a href="#" id="gerar_certificado" data-evento_id="<?= $evento->evento_id ?>" data-usuario_id="<?= Autenticacao::getCookieUsuario() ?>" class="btn btn-lg btn-outline-dark">Certificado</a>
+						<a href="#" id="gerar_certificado" data-evento_id="<?= $evento->evento_id ?>" data-usuario_id="<?= Autenticacao::getCookieUsuario() ?>" class="btn btn-lg btn-outline-dark <?= $verificacaoGerarCeritificado ?>">Certificado</a>
 					<?php } ?>
 				</div>
 			</div>

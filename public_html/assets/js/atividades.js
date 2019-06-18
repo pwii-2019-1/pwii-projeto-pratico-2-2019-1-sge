@@ -94,6 +94,7 @@ const marcarAtividades = () => {
             if (presencas.includes(atividade)) {
                 // Se o id da atividade estiver dentro do array de presencas, ele marca o checkbox
                 $(this).prop('checked', true);
+                $(this).prop('disabled', false);
             }
         });
 

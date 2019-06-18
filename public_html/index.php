@@ -95,7 +95,8 @@ if (!Autenticacao::usuarioAdministrador() && Autenticacao::verificarLogin()) {
             <div class="row">
 
                 <?php if (count((array) $dados['lista_eventos'][0]) > 0) {
-                    foreach ($dados['lista_eventos'] as $i => $evento) { ?>
+                    foreach ($dados['lista_eventos'] as $i => $evento) {
+                        (strtotime(date('Y/m/d')) > strtotime($evento->data_prorrogacao)) ? $d = "disabled" : $d = ""; ?>
 
                     <div class="col-md-4" style="">
                         <div class="card mb-4 box-shadow">
@@ -122,7 +123,7 @@ if (!Autenticacao::usuarioAdministrador() && Autenticacao::verificarLogin()) {
                                                     Atividades Inscritas
                                                 </a>
                                             <?php } else { ?>
-                                                <a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn-outline-success" name="inscrever" data-toggle="modal" data-target="#">
+                                                <a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-sm btn-outline-success <?= $d ?>" name="inscrever" data-toggle="modal" data-target="#" >
                                                     Inscrever-se
                                                 </a>
                                             <?php }

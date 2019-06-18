@@ -16,7 +16,9 @@ $atividades = new Atividades();
 $evento = $eventos->listarEvento($evento_id);
 $atividade = $atividades->listarAtividades($evento_id);
 
-if (!Autenticacao::usuarioAdministrador()) {
+(strtotime(date('Y/m/d')) > strtotime($evento->evento_termino)) ? $d = "disabled" : $d = "";
+
+if (!Autenticacao::usuarioAdministrador() && Autenticacao::verificarLogin()) {
 	$dados_eventos = [];
     $dados_eventos['busca']['me'] = Autenticacao::getCookieUsuario();
     $dados2 = $eventos->listarEventos($dados_eventos); //eventos que o usuario se inscreveu
@@ -26,7 +28,7 @@ if (!Autenticacao::usuarioAdministrador()) {
 
 ?>
 
-<main role='main'>
+<main role='main' class="mt-3">
 	<div class="jumbotron mt-n3" style="border-radius:0px; background:url(assets/imagens/grande.png) no-repeat 0 0">
 		<div class="container mb-4">
 		</div>
@@ -53,7 +55,6 @@ if (!Autenticacao::usuarioAdministrador()) {
 									<?php if (strtotime(date('Y/m/d')) >= strtotime($evento->data_termino)) {
 										echo Util::formataDataBR($evento->data_prorrogacao) . " (prorrogado)";
 									} else {
-										//echo Util::formataDataBR($evento->data_prorrogacao);
 										echo Util::formataDataBR($evento->data_termino);
 									}?>
 								</span>
@@ -85,56 +86,58 @@ if (!Autenticacao::usuarioAdministrador()) {
 			</div>
 			<div class="col-md-2">
 				<div class="btn-group-vertical">
-						<?php
-                        $cont = 0;
+					<?php
+                    $cont = 0;
 
-                        if (count($dados2) > 0 && count((array) $dados2['lista_eventos']) > 0 && count((array) $dados2['lista_eventos'][0]) > 0) {
-							foreach ($dados2['lista_eventos'] as $j => $evento2) {
-								if ($evento->evento_id == $evento2->evento_id) $cont++; ?>
-							<?php }
-						} if ($cont == 1) {
-							$a = "disabled";
-							$b = "";
-						} else {
-							$a = "";
-							$b = "disabled";
-						}?>
+                    if (count($dados2) > 0 && count((array) $dados2['lista_eventos']) > 0 && count((array) $dados2['lista_eventos'][0]) > 0) {
+						foreach ($dados2['lista_eventos'] as $j => $evento2) {
+							if ($evento->evento_id == $evento2->evento_id) $cont++; ?>
+						<?php }
+					} if ($cont == 1) {
+						$a = "disabled";
+						$b = "";
+					} else {
+						$a = "";
+						$b = "disabled";
+					}
 
-						<a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark <?= $a ?>">
-						<?= (Autenticacao::usuarioAdministrador()) ? "Atividades" : "Inscrever-se" ?>
+					if (!Autenticacao::usuarioAdministrador()) { ?>
+						<a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark <?= $a ?> <?= $d ?>">Inscrever-se</a>
+					<?php }
+
+					if (Autenticacao::usuarioAdministrador()) { ?>
+					<a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark <?= $a ?>">Atividades</a>
+					<a href="cadastro_atividade.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark <?= $d ?>">
+						Adicionar Atividades
 					</a>
-					<?php if (Autenticacao::usuarioAdministrador()) { ?>
-						<a href="cadastro_atividade.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark">
-							Adicionar Atividades
+					<div class="btn-group">
+						<a href="cadastro_evento.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark <?= (strtotime(date('Y/m/d')) > strtotime($evento->evento_inicio)) ? "disabled" : "" ?>">
+							Editar
 						</a>
-						<div class="btn-group">
-							<a href="cadastro_evento.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark">
-								Editar
-							</a>
-							<a href="excluir" class="btn btn-lg btn-outline-danger" name="excluir" data-toggle="modal" data-target="#confirmModal">
-								Excluir
-							</a>
+						<a href="excluir" class="btn btn-lg btn-outline-danger <?= (strtotime(date('Y/m/d')) > strtotime($evento->evento_inicio)) ? "disabled" : "" ?>" name="excluir" data-toggle="modal" data-target="#confirmModal">
+							Excluir
+						</a>
 
-						</div>
-						<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div class="modal-body">
-										Deseja realmente <span class="font-weight-bold text-uppercase text-danger"> Excluir</span> esse evento?
-									</div>
-									<div class="modal-footer p-2">
-										<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Não</button>
-										<a id="botao_excluir" href="" class="btn btn-outline-danger" data-evento_id="<?= $evento->evento_id ?>">Sim</a>
-									</div>
+					</div>
+					<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									Deseja realmente <span class="font-weight-bold text-uppercase text-danger"> Excluir</span> esse evento?
+								</div>
+								<div class="modal-footer p-2">
+									<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Não</button>
+									<a id="botao_excluir" href="" class="btn btn-outline-danger" data-evento_id="<?= $evento->evento_id ?>">Sim</a>
 								</div>
 							</div>
 						</div>
+					</div>
 
 					<?php } else { ?>
 						<a href="atividades.php?evento_id=<?= $evento->evento_id ?>" class="btn btn-lg btn-outline-dark <?= $b ?>">Atividades Inscritas</a>

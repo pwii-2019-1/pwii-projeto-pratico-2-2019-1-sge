@@ -28,9 +28,11 @@ $evento = $eventos->listarEvento($evento_id);
 $atividade = $atividades->listarAtividades($evento_id);
 $atiInscritas = $presencas->listarAtividadesInscritas([$evento_id, Autenticacao::getCookieUsuario()], "atividades");
 $x = 0;
+
+(strtotime(date('Y/m/d')) > strtotime($evento->data_prorrogacao)) ? $d = "disabled" : $d = "";
 ?>
 
-<main role='main'>
+<main role='main' class="mt-0">
     <div class="jumbotron" style="border-radius:0px; background:url(assets/imagens/grande.png) no-repeat 0 0">
         <div class="container mb-4"></div>
     </div>
@@ -97,6 +99,11 @@ $x = 0;
                             <tbody>
                             <?php if (count((array)$atividade["lista_atividades"][0]) > 0) {
                                 foreach ($atividade["lista_atividades"] as $j => $ativ) {
+
+                                    $presenca = $presencas->listarPresencas([$ativ->atividade_id, null], "nomes");
+                                    if (empty($presenca[0])) unset($presenca[0]);
+                                    $vagas = $ativ->quantidade_vaga - count($presenca);
+
                                     if (Util::dia($ativ->datahora_inicio) == Util::dia($dia->data)) { ?>
                                         <tr>
                                             <!-- Colocar o 'atividade_id' da atividade no id e no for -->
@@ -106,7 +113,8 @@ $x = 0;
                                                            id="atividade<?= ++$x ?>" data-presenca=""
                                                            data-horario_inicio="<?= Util::hora($ativ->datahora_inicio) . ":" . Util::min($ativ->datahora_inicio) ?>"
                                                            data-horario_termino="<?= Util::hora($ativ->datahora_termino) . ":" . Util::min($ativ->datahora_termino) ?>"
-                                                           data-data_evento="<?= Util::dia($dia->data) . "/" . Util::mes($dia->data) ?>">
+                                                           data-data_evento="<?= Util::dia($dia->data) . "/" . Util::mes($dia->data) ?>"
+                                                           <?= $vagas == 0 ? "disabled" : "" ?>>
                                                 </td>
                                             <?php } ?>
                                             <td class="align-middle" name="horario">
@@ -114,21 +122,22 @@ $x = 0;
                                                 às
                                                 <?= Util::hora($ativ->datahora_termino) . ":" . Util::min($ativ->datahora_termino) ?>
                                             </td>
-                                            <td class="align-middle"><label class="mb-0"
-                                                                            for="atividade<?= $x++ ?>"><?= $ativ->titulo ?></label>
+                                            <td class="align-middle"><label class="mb-0" for="atividade<?= $x++ ?>"><?= $ativ->titulo ?></label>
                                             </td>
                                             <td class="align-middle"><?= $ativ->responsavel ?></td>
                                             <td class="align-middle"><?= $ativ->local ?></td>
 
                                             <!-- verificar se não está muito proximo de começar a atividade para não deixar Excluir e Editar -->
-                                            <?php if (Autenticacao::usuarioAdministrador()) { ?>
+                                            <?php if (Autenticacao::usuarioAdministrador()) {
+                                                (strtotime(date('Y/m/d H:m:s')) > strtotime($ativ->datahora_inicio)) ? $di = "disabled" : $di = "";?>
+
                                                 <td class="align-middle">
-                                                    <a class="btn btn-outline-info"
+                                                    <a class="btn btn-outline-info <?= $di ?>"
                                                        href="cadastro_atividade.php?atividade_id=<?= $ativ->atividade_id; ?>&evento_id=<?= $ativ->evento_id; ?>"
                                                        id="botao_alterar" title="Editar">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <a class="btn btn-outline-danger" href="#"
+                                                    <a class="btn btn-outline-danger <?= $di ?>" href="#"
                                                        data-atividade_id="<?= $ativ->atividade_id ?>" name="excluir"
                                                        data-toggle="modal" data-target="#confirmModal" title="Excluir">
                                                         <i class="fas fa-trash-alt"></i>
@@ -146,10 +155,8 @@ $x = 0;
                                                         </a>
                                                     <?php } ?>
                                                 </td>
-                                            <?php } else {
-                                                $presenca = $presencas->listarPresencas([$ativ->atividade_id, null], "nomes");
-                                                if (empty($presenca[0])) unset($presenca[0]); ?>
-                                                <td class="align-middle"><?= ($ativ->quantidade_vaga - count($presenca)) . "/" . $ativ->quantidade_vaga ?></td>
+                                            <?php } else { ?>
+                                                <td class="align-middle"><?= $vagas . "/" . $ativ->quantidade_vaga ?></td>
                                             <?php } ?>
                                         </tr>
                                     <?php }
@@ -167,8 +174,7 @@ $x = 0;
             <?php if (!Autenticacao::usuarioAdministrador()) { ?>
                 <div class="row mb-5">
                     <div class="col-md-3 ml-md-auto">
-                        <button class="btn btn-outline-success btn-block" id="botao_atividade" type="submit">Salvar
-                        </button>
+                        <button class="btn btn-outline-success btn-block" id="botao_atividade" type="submit" <?= $d ?>>Salvar</button>
                     </div>
                 </div>
             <?php } ?>

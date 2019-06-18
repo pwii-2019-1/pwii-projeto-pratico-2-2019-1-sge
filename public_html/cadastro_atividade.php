@@ -88,7 +88,7 @@ $atividade = $atividades->listarAtividade($atividade_id);
                         <div class="col-md-6"></div>
                         <div class="col-md-2">
                             <!-- <button type="" class="btn btn-block btn-outline-dark" onclick="history.go(-1)"><i >Voltar</i></button> -->
-                            <a type="" href="cadastro_evento.php" class="btn btn-block btn-outline-dark" onclick="">Voltar</a>
+                            <!-- <a type="" href="cadastro_evento.php" class="btn btn-block btn-outline-dark" onclick="">Voltar</a> -->
                         </div>
 
                         <div class="col-md-2">

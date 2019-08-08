@@ -16,7 +16,7 @@ $atividades = new Atividades();
 $evento = $eventos->listarEvento($evento_id);
 $atividade = $atividades->listarAtividades($evento_id);
 
-(strtotime(date('Y/m/d')) > strtotime($evento->evento_termino)) ? $d = "disabled" : $d = "";
+(strtotime(date('Y/m/d')) > strtotime($evento->evento_termino) || strtotime(date('Y/m/d')) < strtotime($evento->data_prorrogacao)) ? $d = "disabled" : $d = "";
 (strtotime(date('Y/m/d')) < strtotime($evento->evento_termino)) ? $verificacaoGerarCeritificado = "disabled": $verificacaoGerarCeritificado = "";
 
 if (!Autenticacao::usuarioAdministrador() && Autenticacao::verificarLogin()) {
